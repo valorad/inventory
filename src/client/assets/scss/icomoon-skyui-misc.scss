@@ -1,0 +1,108 @@
+@import "./icomoon-skyui";
+
+@font-face {
+  font-family: 'skyui-misc';
+  src:  url('#{$icomoon-font-path}/skyui-misc.eot?d47jbz');
+  src:  url('#{$icomoon-font-path}/skyui-misc.eot?d47jbz#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/skyui-misc.ttf?d47jbz') format('truetype'),
+    url('#{$icomoon-font-path}/skyui-misc.woff?d47jbz') format('woff'),
+    url('#{$icomoon-font-path}/skyui-misc.svg?d47jbz#skyui-misc') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i.icomoon.skyui-misc {
+  @extend %fontBase;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'skyui-misc' !important;
+}
+
+@function unicode($str) {
+  @return unquote("\"") + $str + unquote("\"");
+}
+
+.icomoon.icon-equiped {
+  &:before {
+    content: unicode($skyui-misc-icon-equiped);     
+    color: #ccc;
+  }
+}
+.icomoon.icon-poisoned {
+  &:before {
+    content: unicode($skyui-misc-icon-poisoned);     
+    color: #c0f86d;
+  }
+}
+.icomoon.icon-enchanted {
+  &:before {
+    content: unicode($skyui-misc-icon-enchanted);     
+    color: #a2beff;
+  }
+}
+.icomoon.icon-favored {
+  &:before {
+    content: unicode($skyui-misc-icon-favored);     
+    color: #ff6;
+  }
+}
+.icomoon.icon-higher-level {
+  &:before {
+    content: unicode($skyui-misc-icon-higher-level);     
+    color: #ccc;
+  }
+}
+.icomoon.icon-stolen {
+  &:before {
+    content: unicode($skyui-misc-icon-stolen);     
+    color: #feb4b4;
+  }
+}
+.icomoon.icon-read {
+  &:before {
+    content: unicode($skyui-misc-icon-read);     
+    color: #ffc;
+  }
+}
+.icomoon.icon-transfer-in {
+  &:before {
+    content: unicode($skyui-misc-icon-transfer-in);     
+    color: #999;
+  }
+}
+.icomoon.icon-transfer-out {
+  &:before {
+    content: unicode($skyui-misc-icon-transfer-out);     
+    color: #999;
+  }
+}
+.icomoon.icon-buyer {
+  &:before {
+    content: unicode($skyui-misc-icon-buyer);     
+    color: #999;
+  }
+}
+.icomoon.icon-vendor {
+  &:before {
+    content: unicode($skyui-misc-icon-vendor);     
+    color: #999;
+  }
+}
+.icomoon.icon-filter-settings {
+  &:before {
+    content: unicode($skyui-misc-icon-filter-settings);     
+    color: #999;
+  }
+}
+.icomoon.icon-search {
+  &:before {
+    content: unicode($skyui-misc-icon-search);     
+    color: #333;
+  }
+}
+.icomoon.icon-transfer-to {
+  &:before {
+    content: unicode($skyui-misc-icon-transfer-to);     
+    color: #333;
+  }
+}
+

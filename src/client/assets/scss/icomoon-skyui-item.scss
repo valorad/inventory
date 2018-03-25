@@ -1,0 +1,559 @@
+@import "./icomoon-skyui";
+
+@font-face {
+  font-family: 'skyui-item';
+  src:  url('#{$icomoon-font-path}/skyui-item.eot?ge9bcz');
+  src:  url('#{$icomoon-font-path}/skyui-item.eot?ge9bcz#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/skyui-item.ttf?ge9bcz') format('truetype'),
+    url('#{$icomoon-font-path}/skyui-item.woff?ge9bcz') format('woff'),
+    url('#{$icomoon-font-path}/skyui-item.svg?ge9bcz#skyui-item') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i.icomoon.skyui-item {
+  @extend %fontBase;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'skyui-item' !important;
+}
+
+@function unicode($str) {
+  @return unquote("\"") + $str + unquote("\"");
+}
+
+.icomoon.icon-armor-amulet {
+  &:before {
+    content: unicode($skyui-item-icon-armor-amulet); 
+  }
+}
+.icomoon.icon-armor-bracer {
+  &:before {
+    content: unicode($skyui-item-icon-armor-bracer); 
+  }
+}
+.icomoon.icon-armor-circlet {
+  &:before {
+    content: unicode($skyui-item-icon-armor-circlet); 
+  }
+}
+.icomoon.icon-armor-daedra {
+  &:before {
+    content: unicode($skyui-item-icon-armor-daedra); 
+  }
+}
+.icomoon.icon-armor-heavy-body {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-body); 
+  }
+}
+.icomoon.icon-armor-heavy-calves {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-calves); 
+  }
+}
+.icomoon.icon-armor-heavy-feet {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-feet); 
+  }
+}
+.icomoon.icon-armor-heavy-forearms {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-forearms); 
+  }
+}
+.icomoon.icon-armor-heavy-hands {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-hands); 
+  }
+}
+.icomoon.icon-armor-heavy-head {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-head); 
+  }
+}
+.icomoon.icon-armor-heavy-mask {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-mask); 
+  }
+}
+.icomoon.icon-armor-heavy-shield {
+  &:before {
+    content: unicode($skyui-item-icon-armor-heavy-shield); 
+  }
+}
+.icomoon.icon-armor-light-body {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-body); 
+  }
+}
+.icomoon.icon-armor-light-calves {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-calves); 
+  }
+}
+.icomoon.icon-armor-light-feet {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-feet); 
+  }
+}
+.icomoon.icon-armor-light-forearms {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-forearms); 
+  }
+}
+.icomoon.icon-armor-light-hands {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-hands); 
+  }
+}
+.icomoon.icon-armor-light-head {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-head); 
+  }
+}
+.icomoon.icon-armor-light-mask {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-mask); 
+  }
+}
+.icomoon.icon-armor-light-shield {
+  &:before {
+    content: unicode($skyui-item-icon-armor-light-shield); 
+  }
+}
+.icomoon.icon-armor-ring {
+  &:before {
+    content: unicode($skyui-item-icon-armor-ring); 
+  }
+}
+.icomoon.icon-book-journal {
+  &:before {
+    content: unicode($skyui-item-icon-book-journal); 
+  }
+}
+.icomoon.icon-book-map {
+  &:before {
+    content: unicode($skyui-item-icon-book-map); 
+  }
+}
+.icomoon.icon-book-note {
+  &:before {
+    content: unicode($skyui-item-icon-book-note); 
+  }
+}
+.icomoon.icon-book-tome {
+  &:before {
+    content: unicode($skyui-item-icon-book-tome); 
+  }
+}
+.icomoon.icon-book-tome-read {
+  &:before {
+    content: unicode($skyui-item-icon-book-tome-read); 
+  }
+}
+.icomoon.icon-clothing-body {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-body); 
+  }
+}
+.icomoon.icon-clothing-calves {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-calves); 
+  }
+}
+.icomoon.icon-clothing-feet {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-feet); 
+  }
+}
+.icomoon.icon-clothing-forearms {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-forearms); 
+  }
+}
+.icomoon.icon-clothing-hands {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-hands); 
+  }
+}
+.icomoon.icon-clothing-head {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-head); 
+  }
+}
+.icomoon.icon-clothing-mask {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-mask); 
+  }
+}
+.icomoon.icon-clothing-pants {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-pants); 
+  }
+}
+.icomoon.icon-clothing-robe {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-robe); 
+  }
+}
+.icomoon.icon-clothing-shield {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-shield); 
+  }
+}
+.icomoon.icon-clothing-shoes {
+  &:before {
+    content: unicode($skyui-item-icon-clothing-shoes); 
+  }
+}
+.icomoon.icon-default-alteration {
+  &:before {
+    content: unicode($skyui-item-icon-default-alteration); 
+  }
+}
+.icomoon.icon-default-armor {
+  &:before {
+    content: unicode($skyui-item-icon-default-armor); 
+  }
+}
+.icomoon.icon-default-book {
+  &:before {
+    content: unicode($skyui-item-icon-default-book); 
+  }
+}
+.icomoon.icon-default-book-read {
+  &:before {
+    content: unicode($skyui-item-icon-default-book-read); 
+  }
+}
+.icomoon.icon-default-conjuration {
+  &:before {
+    content: unicode($skyui-item-icon-default-conjuration); 
+  }
+}
+.icomoon.icon-default-destruction {
+  &:before {
+    content: unicode($skyui-item-icon-default-destruction); 
+  }
+}
+.icomoon.icon-default-effect {
+  &:before {
+    content: unicode($skyui-item-icon-default-effect); 
+  }
+}
+.icomoon.icon-default-food {
+  &:before {
+    content: unicode($skyui-item-icon-default-food); 
+  }
+}
+.icomoon.icon-default-illusion {
+  &:before {
+    content: unicode($skyui-item-icon-default-illusion); 
+  }
+}
+.icomoon.icon-default-ingredient {
+  &:before {
+    content: unicode($skyui-item-icon-default-ingredient); 
+  }
+}
+.icomoon.icon-default-key {
+  &:before {
+    content: unicode($skyui-item-icon-default-key); 
+  }
+}
+.icomoon.icon-default-misc {
+  &:before {
+    content: unicode($skyui-item-icon-default-misc); 
+  }
+}
+.icomoon.icon-default-potion {
+  &:before {
+    content: unicode($skyui-item-icon-default-potion); 
+  }
+}
+.icomoon.icon-default-power {
+  &:before {
+    content: unicode($skyui-item-icon-default-power); 
+  }
+}
+.icomoon.icon-default-restoration {
+  &:before {
+    content: unicode($skyui-item-icon-default-restoration); 
+  }
+}
+.icomoon.icon-default-scroll {
+  &:before {
+    content: unicode($skyui-item-icon-default-scroll); 
+  }
+}
+.icomoon.icon-default-shout {
+  &:before {
+    content: unicode($skyui-item-icon-default-shout); 
+  }
+}
+.icomoon.icon-default-weapon {
+  &:before {
+    content: unicode($skyui-item-icon-default-weapon); 
+  }
+}
+.icomoon.icon-food-beer {
+  &:before {
+    content: unicode($skyui-item-icon-food-beer); 
+  }
+}
+.icomoon.icon-food-wine {
+  &:before {
+    content: unicode($skyui-item-icon-food-wine); 
+  }
+}
+.icomoon.icon-key-house {
+  &:before {
+    content: unicode($skyui-item-icon-key-house); 
+  }
+}
+.icomoon.icon-magic-fire {
+  &:before {
+    content: unicode($skyui-item-icon-magic-fire); 
+  }
+}
+.icomoon.icon-magic-frost {
+  &:before {
+    content: unicode($skyui-item-icon-magic-frost); 
+  }
+}
+.icomoon.icon-magic-shock {
+  &:before {
+    content: unicode($skyui-item-icon-magic-shock); 
+  }
+}
+.icomoon.icon-misc-artifact {
+  &:before {
+    content: unicode($skyui-item-icon-misc-artifact); 
+  }
+}
+.icomoon.icon-misc-clutter {
+  &:before {
+    content: unicode($skyui-item-icon-misc-clutter); 
+  }
+}
+.icomoon.icon-misc-dragonclaw {
+  &:before {
+    content: unicode($skyui-item-icon-misc-dragonclaw); 
+  }
+}
+.icomoon.icon-misc-gem {
+  &:before {
+    content: unicode($skyui-item-icon-misc-gem); 
+  }
+}
+.icomoon.icon-misc-gold {
+  &:before {
+    content: unicode($skyui-item-icon-misc-gold); 
+  }
+}
+.icomoon.icon-misc-goldsack {
+  &:before {
+    content: unicode($skyui-item-icon-misc-goldsack); 
+  }
+}
+.icomoon.icon-misc-hide {
+  &:before {
+    content: unicode($skyui-item-icon-misc-hide); 
+  }
+}
+.icomoon.icon-misc-ingot {
+  &:before {
+    content: unicode($skyui-item-icon-misc-ingot); 
+  }
+}
+.icomoon.icon-misc-leather {
+  &:before {
+    content: unicode($skyui-item-icon-misc-leather); 
+  }
+}
+.icomoon.icon-misc-lockpick {
+  &:before {
+    content: unicode($skyui-item-icon-misc-lockpick); 
+  }
+}
+.icomoon.icon-misc-ore {
+  &:before {
+    content: unicode($skyui-item-icon-misc-ore); 
+  }
+}
+.icomoon.icon-misc-remains {
+  &:before {
+    content: unicode($skyui-item-icon-misc-remains); 
+  }
+}
+.icomoon.icon-misc-soulgem {
+  &:before {
+    content: unicode($skyui-item-icon-misc-soulgem); 
+  }
+}
+.icomoon.icon-misc-strips {
+  &:before {
+    content: unicode($skyui-item-icon-misc-strips); 
+  }
+}
+.icomoon.icon-misc-torch {
+  &:before {
+    content: unicode($skyui-item-icon-misc-torch); 
+  }
+}
+.icomoon.icon-misc-trollskull {
+  &:before {
+    content: unicode($skyui-item-icon-misc-trollskull); 
+  }
+}
+.icomoon.icon-misc-wood {
+  &:before {
+    content: unicode($skyui-item-icon-misc-wood); 
+  }
+}
+.icomoon.icon-potion-fire {
+  &:before {
+    content: unicode($skyui-item-icon-potion-fire); 
+  }
+}
+.icomoon.icon-potion-frost {
+  &:before {
+    content: unicode($skyui-item-icon-potion-frost); 
+  }
+}
+.icomoon.icon-potion-health {
+  &:before {
+    content: unicode($skyui-item-icon-potion-health); 
+  }
+}
+.icomoon.icon-potion-magic {
+  &:before {
+    content: unicode($skyui-item-icon-potion-magic); 
+  }
+}
+.icomoon.icon-potion-poison {
+  &:before {
+    content: unicode($skyui-item-icon-potion-poison); 
+  }
+}
+.icomoon.icon-potion-shock {
+  &:before {
+    content: unicode($skyui-item-icon-potion-shock); 
+  }
+}
+.icomoon.icon-potion-stam {
+  &:before {
+    content: unicode($skyui-item-icon-potion-stam); 
+  }
+}
+.icomoon.icon-soulgem-azura {
+  &:before {
+    content: unicode($skyui-item-icon-soulgem-azura); 
+  }
+}
+.icomoon.icon-soulgem-empty {
+  &:before {
+    content: unicode($skyui-item-icon-soulgem-empty); 
+  }
+}
+.icomoon.icon-soulgem-full {
+  &:before {
+    content: unicode($skyui-item-icon-soulgem-full); 
+  }
+}
+.icomoon.icon-soulgem-grand-empty {
+  &:before {
+    content: unicode($skyui-item-icon-soulgem-grand-empty); 
+  }
+}
+.icomoon.icon-soulgem-grand-full {
+  &:before {
+    content: unicode($skyui-item-icon-soulgem-grand-full); 
+  }
+}
+.icomoon.icon-soulgem-grand-partial {
+  &:before {
+    content: unicode($skyui-item-icon-soulgem-grand-partial); 
+  }
+}
+.icomoon.icon-soulgem-partial {
+  &:before {
+    content: unicode($skyui-item-icon-soulgem-partial); 
+  }
+}
+.icomoon.icon-weapon-arrow {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-arrow); 
+  }
+}
+.icomoon.icon-weapon-battleaxe {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-battleaxe); 
+  }
+}
+.icomoon.icon-weapon-bolt {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-bolt); 
+  }
+}
+.icomoon.icon-weapon-bow {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-bow); 
+  }
+}
+.icomoon.icon-weapon-crossbow {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-crossbow); 
+  }
+}
+.icomoon.icon-weapon-daedra {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-daedra); 
+  }
+}
+.icomoon.icon-weapon-dagger {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-dagger); 
+  }
+}
+.icomoon.icon-weapon-greatsword {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-greatsword); 
+  }
+}
+.icomoon.icon-weapon-hammer {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-hammer); 
+  }
+}
+.icomoon.icon-weapon-mace {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-mace); 
+  }
+}
+.icomoon.icon-weapon-pickaxe {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-pickaxe); 
+  }
+}
+.icomoon.icon-weapon-staff {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-staff); 
+  }
+}
+.icomoon.icon-weapon-sword {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-sword); 
+  }
+}
+.icomoon.icon-weapon-waraxe {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-waraxe); 
+  }
+}
+.icomoon.icon-weapon-woodaxe {
+  &:before {
+    content: unicode($skyui-item-icon-weapon-woodaxe); 
+  }
+}
+

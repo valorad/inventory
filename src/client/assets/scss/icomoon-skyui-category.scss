@@ -1,0 +1,124 @@
+@import "./icomoon-skyui";
+
+@font-face {
+  font-family: 'skyui-category';
+  src:  url('#{$icomoon-font-path}/skyui-category.eot?21y5ff');
+  src:  url('#{$icomoon-font-path}/skyui-category.eot?21y5ff#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/skyui-category.ttf?21y5ff') format('truetype'),
+    url('#{$icomoon-font-path}/skyui-category.woff?21y5ff') format('woff'),
+    url('#{$icomoon-font-path}/skyui-category.svg?21y5ff#skyui-category') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i.icomoon.skyui-category {
+  @extend %fontBase;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'skyui-category' !important;
+}
+
+@function unicode($str) {
+  @return unquote("\"") + $str + unquote("\"");
+}
+
+.icomoon.icon-all-inventory {
+  &:before {
+    content: unicode($skyui-category-icon-all-inventory); 
+  }
+}
+.icomoon.icon-all-magic {
+  &:before {
+    content: unicode($skyui-category-icon-all-magic); 
+  }
+}
+.icomoon.icon-alteration {
+  &:before {
+    content: unicode($skyui-category-icon-alteration); 
+  }
+}
+.icomoon.icon-apparel {
+  &:before {
+    content: unicode($skyui-category-icon-apparel); 
+  }
+}
+.icomoon.icon-books {
+  &:before {
+    content: unicode($skyui-category-icon-books); 
+  }
+}
+.icomoon.icon-conjuration {
+  &:before {
+    content: unicode($skyui-category-icon-conjuration); 
+  }
+}
+.icomoon.icon-destruction {
+  &:before {
+    content: unicode($skyui-category-icon-destruction); 
+  }
+}
+.icomoon.icon-favorites {
+  &:before {
+    content: unicode($skyui-category-icon-favorites); 
+  }
+}
+.icomoon.icon-food {
+  &:before {
+    content: unicode($skyui-category-icon-food); 
+  }
+}
+.icomoon.icon-illusion {
+  &:before {
+    content: unicode($skyui-category-icon-illusion); 
+  }
+}
+.icomoon.icon-ingredients {
+  &:before {
+    content: unicode($skyui-category-icon-ingredients); 
+  }
+}
+.icomoon.icon-keys {
+  &:before {
+    content: unicode($skyui-category-icon-keys); 
+  }
+}
+.icomoon.icon-magical-effects {
+  &:before {
+    content: unicode($skyui-category-icon-magical-effects); 
+  }
+}
+.icomoon.icon-misc {
+  &:before {
+    content: unicode($skyui-category-icon-misc); 
+  }
+}
+.icomoon.icon-potions {
+  &:before {
+    content: unicode($skyui-category-icon-potions); 
+  }
+}
+.icomoon.icon-powers {
+  &:before {
+    content: unicode($skyui-category-icon-powers); 
+  }
+}
+.icomoon.icon-restoration {
+  &:before {
+    content: unicode($skyui-category-icon-restoration); 
+  }
+}
+.icomoon.icon-scrolls {
+  &:before {
+    content: unicode($skyui-category-icon-scrolls); 
+  }
+}
+.icomoon.icon-shouts {
+  &:before {
+    content: unicode($skyui-category-icon-shouts); 
+  }
+}
+.icomoon.icon-weapons {
+  &:before {
+    content: unicode($skyui-category-icon-weapons); 
+  }
+}
+
