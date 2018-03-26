@@ -43,6 +43,38 @@ pc端界面和老滚基本一致，只是：
 
 后台数据库用mongo，数据集还没有设计。后面再说。
 
+
+### 想法
+物品栏里展示的是ref，而不是base
+
+打开物品栏的时候实际上是在查询“我”所拥有的“ref”
+
+后台数据集：
+
+物品item base表： name, price, weight
+
+物品系列子表：
+armor: ..., rating(防护), type(轻甲、重甲),equip(头、身、足、手), (enchanting)
+
+weapon: ..., rating(伤害), type(长剑、单手斧、匕首……) equip(单手，双手，弓，弩……), (enchanting)
+
+potion: ..., effect(法术效果)
+
+玩家Actor ref表: name, avatar
+
+物品ref表： name(外键连物品base表 name), owner(外键连玩家Actor ref表 name), num(个数)
+
+# To Do:
+
+前端：
+
+- 界面：首页
+- 界面：物品栏页（物品详情 增加物品-控制台 删除物品-R-移动端-更多）
+
+后台：
+
+- 数据库设计
+
 # License
 
 MIT License
