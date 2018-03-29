@@ -51,19 +51,21 @@ pc端界面和老滚基本一致，只是：
 
 后台数据集：
 
-物品item base表： dbname, name{en, zh} price, weight, description
+![dbDataflow](https://i.imgur.com/XkC4p3r.png)
+
+物品item base表： dbname, value, weight, category (外键连gears表、consumables表、books)
 
 物品系列子表：
 
 gears表 (包括armor和weapon)
 
-- armor: ..., rating(防护), type(轻甲、重甲), equip(头、身、足、手), (enchanting)
+- armor: ..., rating(防护), type(轻甲、重甲), equip(头、身、足、手), effects
 
-- weapon: ..., rating(伤害), type(长剑、单手斧、匕首……) equip(单手，双手), (enchanting)
+- weapon: ..., rating(伤害), type(长剑、单手斧、匕首……) equip(单手，双手), effects
 
 consumables表 (包括potion、scroll、food、ingredients)，在type字段里区分
 
-- potion: ..., effect(法术效果)数组
+- potion: ..., effects(法术效果)数组
 
 - ...
 
@@ -73,9 +75,13 @@ consumables表 (包括potion、scroll、food、ingredients)，在type字段里�
 
 books: ..., content(书的内容)
 
-玩家Actor ref表: dbname, name{en, zh}, icon, description
+effects法术效果表：dbname
 
-物品ref表： dbname(外键连物品base表 dbname), name{en, zh}, owner(外键连玩家Actor ref表 dbname), num(个数)
+玩家Actor ref表: dbname, icon, description
+
+物品ref表： dbname(外键连物品base表 dbname), owner(外键连玩家Actor ref表 dbname), num(个数)
+
+name表（可能会是个外置json文件）dbname, en{name, description}, zh{name, description}
 
 # To Do:
 
@@ -94,4 +100,4 @@ MIT License
 
 所有图标、界面的版权属于Bethesda Game Studios和/或SkyUI团队。
 
-Thanks to Bethesda Game Studios for creating The Elder Scrolls V: Skyrim (SSE), providing the base content and allowing us to mod it.
+Thanks to Bethesda Game Studios for creating The Elder Scrolls V: Skyrim (and SSE), providing the base content and allowing us to mod it.
