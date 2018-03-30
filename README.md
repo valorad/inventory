@@ -51,7 +51,7 @@ pc端界面和老滚基本一致，只是：
 
 后台数据集：
 
-![dbDataflow](https://i.imgur.com/XkC4p3r.png)
+![dbDataflow](https://i.imgur.com/oizQ0f5.png)
 
 物品item base表： dbname, value, weight, category (外键连gears表、consumables表、books)
 
