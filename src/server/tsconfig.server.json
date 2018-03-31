@@ -1,11 +1,10 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": [
-      "dom",
       "esnext"
     ],
     "experimentalDecorators": true,

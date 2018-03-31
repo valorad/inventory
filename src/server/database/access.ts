@@ -7,8 +7,8 @@ class Access {
     const uri = `mongodb://${ config.user }:${ config.password }@${ config.host }:${ config.port }/${ config.db }?authSource=${ config.authDB }`;
     
     try {
-      let mongooseInstance = await mongoose.connect(uri);
-      mongooseInstance.connection
+      let mongooseInstance = mongoose.connect(uri);
+      mongoose.connection
         .on('close', () => {
           console.log(`Connection to ${ config.db } has been closed.`);
         })
@@ -16,6 +16,7 @@ class Access {
           console.log(`Connection to ${ config.db } established successfully.`);
           return mongooseInstance;
         });
+
     } catch (error) {
       console.warn(`Warning! Failed to connect to database '${config.db}'!`);
     }
