@@ -1,0 +1,63 @@
+{
+  "name": "inventory",
+  "version": "1.0.0",
+  "description": "高仿SkyUI 5的Angular物品栏. An Inventory highly resembles SkyUI 5.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "start": "node dist/server/inventory",
+    "build": "npm run build:s",
+    "build:s": "cross-env NODE_ENV=production webpack --config webpack/w.c.server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valorad/inventory.git"
+  },
+  "keywords": [
+    "angular",
+    "graphql",
+    "angular-redux",
+    "koa",
+    "typescript"
+  ],
+  "author": "valorad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valorad/inventory/issues"
+  },
+  "homepage": "https://github.com/valorad/inventory#readme",
+  "dependencies": {
+    "@koa/cors": "^2.2.1",
+    "apollo-server-koa": "^1.3.4",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.8.0",
+    "graphql-tools": "^2.23.1",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-send": "^4.1.3",
+    "koa-static": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/graphql": "^0.12.7",
+    "@types/koa": "^2.0.44",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-logger": "^3.1.0",
+    "@types/koa-router": "^7.0.27",
+    "@types/koa-send": "^4.1.1",
+    "@types/koa-static": "^4.0.0",
+    "@types/node": "^9.6.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
+    "cross-env": "^5.1.4",
+    "ts-loader": "^4.1.0",
+    "typescript": "^2.8.1",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-node-externals": "^1.6.0"
+  }
+}
