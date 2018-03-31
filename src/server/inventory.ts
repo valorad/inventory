@@ -8,30 +8,47 @@ import * as serve from 'koa-static';
 import * as bodyParser from 'koa-bodyparser';
 import * as cors from "@koa/cors";
 
-import { api } from './router/api';
+import { api } from './router';
+
+import { ConfigLoader } from './util/config-loader';
+import { DataBase } from "./database";
 
 const app = new Koa();
-const router = new Router();
 
-const clientPath = join(__dirname, "../client");
+let config = new ConfigLoader("inventory.json").config();
 
-app.use(logger());
-app.use(bodyParser());
-app.use(serve(clientPath));
+// handling config
+if (config) {
+  let port: number = config.koa.port || 3000;
 
-// root route and sub route settings
+  const router = new Router();
 
-router.use('/api', api.routes(), api.allowedMethods())
-// router.get('/*', async (ctx) => {
-//   await send(ctx, join(clientPath, 'index.html'), { root: '/' });
-// });
+  const clientPath = join(__dirname, "../client");
+  
+  app.use(logger());
+  app.use(bodyParser());
+  app.use(serve(clientPath));
+  
+  // root route and sub route settings
+  
+  router.use('/api', api.routes(), api.allowedMethods())
+  // router.get('/*', async (ctx) => {
+  //   await send(ctx, join(clientPath, 'index.html'), { root: '/' });
+  // });
+  
+  app.use(router.routes())
+  .use(router.allowedMethods());
+  
+  new DataBase();
 
-app.use(router.routes())
-.use(router.allowedMethods());
+  // listen
+  app.listen(port, () => {
+    console.log(`** koa started on port ${port}. **`);
+  });
 
-// listen
-app.listen(3000, () => {
-  console.log("** koa started on port 3000. **");
-});
+} else {
+  console.error("Invalid config detected, program shutting down");
+  process.exit(-1);
+}
 
 export default app;

@@ -1,0 +1,16 @@
+[
+  {
+    "koa": {
+      "port": 3000
+    },
+    "mongo": {
+      "db": "inventory",
+      "authDB": "a",
+      "user": "a",
+      "password": "a",
+      "host": "localhost",
+      "port": 27017
+    }
+  }
+
+]

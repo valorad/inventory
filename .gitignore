@@ -59,3 +59,5 @@ jspm_packages/
 /.vscode/**
 *.lock
 package-*.json
+/src/server/config/**
+!*.example.*
