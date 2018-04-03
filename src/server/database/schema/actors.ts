@@ -10,6 +10,10 @@ const schema = new Schema({
   icon: {
     type: String,
     required: false
+  },
+  equip: {
+    type: {},
+    required: false
   }
 });
 
