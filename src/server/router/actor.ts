@@ -4,6 +4,7 @@ import { View } from "../util";
 
 // import schemas
 import { actors } from '../database/schema/actors';
+import { DeleteWriteOpResultObject } from 'mongodb';
 
 
 class Actor {
@@ -30,36 +31,12 @@ class Actor {
     });
 
     this.router.post('/add', async (ctx) => {
-      // let actorToSave = {};
-      // let info = ctx.request.body;
 
-      // actorToSave["dbname"] = info.dbname;
-      // actorToSave["icon"] = info.icon;
-      // actorToSave["equiped"] = info.equiped;
-
-      // let newActor = new actors(actorToSave);
-
-      // try {
-      //   await newActor.save();
-        // ctx.body = {
-        //   msg: `Successfully created new actor ${newActor.dbname} with id ${newActor._id}`,
-        //   status: 'success',
-        //   id: newActor._id
-        // }
-      // } catch (error) {
-      //   console.error(error);
-      //   ctx.status = 500;
-        // ctx.body = {
-        //   msg: `Failed to create actor ${info.dbname}`,
-        //   status: 'failure',
-        //   id: null
-        // }
-      // }
       let newActor = await View.addRecord(actors, ctx.request.body, ["dbname", "icon", "equiped"]);
 
       if (newActor) {
         ctx.body = {
-          msg: `Successfully created new actor ${newActor.dbname} with id ${newActor._id}`,
+          msg: `Successfully created new actor "${newActor.dbname}" with id "${newActor._id}"`,
           status: 'success',
           id: newActor._id
         };
@@ -67,9 +44,32 @@ class Actor {
       } else {
         ctx.status = 500;
         ctx.body = {
-          msg: `Failed to create actor ${ctx.request.body.dbname}`,
+          msg: `Failed to create actor "${ctx.request.body.dbname}"`,
           status: 'failure',
           id: null
+        }
+      }
+
+    });
+
+    this.router.delete('/delete/:name', async (ctx) => {
+
+      let token = {dbname: ctx.params.name};
+      let delResult: DeleteWriteOpResultObject["result"] = await View.deleteRecord(actors, token);
+
+      if (delResult) {
+        ctx.body = {
+          msg: `Successfully deleted actor "${ctx.params.name}"`,
+          status: 'success',
+          removedCount: delResult.n
+        };
+        return;
+      } else {
+        ctx.status = 500;
+        ctx.body = {
+          msg: `Failed to delete actor "${ctx.params.name}"`,
+          status: 'failure',
+          removedCount: 0
         }
       }
 

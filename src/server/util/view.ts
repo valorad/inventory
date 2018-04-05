@@ -78,4 +78,15 @@ export class View {
 
   };
 
+  static deleteRecord = async (collection: Model<any>, conditions: any) => {
+
+    try {
+      return await collection.remove(conditions);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+
+  };
+
 }
