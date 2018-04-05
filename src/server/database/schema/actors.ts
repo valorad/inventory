@@ -63,7 +63,7 @@ const schema = new Schema({
       
     },
 
-    required: false
+    required: true
   }
 });
 

@@ -61,10 +61,14 @@ export class View {
     return result;
   };
 
-  static addRecord = async (collection: Model<any>, source: any, fields: string[]) => {
+  static addRecord = async (collection: Model<any>, source: any, fields: string[], postActions?: (raw: any)=>any) => {
     let recordToSave = {};
     for (let field of fields) {
       recordToSave[field] = source[field];
+    }
+
+    if (postActions) {
+      postActions(recordToSave);
     }
 
     let newRecord = new collection(recordToSave);

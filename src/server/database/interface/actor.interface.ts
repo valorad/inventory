@@ -18,5 +18,5 @@ export interface IEquiped {
 export interface IActor extends Document {
   dbname: string,
   icon?: string,
-  equiped?: IEquiped
+  equiped: IEquiped
 }

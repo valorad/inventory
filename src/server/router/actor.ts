@@ -4,7 +4,7 @@ import { View } from "../util";
 
 // import schemas
 import { actors } from '../database/schema/actors';
-import { DeleteWriteOpResultObject } from 'mongodb';
+import { DeleteWriteOpResultObject, ObjectId } from 'mongodb';
 
 
 class Actor {
@@ -32,7 +32,38 @@ class Actor {
 
     this.router.post('/add', async (ctx) => {
 
-      let newActor = await View.addRecord(actors, ctx.request.body, ["dbname", "icon", "equiped"]);
+      let newActor = await View.addRecord(
+        actors,
+        ctx.request.body,
+        ["dbname", "icon", "equiped"],
+        (actorToSave: any) => {
+
+          if (!actorToSave.equiped) {
+            actorToSave.equiped = {};
+          }
+
+          for (let key in actorToSave.equiped) {
+
+            if (typeof actorToSave.equiped[key] === 'string') {
+
+              try {
+
+                actorToSave.equiped[key] = new ObjectId(actorToSave.equiped[key]);
+  
+              } catch (error) {
+                console.error(`Error: ObjectID Conversion Failure at ${actorToSave.dbname}'s equiped ${key}: ${error.message}`);
+                actorToSave.equiped[key] = null;
+              }
+              
+            } else if (!(actorToSave.equiped[key] instanceof ObjectId)) {
+              actorToSave.equiped[key] = null;
+            }
+
+          } // <- for
+
+        }
+
+      );
 
       if (newActor) {
         ctx.body = {
