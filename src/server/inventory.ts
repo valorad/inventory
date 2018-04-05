@@ -10,7 +10,7 @@ import * as cors from "@koa/cors";
 
 import { api } from './router';
 
-import { ConfigLoader } from './util/config-loader';
+import { ConfigLoader } from './util';
 import { DataBase } from "./database";
 
 const app = new Koa();

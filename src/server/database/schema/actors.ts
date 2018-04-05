@@ -11,7 +11,7 @@ const schema = new Schema({
     type: String,
     required: false
   },
-  equip: {
+  equiped: {
     type: {},
     required: false
   }

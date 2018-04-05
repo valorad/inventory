@@ -2,10 +2,8 @@ import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 
-// import schemas
-import { actors } from '../database/schema/actors';
-
-// import { schema } from '../graph/scaryCat';
+// sub routes
+import { actor } from "./actor";
 
 class API {
 
@@ -21,10 +19,8 @@ class API {
       }
     });
 
-    this.routerInstance.get('/actors', async (ctx) => {
-      let metActors = await actors.find();
-      ctx.body = metActors;
-    });
+    // sub routes
+    this.routerInstance.use('/actor', actor.routes(), actor.allowedMethods());
 
 
     // this.routerInstance.get('/graphql', graphqlKoa({ schema: schema }));

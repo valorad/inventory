@@ -1,6 +1,6 @@
 
 import { connectDB } from './access';
-import { ConfigLoader } from "../util/config-loader";
+import { ConfigLoader } from "../util";
 
 export class DataBase {
 
