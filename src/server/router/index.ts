@@ -4,6 +4,7 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 
 // sub routes
 import { actor } from "./actor";
+import { refItem } from "./ref-item";
 
 class API {
 
@@ -21,6 +22,7 @@ class API {
 
     // sub routes
     this.routerInstance.use('/actor', actor.routes(), actor.allowedMethods());
+    this.routerInstance.use('/refItem', refItem.routes(), refItem.allowedMethods());
 
 
     // this.routerInstance.get('/graphql', graphqlKoa({ schema: schema }));

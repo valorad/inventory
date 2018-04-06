@@ -1,11 +1,9 @@
 import * as Router from 'koa-router';
-
-import { View } from "../util";
-
-// import schemas
-import { actors } from '../database/schema/actors';
 import { DeleteWriteOpResultObject, ObjectId } from 'mongodb';
 
+import { Query } from "../util";
+// import schemas
+import { actors } from '../database/schema/actors';
 
 class Actor {
   router = new Router();
@@ -20,19 +18,19 @@ class Actor {
     });
 
     this.router.get('/all', async (ctx) => {
-      let result = await View.getList(actors);
+      let result = await Query.getList(actors);
       ctx.body = result;
     });
 
     this.router.get('/name/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
-      let result = await View.getDetail(actors, {dbname});
+      let result = await Query.getDetail(actors, {dbname});
       ctx.body = result;
     });
 
     this.router.post('/add', async (ctx) => {
 
-      let newActor = await View.addRecord(
+      let newActor = await Query.addRecord(
         actors,
         ctx.request.body,
         ["dbname", "icon", "equiped"],
@@ -86,13 +84,13 @@ class Actor {
     this.router.delete('/delete/:name', async (ctx) => {
 
       let token = {dbname: ctx.params.name};
-      let delResult: DeleteWriteOpResultObject["result"] = await View.deleteRecord(actors, token);
+      let delResult: DeleteWriteOpResultObject["result"] = await Query.deleteRecord(actors, token);
 
       if (delResult) {
         ctx.body = {
           msg: `Successfully deleted actor "${ctx.params.name}"`,
           status: 'success',
-          removedCount: delResult.n
+          rmCount: delResult.n
         };
         return;
       } else {
@@ -100,7 +98,7 @@ class Actor {
         ctx.body = {
           msg: `Failed to delete actor "${ctx.params.name}"`,
           status: 'failure',
-          removedCount: 0
+          rmCount: 0
         }
       }
 

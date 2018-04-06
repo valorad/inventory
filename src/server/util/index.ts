@@ -1,2 +1,2 @@
 export { ConfigLoader } from './config-loader';
-export { View } from './view';
+export { Query } from './query';

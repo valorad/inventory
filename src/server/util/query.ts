@@ -10,7 +10,7 @@ interface IMQuery {
   order?: "asc" | "desc"
 }
 
-export class View {
+export class Query {
 
   static getList = async (collection: Model<any>, query: IMQuery = {}) => {
 
@@ -57,8 +57,15 @@ export class View {
   };
 
   static getDetail = async (collection: Model<any>, conditions: any = {}) => {
-    let result = await collection.find(conditions);
-    return result;
+    try {
+      let result = await collection.find(conditions);
+      return result;
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      return null;
+    }
+    
+    
   };
 
   static addRecord = async (collection: Model<any>, source: any, fields: string[], postActions?: (raw: any)=>any) => {
@@ -76,7 +83,7 @@ export class View {
     try {
       return await newRecord.save();
     } catch (error) {
-      console.error(error);
+      console.error(`Error: ${error.message}`);
       return null;
     }
 
@@ -87,7 +94,7 @@ export class View {
     try {
       return await collection.remove(conditions);
     } catch (error) {
-      console.error(error);
+      console.error(`Error: ${error.message}`);
       return null;
     }
 
