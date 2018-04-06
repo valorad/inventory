@@ -10,10 +10,6 @@ const schema = new Schema({
   owner: {
     type: String,
     required: false
-  },
-  num: {
-    type: Number,
-    default: 0
   }
 });
 

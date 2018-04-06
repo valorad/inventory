@@ -64,17 +64,17 @@ pc端界面和老滚基本一致，只是：
 
 使用nodejs后台，koa + GraphQL 框架
 
-后台数据库用mongo，数据集还没有设计。后面再说。
+后台数据库用mongo，数据集正在设计。
 
 ---------------------------------------
 
 物品栏里展示的是ref，而不是base
 
-打开物品栏的时候实际上是在查询“我”所拥有的“ref”
+打开物品栏的时候实际上是在查询“inventories”表中“我”拥有的项目
 
 后台数据集：
 
-![dbDataflow](https://i.imgur.com/LceAXqF.png)
+![dbDataflow](https://i.imgur.com/ZiqMwHA.png)
 
 物品item base表： dbname, value, weight, category (外键连gears表、consumables表、books)
 
@@ -102,9 +102,12 @@ effects法术效果表：dbname
 
 玩家Actor ref表: dbname, icon, description
 
-物品ref表： dbname(外键连物品base表 dbname), owner(外键连玩家Actor ref表 dbname), num(个数)
+物品ref表： dbname(外键连物品base表 dbname), owner(外键连玩家Actor ref表 dbname)
+ ~~num(个数)~~ 现在没有num了，num由前端计算。
 
-name表（可能会是个外置json文件）dbname, en{name, description}, zh{name, description}
+物品inventory表：存放玩家的物品栏数据。(item: 外链refItems的主键_id，holder:外连actors的dbname)
+
+name表（可能会是个外置json文件）dbname, en{name, description, categoies, types}, zh{name, description, categories, types}
 
 # To Do:
 
@@ -116,6 +119,7 @@ name表（可能会是个外置json文件）dbname, en{name, description}, zh{na
 后台：
 
 - 数据库设计
+- 接口单元测试
 
 # License
 
