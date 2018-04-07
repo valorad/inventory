@@ -96,6 +96,8 @@ consumables表 (包括potion、scroll、food、ingredients)，在type字段里�
 
 - scroll 当然不包括 Elder Scrolls ... 😏
 
+- 弓箭属于gears(因为弓箭有ratings，并且可以装备在身上)，子弹属于comsumables
+
 books: ..., content(书的内容)
 
 effects法术效果表：dbname
