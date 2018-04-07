@@ -10,7 +10,8 @@
     "start": "node dist/server/inventory",
     "build": "npm run build:s",
     "build:s": "cross-env NODE_ENV=production webpack --config webpack/w.c.server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:s",
+    "test:s": "jest --config jest/j.c.server.js"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@types/graphql": "^0.12.7",
+    "@types/jest": "^22.2.2",
     "@types/koa": "^2.0.44",
     "@types/koa-bodyparser": "^4.2.0",
     "@types/koa-logger": "^3.1.0",
@@ -56,6 +58,8 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.4",
+    "jest": "^22.4.3",
+    "ts-jest": "^22.4.2",
     "ts-loader": "^4.1.0",
     "typescript": "^2.8.1",
     "webpack": "^4.4.1",
