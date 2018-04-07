@@ -4,13 +4,21 @@ import { ConfigLoader } from "../util";
 
 export class DataBase {
 
-  config = new ConfigLoader("inventory.json").config();
-  
-  main = async () => {
-    await connectDB(this.config.mongo);
+  siteConfig = new ConfigLoader("inventory.json").config();
+
+  dbConfig = {
+    ...this.siteConfig.mongo,
+    db: {
+      auth: this.siteConfig.mongo.db.auth,
+      apply: this.siteConfig.mongo.db.main
+    }
+  }
+
+  connect = async () => {
+    if (process.env.isTesting === 'yes') {
+      this.dbConfig.db.apply = this.siteConfig.mongo.db.test;
+    }
+    return await connectDB(this.dbConfig);
   };
 
-  constructor() {
-    this.main();
-  }
 }

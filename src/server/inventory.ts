@@ -39,7 +39,8 @@ if (config) {
   app.use(router.routes())
   .use(router.allowedMethods());
   
-  new DataBase();
+  const db = new DataBase();
+  db.connect();
 
   // listen
   app.listen(port, () => {
