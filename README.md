@@ -5,7 +5,22 @@
 
 主要是希望当成 [GraphQL](https://github.com/graphql/graphql-js) 和 [Angular-Redux](https://github.com/angular-redux/store) 的练手项目。
 
-由于所需技术栈尚未补全，这里只是挖个坑，正式动工应该还有一段时间。😐
+由于所需技术栈尚未完全补全，这里只是挖个坑，进度应该会非常缓慢。😐
+
+## 运行
+``` bash
+##### 后台 #####
+
+# 编译 (Webpack)
+npm run build:s
+
+# 运行 (Koa)
+npm run start:s
+
+# 单元测试 (Jest)
+npm run test:s
+
+```
 
 ## 为啥做物品栏
 Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一点的，但是又不是复杂到我无法完成的项目中，物品栏可能是比较合适的。业务逻辑比较清晰，比较灵活，比较常见。
@@ -74,7 +89,7 @@ pc端界面和老滚基本一致，只是：
 
 后台数据集：
 
-![dbDataflow](https://i.imgur.com/ZiqMwHA.png)
+![dbDataflow](https://i.imgur.com/BpWrMrz.png)
 
 物品item base表： dbname, value, weight, category (外键连gears表、consumables表、books)
 
