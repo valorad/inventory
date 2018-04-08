@@ -13,7 +13,8 @@ const schema = new Schema({
   },
   weight: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   },
   description: {
     type: String,

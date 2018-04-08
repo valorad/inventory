@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface IRefItem extends Document {
-  dbname: string,
-  owner?: string
+  item: string,
+  owner?: string,
+  num: number
 }

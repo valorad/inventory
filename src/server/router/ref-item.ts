@@ -1,13 +1,10 @@
 import * as Router from 'koa-router';
-import { DeleteWriteOpResultObject } from 'mongodb';
 
-import { Query } from "../util";
-// import schemas
-import { refItems } from '../database/schema/ref-items';
-
+import { RefItemAction as Action } from "../action/ref-item.action";
 
 class RefItem {
   router = new Router();
+  action = new Action();
 
   constructor() {
 
@@ -19,40 +16,26 @@ class RefItem {
     });
 
     this.router.get('/all', async (ctx) => {
-      let result = await Query.getList(refItems);
+      let result = await this.action.getAll();
       ctx.body = result;
     });
 
     this.router.get('/owner/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
-      let result = await Query.getList(
-        refItems,
-        {
-          conditions: {
-            owner: dbname
-          }
-        }
-      );
+      let result = await this.action.getList({ owner: dbname });
       ctx.body = result;
     });
 
     this.router.get('/item/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
-      let result = await Query.getList(
-        refItems,
-        {
-          conditions: {
-            item: dbname
-          }
-        }
-      );
+      let result = await this.action.getList({ item: dbname });
       ctx.body = result;
     });
 
     this.router.get('/id/:_id', async (ctx) => {
       let _id: string = ctx.params._id;
 
-      let result = await Query.getDetail(refItems, {_id});
+      let result = await this.action.getSingle(_id);
       if (result) {
         ctx.body = result;
       } else {
@@ -63,11 +46,7 @@ class RefItem {
 
     this.router.post('/add', async (ctx) => {
 
-      let newRefItem = await Query.addRecord(
-        refItems,
-        ctx.request.body,
-        ["item", "owner"]
-      );
+      let newRefItem = await this.action.add(ctx.request.body);
 
       if (newRefItem) {
         ctx.body = {
@@ -90,7 +69,7 @@ class RefItem {
     this.router.delete('/delete/:_id', async (ctx) => {
 
       let token = {_id: ctx.params._id};
-      let delResult: DeleteWriteOpResultObject["result"] = await Query.deleteRecord(refItems, token);
+      let delResult = await this.action.delete(token);
 
       if (delResult) {
         ctx.body = {

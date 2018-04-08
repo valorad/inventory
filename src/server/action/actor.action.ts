@@ -29,7 +29,7 @@ export class ActorAction {
         for (let key in actorToSave.equiped) {
 
           if (typeof actorToSave.equiped[key] === 'string') {
-            actorToSave.equiped[key] = Query.convertObjID(actorToSave.equiped[key]);
+            actorToSave.equiped[key] = Query.toObjID(actorToSave.equiped[key]);
           } else if (!(actorToSave.equiped[key] instanceof ObjectId)) {
             actorToSave.equiped[key] = null;
           }

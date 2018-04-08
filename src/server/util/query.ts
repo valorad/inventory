@@ -101,7 +101,7 @@ export class Query {
 
   };
 
-  static convertObjID = (str: string) => {
+  static toObjID = (str: string) => {
     try {
       return new ObjectId(str);
     } catch (error) {

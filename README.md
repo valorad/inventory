@@ -105,9 +105,9 @@ effects法术效果表：dbname
 玩家Actor ref表: dbname, icon, description
 
 物品ref表： dbname(外键连物品base表 dbname), owner(外键连玩家Actor ref表 dbname)
- ~~num(个数)~~ 现在没有num了，num由前端计算。
+num(个数)。
 
-物品inventory表：存放玩家的物品栏数据。(item: 外链refItems的主键_id，holder:外连actors的dbname)
+物品inventory表：存放玩家的物品栏数据。(item: 外链refItems的主键_id，holder:外连actors的dbname)inventory没有了，num由前端计算相同物品（item相同，owner也相同）的所有ref的num相加
 
 name表（可能会是个外置json文件）dbname, en{name, description, categoies, types}, zh{name, description, categories, types}
 
