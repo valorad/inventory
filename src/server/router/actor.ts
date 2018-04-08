@@ -1,12 +1,11 @@
 import * as Router from 'koa-router';
-import { DeleteWriteOpResultObject, ObjectId } from 'mongodb';
 
-import { Query } from "../util";
-// import schemas
-import { actors } from '../database/schema/actors';
+import { ActorAction as Action } from "../action/actor.action";
 
 class Actor {
+  
   router = new Router();
+  action = new Action();
 
   constructor() {
 
@@ -18,50 +17,19 @@ class Actor {
     });
 
     this.router.get('/all', async (ctx) => {
-      let result = await Query.getList(actors);
+      let result = this.action.getAll();
       ctx.body = result;
     });
 
     this.router.get('/name/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
-      let result = await Query.getDetail(actors, {dbname});
+      let result = await this.action.getSingle(dbname);
       ctx.body = result;
     });
 
     this.router.post('/add', async (ctx) => {
 
-      let newActor = await Query.addRecord(
-        actors,
-        ctx.request.body,
-        ["dbname", "icon", "equiped"],
-        (actorToSave: any) => {
-
-          if (!actorToSave.equiped) {
-            actorToSave.equiped = {};
-          }
-
-          for (let key in actorToSave.equiped) {
-
-            if (typeof actorToSave.equiped[key] === 'string') {
-
-              try {
-
-                actorToSave.equiped[key] = new ObjectId(actorToSave.equiped[key]);
-  
-              } catch (error) {
-                console.error(`Error: ObjectID Conversion Failure at ${actorToSave.dbname}'s equiped ${key}: ${error.message}`);
-                actorToSave.equiped[key] = null;
-              }
-              
-            } else if (!(actorToSave.equiped[key] instanceof ObjectId)) {
-              actorToSave.equiped[key] = null;
-            }
-
-          } // <- for
-
-        }
-
-      );
+      let newActor = await this.action.add(ctx.request.body);
 
       if (newActor) {
         ctx.body = {
@@ -84,7 +52,7 @@ class Actor {
     this.router.delete('/delete/:name', async (ctx) => {
 
       let token = {dbname: ctx.params.name};
-      let delResult: DeleteWriteOpResultObject["result"] = await Query.deleteRecord(actors, token);
+      let delResult = await this.action.delete(token);
 
       if (delResult) {
         ctx.body = {

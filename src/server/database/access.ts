@@ -20,15 +20,6 @@ class Access {
     try {
       let mongooseInstance = await mongoose.connect(uri);
       console.log(`Connection to '${ config.db.apply }' established successfully.`);
-      // console.log(mongooseInstance);
-      // mongoose.connection
-      //   .on('close', () => {
-      //     console.log(`Connection to ${ config.db.apply } has been closed.`);
-      //   })
-      //   .once('open', () => {
-      //     console.log(`Connection to ${ config.db.apply } established successfully.`);
-      //     return mongooseInstance;
-      //   });
       return mongooseInstance;
 
     } catch (error) {

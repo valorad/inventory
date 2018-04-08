@@ -1,4 +1,5 @@
 import { Model } from "mongoose";
+import { ObjectId } from "bson";
 
 interface IMQuery {
   conditions?: any,
@@ -98,6 +99,15 @@ export class Query {
       return null;
     }
 
+  };
+
+  static convertObjID = (str: string) => {
+    try {
+      return new ObjectId(str);
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      return null;
+    }
   };
 
 }
