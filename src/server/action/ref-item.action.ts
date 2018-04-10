@@ -34,6 +34,11 @@ export class RefItemAction {
     return newRefItem;
   };
 
+  updateSingle = async (_id: string, token: any) => {
+    let queryObjID = Query.toObjID(_id);
+    return await Query.setRecord(refItems, {_id: queryObjID}, token);
+  };
+
   delete = async (token: any) => {
 
     let delResult = await Query.deleteRecord(refItems, token);

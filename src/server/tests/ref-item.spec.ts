@@ -70,7 +70,17 @@ export const refItemSpec = describe("ref-item inspections", () => {
     } else {
       throw "Error finding item";
     }
-    
+  });
+
+  test("transfer refitem of provided _id to Geralt", async () => {
+    let _id = lastId;
+    let transferedItem = await action.updateSingle(_id, {owner: 'geralt'});
+    let lastItem = await action.getSingle(_id);
+    if (transferedItem && lastItem) {
+      expect(lastItem[0].owner === transferedItem[0].owner);
+    } else {
+      throw "Failed to transfer ownership";
+    }
   });
 
   test("delete item providing _id", async () => {

@@ -15,8 +15,8 @@ beforeAll(async () => {
 });
 
 // activated tests
-actorSpec;
-// refItemSpec;
+// actorSpec;
+refItemSpec;
 
 afterAll(async () => {
   if (mongoInstance) {
