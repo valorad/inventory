@@ -113,6 +113,10 @@ consumables表 (包括potion、scroll、food、ingredients)，在type字段里�
 
 - 弓箭属于gears(因为弓箭有ratings，并且可以装备在身上)，子弹属于comsumables
 
+- 弓箭刚射出时，refitem的num减少1。如果num减少到0，则删除这个refitem，并且在inventories表中遍历并删除记录。当弓箭着陆时（射中目标或射偏到旁边墙上树上），新增一条refitem，num是1，item仍然是这支箭。关于owner，如果射中Actor，那么就是这个actor，如果射偏，就是null。但是这个都扯远了，现阶段我是不会做战斗的。
+
+- 交易原理也类似。当交易发生时，refitem的num减少1。如果num减少到0，则删除这个refitem，并且在inventories表中遍历并删除记录。紧接着，创建一个新refitem，num是1，item是这样东西，而owner是接收人。
+
 books: ..., content(书的内容)
 
 effects法术效果表：dbname
