@@ -1,10 +1,11 @@
 import { ObjectId } from 'mongodb';
 
 import { Query } from "../util/query";
+import { IAction } from "./interface/action.interface";
 // import schemas
 import { actors } from '../database/schema/actors';
 
-export class ActorAction {
+export class ActorAction implements IAction {
 
   getAll = async () => {
     return await Query.getList(actors);

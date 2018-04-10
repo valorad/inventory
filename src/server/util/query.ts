@@ -102,9 +102,10 @@ export class Query {
         let updateResult = await collection.updateMany(conditions, doc);
         updatedRecords = await Query.getList(conditions);
       } else {
-        let updatedDoc = await collection.findOneAndUpdate(conditions, {
-          $set: doc
-        });
+        let updatedDoc = await collection.findOneAndUpdate(
+          conditions,
+          doc
+        );
         updatedRecords = [updatedDoc];
       }
 

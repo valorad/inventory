@@ -4,6 +4,7 @@ import { connection, Mongoose } from 'mongoose';
 //tests
 import { actorSpec } from "./actor.spec";
 import { refItemSpec } from "./ref-item.spec"
+import { inventorySpec } from "./inventory.spec"
 
 process.env.isTesting = 'yes';
 
@@ -16,7 +17,8 @@ beforeAll(async () => {
 
 // activated tests
 // actorSpec;
-refItemSpec;
+// refItemSpec;
+inventorySpec;
 
 afterAll(async () => {
   if (mongoInstance) {

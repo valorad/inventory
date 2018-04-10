@@ -50,13 +50,13 @@ export const refItemSpec = describe("ref-item inspections", () => {
     expect(refItems.length).toEqual(5);
   });
 
-  test("get list by given item", async () => {
+  test("get to know who owns 'iron-helmet'", async () => {
     let item = "item_iron-helmet";
     let refList = await action.getList({ item });
     expect(refList.length).toEqual(2);
   });
 
-  test("get list by given owner", async () => {
+  test("get list of items owned by josh", async () => {
     let owner = "josh";
     let refList = await action.getList({ owner });
     expect(refList.length).toEqual(2);
@@ -68,7 +68,7 @@ export const refItemSpec = describe("ref-item inspections", () => {
     if (refItem) {
       expect(refItem[0].item).toBe("item_daedra-heart");
     } else {
-      throw "Error finding item";
+      throw new Error("Error finding item");
     }
   });
 
@@ -79,7 +79,7 @@ export const refItemSpec = describe("ref-item inspections", () => {
     if (transferedItem && lastItem) {
       expect(lastItem[0].owner === transferedItem[0].owner);
     } else {
-      throw "Failed to transfer ownership";
+      throw new Error("Failed to transfer ownership");
     }
   });
 
@@ -89,7 +89,7 @@ export const refItemSpec = describe("ref-item inspections", () => {
     if (delResult) {
       expect(delResult.n).toEqual(1);
     } else {
-      throw "Error deleting item";
+      throw new Error("Error deleting item");
     }
     
   });
