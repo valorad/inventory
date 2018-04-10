@@ -6,7 +6,8 @@ import { ObjectId } from 'bson';
 const schema = new Schema({
   dbname: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   icon: {
     type: String,

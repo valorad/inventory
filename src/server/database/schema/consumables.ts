@@ -5,7 +5,8 @@ import { IConsumable } from "../interface/consumable.interface";
 const schema = new Schema({
   dbname: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   type: {
     type: String,

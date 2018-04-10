@@ -5,7 +5,8 @@ import { IBaseItem } from "../interface/base-item.interface";
 const schema = new Schema({
   dbname: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   category: {
     type: String,

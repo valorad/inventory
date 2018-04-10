@@ -5,7 +5,8 @@ import { IEffect } from "../interface/effect.interface";
 const schema = new Schema({
   dbname: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   }
 });
 

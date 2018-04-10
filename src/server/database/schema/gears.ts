@@ -5,7 +5,8 @@ import { IGear } from "../interface/gear.interface";
 const schema = new Schema({
   dbname: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   rating: {
     type: Number,

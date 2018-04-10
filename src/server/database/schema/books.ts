@@ -5,7 +5,8 @@ import { IBook } from "../interface/book.interface";
 const schema = new Schema({
   dbname: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   content: {
     type: String,
