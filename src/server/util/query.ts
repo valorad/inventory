@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { ObjectId } from "bson";
+import { DeleteWriteOpResultObject, ObjectId } from 'mongodb';
 
 interface IMQuery {
   conditions?: any,
@@ -9,6 +9,10 @@ interface IMQuery {
   perPage?: number,
   orderBy?: string,
   order?: "asc" | "desc"
+}
+
+interface IUpdateOptions {
+  updateAll?: boolean
 }
 
 export class Query {
@@ -90,10 +94,32 @@ export class Query {
 
   };
 
+  static setRecord = async (collection: Model<any>, conditions: any, doc: any, options: IUpdateOptions = {}) => {
+    try {
+
+      let updatedRecords: any[];
+      if (options.updateAll) {
+        let updateResult = await collection.updateMany(conditions, doc);
+        updatedRecords = await Query.getList(conditions);
+      } else {
+        let updatedDoc = await collection.findOneAndUpdate(conditions, {
+          $set: doc
+        });
+        updatedRecords = [updatedDoc];
+      }
+
+      return updatedRecords;
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      return null;
+    }
+  };
+
   static deleteRecord = async (collection: Model<any>, conditions: any) => {
 
     try {
-      return await collection.remove(conditions);
+      let delResult: DeleteWriteOpResultObject["result"] = await collection.remove(conditions);
+      return delResult;
     } catch (error) {
       console.error(`Error: ${error.message}`);
       return null;

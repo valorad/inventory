@@ -1,6 +1,3 @@
-
-import { DeleteWriteOpResultObject } from 'mongodb';
-
 import { Query } from "../util/query";
 // import schemas
 import { refItems } from '../database/schema/ref-items';
@@ -39,7 +36,7 @@ export class RefItemAction {
 
   delete = async (token: any) => {
 
-    let delResult: DeleteWriteOpResultObject["result"] = await Query.deleteRecord(refItems, token);
+    let delResult = await Query.deleteRecord(refItems, token);
     return delResult;
 
   };

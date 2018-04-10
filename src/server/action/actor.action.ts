@@ -1,4 +1,4 @@
-import { DeleteWriteOpResultObject, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 import { Query } from "../util/query";
 // import schemas
@@ -44,9 +44,14 @@ export class ActorAction {
 
   };
 
+  updateSingle = async (dbname: string, token: any) => {
+    let updatedActor = await Query.setRecord(actors, {dbname}, token);
+    return updatedActor;
+  };
+
   delete = async (token: any) => {
 
-    let delResult: DeleteWriteOpResultObject["result"] = await Query.deleteRecord(actors, token);
+    let delResult = await Query.deleteRecord(actors, token);
     return delResult;
 
   };

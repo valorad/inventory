@@ -27,10 +27,26 @@ export const actorSpec = describe("Actor inspections", () => {
     
   });
 
+  test("update actor icon", async () => {
+    let updatedActor = await action.updateSingle("olaf", {icon: "olaf.png"});
+    let olaf = await action.getSingle("olaf");
+    if (olaf && updatedActor) {
+      expect(olaf[0].icon === updatedActor[0].icon);
+    } else {
+      throw "Failed to update or find actor olaf";
+    }
+    
+  });
+
   test("delete an actor", async () => {
     let token = {dbname: 'olaf'};
     let delResult = await action.delete(token);
-    expect(delResult.n).toBeGreaterThan(0);
+    if (delResult) {
+      expect(delResult.n).toBeGreaterThan(0);
+    } else {
+      throw "failed to delete actor";
+    }
+
     let result = await action.getSingle(token.dbname);
     if (result) {
       expect(result.length).toBe(0);
