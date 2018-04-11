@@ -1,5 +1,3 @@
-import { ObjectId } from 'mongodb';
-
 import { Query } from "../util/query";
 import { IAction } from "./interface/action.interface";
 // import schemas
@@ -29,11 +27,7 @@ export class ActorAction implements IAction {
 
         for (let key in actorToSave.equiped) {
 
-          if (typeof actorToSave.equiped[key] === 'string') {
-            actorToSave.equiped[key] = Query.toObjID(actorToSave.equiped[key]);
-          } else if (!(actorToSave.equiped[key] instanceof ObjectId)) {
-            actorToSave.equiped[key] = null;
-          }
+          actorToSave.equiped[key] = Query.toObjID(actorToSave.equiped[key]);
 
         } // <- for
 
