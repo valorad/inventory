@@ -89,9 +89,9 @@ pc端界面和老滚基本一致，只是：
 
 后台数据集：
 
-![dbDataflow](https://i.imgur.com/4kHhkqV.png)
+![dbDataflow](https://i.imgur.com/CUS2vJY.png)
 
-物品item base表： dbname, value, weight, category填分类(护甲、武器、消耗品、书)
+物品item base表： dbname, value, weight, category(填数据集名称(gears, comsumables, books))
 
 物品系列子表：
 
@@ -100,6 +100,8 @@ gears表 (包括armor和weapon)
 - armor: ..., rating(防护), type(轻甲、重甲), equip(头、身、足、手), effects
 
 - weapon: ..., rating(伤害), type(长剑、单手斧、匕首……) equip(单手，双手), effects
+
+(武器和护甲的区分就是根据type)
 
 consumables表 (包括potion、scroll、food、ingredients)，在type字段里区分
 
@@ -118,8 +120,6 @@ consumables表 (包括potion、scroll、food、ingredients)，在type字段里�
 - 交易原理也类似。当交易发生时，refitem的num减少1。如果num减少到0，则删除这个refitem，并且在inventories表中遍历并删除记录。紧接着，创建一个新refitem，num是1，item是这样东西，而owner是接收人。
 
 books: ..., content(书的内容)
-
-categories表： 根据提供的dbname连接相应的数据集。比如武器和护甲连gears， 消耗品连consumables，书连books，等等。
 
 玩家Actor ref表: dbname, icon, description
 
