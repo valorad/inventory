@@ -28,7 +28,10 @@ export class InventoryAction implements IAction {
     let newInventoryItem = await Query.addRecord(
       inventories,
       info,
-      ["item", "holder"]
+      ["item", "holder"],
+      (invToSave: any) => {
+        invToSave.item = Query.toObjID(invToSave.item);
+      }
     );
     return newInventoryItem;
   };

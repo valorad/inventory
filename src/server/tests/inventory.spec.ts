@@ -4,9 +4,9 @@ import { Query } from "../util";
 const action = new Action();
 
 const data = [
-  // item is storing a field that is to be conerted to objectId
-  // it has to be a 12- or 24-character string
-  // in pratice, it may not necessarily be like this
+  // item is storing a field that is to be conerted to objectId.
+  // It has to be a 12- or 24-character string.
+  // In pratice, it may not necessarily be like this. Could store Objid directly.
   {
     item: "greedisgood!",
     holder: "dogmeat"
@@ -42,7 +42,7 @@ export const inventorySpec = describe("Inventory inspections", () => {
 
   });
 
-  test.skip("(getList) Get Dogmeat's inventory", async () => {
+  test("(getList) Get Dogmeat's inventory", async () => {
 
     let dogmeatBag = await action.getList({holder: 'dogmeat'});
     if (dogmeatBag) {
@@ -53,7 +53,7 @@ export const inventorySpec = describe("Inventory inspections", () => {
 
   });
 
-  test.skip("(getSingle) Get detail of an invItem in nvidia's bag with _id", async () => {
+  test("(getSingle) Get detail of an invItem in nvidia's bag with _id", async () => {
 
     let holder = "nvidia";
     let invItem = await action.getList({
@@ -68,6 +68,7 @@ export const inventorySpec = describe("Inventory inspections", () => {
 
   test("(updateSingleByConditions) Triss's 'robin___hood' is stolen and 洗白ed by Jessica", async () => {
     let item = Query.toObjID('robin___hood');
+
     let transferedItem = await action.updateSingleByConditions(
       {
         item: item,
@@ -85,12 +86,12 @@ export const inventorySpec = describe("Inventory inspections", () => {
     }
 
     throw new Error("Failed to transfer ownership");
-    
+
 
   });
 
-  test.skip("(delete) Dogmeat's Arrow ammo out", async () => {
-    let item = "tucktucktuck";
+  test("(delete) Dogmeat's Arrow ammo out", async () => {
+    let item = Query.toObjID("tucktucktuck");
     let holder = "dogmeat";
     let delResult = await action.delete({
       item,
