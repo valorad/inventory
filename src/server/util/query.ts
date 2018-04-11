@@ -94,17 +94,24 @@ export class Query {
 
   };
 
-  static setRecord = async (collection: Model<any>, conditions: any, doc: any, options: IUpdateOptions = {}) => {
+  /**
+   * update record by condition and update object.
+   * For para. 'update':
+   * could be doc directly.
+   * if top-level key is not atomic(i.e $set, $inc, $push etc.),
+   * it will be considered as "$set"
+   */
+  static setRecord = async (collection: Model<any>, conditions: any, update: any, options: IUpdateOptions = {}) => {
     try {
 
       let updatedRecords: any[];
       if (options.updateAll) {
-        let updateResult = await collection.updateMany(conditions, doc);
+        let updateResult = await collection.updateMany(conditions, update);
         updatedRecords = await Query.getList(conditions);
       } else {
         let updatedDoc = await collection.findOneAndUpdate(
           conditions,
-          doc
+          update
         );
         updatedRecords = [updatedDoc];
       }

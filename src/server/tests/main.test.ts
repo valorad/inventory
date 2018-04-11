@@ -3,9 +3,10 @@ import { connection, Mongoose } from 'mongoose';
 
 //tests
 import { actorSpec } from "./actor.spec";
-import { refItemSpec } from "./ref-item.spec"
-import { inventorySpec } from "./inventory.spec"
-import { bookSpec } from "./book.spec"
+import { refItemSpec } from "./ref-item.spec";
+import { inventorySpec } from "./inventory.spec";
+import { bookSpec } from "./book.spec";
+import { gearSpec } from "./gear.spec";
 
 process.env.isTesting = 'yes';
 
@@ -20,7 +21,8 @@ beforeAll(async () => {
 // actorSpec;
 // refItemSpec;
 // inventorySpec;
-bookSpec;
+// bookSpec;
+gearSpec;
 
 afterAll(async () => {
   if (mongoInstance) {
