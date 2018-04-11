@@ -89,9 +89,9 @@ pc端界面和老滚基本一致，只是：
 
 后台数据集：
 
-![dbDataflow](https://i.imgur.com/BpWrMrz.png)
+![dbDataflow](https://i.imgur.com/4kHhkqV.png)
 
-物品item base表： dbname, value, weight, category (外键连gears表、consumables表、books)
+物品item base表： dbname, value, weight, category填分类(护甲、武器、消耗品、书)
 
 物品系列子表：
 
@@ -119,7 +119,7 @@ consumables表 (包括potion、scroll、food、ingredients)，在type字段里�
 
 books: ..., content(书的内容)
 
-effects法术效果表：dbname
+categories表： 根据提供的dbname连接相应的数据集。比如武器和护甲连gears， 消耗品连consumables，书连books，等等。
 
 玩家Actor ref表: dbname, icon, description
 
@@ -128,7 +128,7 @@ num(个数)。
 
 物品inventory表：存放玩家的物品栏数据。(item: 外链refItems的主键_id，holder:外连actors的dbname)inventory没有了，num由前端计算相同物品（item相同，owner也相同）的所有ref的num相加
 
-name表（可能会是个外置json文件）dbname, en{name, description, categoies, types}, zh{name, description, categories, types}
+name表（可能会是个外置json文件）dbname, en{name, description, categoies, types, effects}, zh{name, description, categories, types, effects}
 
 # To Do:
 

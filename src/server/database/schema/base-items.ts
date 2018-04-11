@@ -17,10 +17,6 @@ const schema = new Schema({
     default: 0,
     min: 0
   },
-  description: {
-    type: String,
-    required: false
-  },
   value: {
     type: Number,
     default: 0
