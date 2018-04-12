@@ -8,6 +8,7 @@ import { inventorySpec } from "./inventory.spec";
 import { bookSpec } from "./book.spec";
 import { gearSpec } from "./gear.spec";
 import { consumableSpec } from "./consumable.spec";
+import { baseItemSpec } from "./base-item.spec"
 
 process.env.isTesting = 'yes';
 
@@ -24,7 +25,8 @@ beforeAll(async () => {
 // inventorySpec;
 // bookSpec;
 // gearSpec;
-consumableSpec;
+// consumableSpec;
+baseItemSpec;
 
 afterAll(async () => {
   if (mongoInstance) {

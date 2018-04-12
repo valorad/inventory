@@ -1,8 +1,9 @@
 import { Query } from "../util/query";
+import { IAction } from "./interface/action.interface";
 // import schemas
 import { refItems } from '../database/schema/ref-items';
 
-export class RefItemAction {
+export class RefItemAction implements IAction {
 
   getAll = async () => {
     return await Query.getList(refItems);
@@ -20,7 +21,7 @@ export class RefItemAction {
     return result;
   };
 
-  getSingle = async (_id: string) => {
+  getSingle = async (_id: string = "") => {
     let queryObjID = Query.toObjID(_id);
     return await Query.getDetail(refItems, {_id: queryObjID});
   };
