@@ -1,0 +1,78 @@
+type BaseItem {
+  dbname: String
+  value: Int
+  weight: Float
+  category: String
+  detail: Detail
+}
+
+type Gear {
+  rating: Int
+  type: String
+  equip: String
+  effects: [String]
+}
+
+type Consumable {
+  type: String
+  effects: [String]
+}
+
+type Book {
+  content: String
+}
+
+union Detail = Gear | Consumable | Book
+
+# input newBaseItem {
+#   dbname: String
+#   value: Int
+#   weight: Float
+#   category: String
+#   detail: newDetail
+# }
+
+# input newGear {
+#   rating: Int
+#   type: String
+#   equip: String
+#   effects: [String]
+# }
+
+# input newConsumable {
+#   type: String
+#   effects: [String]
+# }
+
+# input newBook {
+#   content: String
+# }
+
+# union newDetail = newGear | newConsumable | newBook
+
+input newBaseItem {
+  dbname: String
+  value: Int
+  weight: Float
+  category: String
+  detail: newDetail
+}
+
+input newDetail {
+  # gear + comsumable
+  rating: Int
+  type: String
+  equip: String
+  effects: [String]
+  # book
+  content: String
+}
+
+type Query {
+  baseItem(dbname: String!): BaseItem
+}
+
+type Mutation {
+  add(input: newBaseItem): BaseItem
+}
+
