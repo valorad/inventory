@@ -24,6 +24,12 @@ type Book {
 
 union Detail = Gear | Consumable | Book
 
+type Callback {
+  message: String
+  status: String
+  id: ID
+}
+
 # input newBaseItem {
 #   dbname: String
 #   value: Int
@@ -73,6 +79,6 @@ type Query {
 }
 
 type Mutation {
-  add(input: newBaseItem): BaseItem
+  add(input: newBaseItem): Callback
 }
 

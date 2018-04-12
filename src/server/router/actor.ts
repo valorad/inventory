@@ -33,7 +33,7 @@ class Actor {
 
       if (newActor) {
         ctx.body = {
-          msg: `Successfully created new actor "${newActor.dbname}" with id "${newActor._id}"`,
+          message: `Successfully created new actor "${newActor.dbname}" with id "${newActor._id}"`,
           status: 'success',
           id: newActor._id
         };
