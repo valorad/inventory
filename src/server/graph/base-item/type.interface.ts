@@ -14,7 +14,7 @@ interface IBook {
   content: string
 }
 
-interface IBaseItem {
+export interface IBaseItem {
   dbname: string
   value: number
   weight: number
@@ -30,4 +30,8 @@ interface ICallback {
 
 export interface IMutation {
   add: (obj: any, args: {input: IBaseItem}, context?: any, info?: any) => Promise<ICallback>
+}
+
+export interface IQuery {
+  getList: (obj: any, args: {conditions?: string, page?: number}, context?: any, info?: any) => Promise<any[]>
 }

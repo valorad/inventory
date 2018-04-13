@@ -1,28 +1,30 @@
+scalar JSON
+
 type BaseItem {
   dbname: String
   value: Int
   weight: Float
   category: String
-  detail: Detail
+  detail: JSON
 }
 
-type Gear {
-  rating: Int
-  type: String
-  equip: String
-  effects: [String]
-}
+# type Gear {
+#   rating: Int
+#   type: String
+#   equip: String
+#   effects: [String]
+# }
 
-type Consumable {
-  type: String
-  effects: [String]
-}
+# type Consumable {
+#   type: String
+#   effects: [String]
+# }
 
-type Book {
-  content: String
-}
+# type Book {
+#   content: String
+# }
 
-union Detail = Gear | Consumable | Book
+# union Detail = Gear | Consumable | Book
 
 type Callback {
   message: String
@@ -49,7 +51,8 @@ input newDetail {
 }
 
 type Query {
-  baseItem(dbname: String!): BaseItem
+  baseItem(dbname: String): BaseItem
+  baseItems(conditions: JSON, page: Int): [BaseItem]
 }
 
 type Mutation {

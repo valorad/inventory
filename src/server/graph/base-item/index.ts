@@ -1,7 +1,8 @@
 import { makeExecutableSchema } from 'graphql-tools'; 
+import GraphQLJSON from 'graphql-type-json';
 
 import * as typeDefs from "./type.graphql";
-import { IMutation } from "./type.interface";
+import { IMutation, IQuery } from "./type.interface";
 
 // actions
 import { BaseItemAction } from "../../action/base-item.action";
@@ -13,7 +14,7 @@ const baseItemAction = new BaseItemAction();
 
 class BaseItem {
 
-  fakeDB: any = {};
+  // fakeDB: any = {};
 
   types: any = typeDefs; // workaround for stupid typescript module
   // in fact, 'types' is of type 'DocumentNode'
@@ -50,24 +51,10 @@ class BaseItem {
 
     if (newBaseItem) {
       // according to "category", insert detail info to corresponing col.
-      let detailAction: any = null;
-
-      switch (newBaseItem.category) {
-        case 'gears':
-          detailAction = new GearAction();
-          break;
-        case 'consumables':
-          detailAction = new ConsumableAction();
-          break;
-        case 'books':
-          detailAction = new BookAction();
-          break;
-        default: 
-          break;
-      }
+      let detailAction = this.selectAction(newBaseItem.category)
 
       if (detailAction) {
-        
+
         let newDetail = await detailAction.add({
           dbname: newBaseItem.dbname,
           ...args.input.detail
@@ -118,32 +105,129 @@ class BaseItem {
 
   };
 
+  getList: IQuery["getList"] = async (obj, args) => {
+
+    let conditions: any = {};
+
+    if (args.conditions) {
+      conditions = JSON.parse(args.conditions);
+    }
+
+    let metBaseItems = await baseItemAction.getList({}, args.page);
+    let extractedItems: any[] = [];
+
+    // extract needed info from mongoose query result
+    for (let item of metBaseItems) {
+      let ext = {};
+      for (let key of baseItemAction.fileds) {
+
+        ext[key] = item[key];
+      }
+
+      extractedItems.push(ext);
+    }
+
+    // attach details
+    for (let item of extractedItems) {
+
+      let detailAction = this.selectAction(item.category);
+
+      if (detailAction) {
+
+        let rawDetail = await detailAction.getSingle(item.dbname);
+
+        if (rawDetail && rawDetail.length > 0) {
+          let detail = rawDetail[0];
+          item.detail = detail;
+
+        } else {
+          item.detail = {};
+        }
+
+      }
+    }
+
+
+    return extractedItems;
+
+    // e.g. front-end request
+    // query getItemList($conditions: JSON, $page: Int) {
+  
+    //   baseItems: baseItems(conditions: $conditions, page: $page) {
+    //     dbname,
+    //     value,
+    //     weight,
+    //     category,
+    //     detail
+    //   }
+    
+    // }
+
+    // ----- params -----
+
+    // {
+    //   "page": 1
+    // }
+
+  };
+
   getSingle = (obj: any, args: any, context: any, info: any) => {
 
-    let id = args.id;
-    console.log(id);
+    // let dbanme = args.dbanme;
+    // console.log(id);
     return this.data;
 
   };
 
+  selectAction = (category: string) => {
+    let action: any = null;
+
+    switch (category) {
+      case 'gears':
+      action = new GearAction();
+        break;
+      case 'consumables':
+      action = new ConsumableAction();
+        break;
+      case 'books':
+      action = new BookAction();
+        break;
+      default: 
+        break;
+    }
+    return action;
+  };
+
   resolvers = {
     Query: {
-      baseItem: this.getSingle
+      baseItem: this.getSingle,
+      baseItems: this.getList
     },
     Mutation: {
       add: this.add
     }
   }
-  
-  get schema() {
-    return makeExecutableSchema(
-      {
-        typeDefs: this.types,
-        resolvers: this.resolvers
-      }
-    );
 
-  }
+
+  
+  // get schema() {
+  //   return makeExecutableSchema(
+  //     {
+  //       typeDefs: this.types,
+  //       resolvers: this.resolvers
+  //     }
+  //   );
+
+  // }
+
+  // Object.assign(schema._typeMap.JSON, {
+  //   name: 'JSON',
+  //   serialize: GraphQLJSON.serialize,
+  //   parseValue: GraphQLJSON.parseValue,
+  //   parseLiteral: GraphQLJSON.parseLiteral
+  // })
+
+  schema = makeExecutableSchema({typeDefs: this.types, resolvers: this.resolvers})
 
 }
 
