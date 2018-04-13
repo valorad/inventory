@@ -30,32 +30,6 @@ type Callback {
   id: ID
 }
 
-# input newBaseItem {
-#   dbname: String
-#   value: Int
-#   weight: Float
-#   category: String
-#   detail: newDetail
-# }
-
-# input newGear {
-#   rating: Int
-#   type: String
-#   equip: String
-#   effects: [String]
-# }
-
-# input newConsumable {
-#   type: String
-#   effects: [String]
-# }
-
-# input newBook {
-#   content: String
-# }
-
-# union newDetail = newGear | newConsumable | newBook
-
 input newBaseItem {
   dbname: String
   value: Int
