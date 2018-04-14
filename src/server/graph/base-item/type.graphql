@@ -26,10 +26,16 @@ type BaseItem {
 
 # union Detail = Gear | Consumable | Book
 
-type Callback {
+type AddCallback {
   message: String
   status: String
   id: ID
+}
+
+type DeleteCallback {
+  message: String
+  status: String
+  rmCount: Int
 }
 
 input newBaseItem {
@@ -56,6 +62,7 @@ type Query {
 }
 
 type Mutation {
-  add(input: newBaseItem): Callback
+  add(input: newBaseItem): AddCallback
+  delete(conditions: JSON): DeleteCallback
 }
 

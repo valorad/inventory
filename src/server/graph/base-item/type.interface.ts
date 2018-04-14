@@ -14,6 +14,18 @@ interface IBook {
   content: string
 }
 
+interface IAddCallback {
+  message: string
+  status: string
+  id: string | null
+}
+
+interface IDeleteCallback {
+  message: string
+  status: string
+  rmCount: number
+}
+
 export interface IBaseItem {
   dbname: string
   value: number
@@ -22,16 +34,13 @@ export interface IBaseItem {
   detail: IGear | IConsumable | IBook
 }
 
-interface ICallback {
-  message: string
-  status: string
-  id: string | null
+export interface IQuery {
+  getList: (obj: any, args: {conditions?: string, page?: number}, context?: any, info?: any) => Promise<any[]>,
+  getSingle: (obj: any, args: {dbname?: string}, context?: any, info?: any) => Promise<any[]>
 }
 
 export interface IMutation {
-  add: (obj: any, args: {input: IBaseItem}, context?: any, info?: any) => Promise<ICallback>
+  add: (obj: any, args: {input: IBaseItem}, context?: any, info?: any) => Promise<IAddCallback>,
+  delete: (obj: any, args: {conditions?: string}, context?: any, info?: any) => Promise<IDeleteCallback>
 }
 
-export interface IQuery {
-  getList: (obj: any, args: {conditions?: string, page?: number}, context?: any, info?: any) => Promise<any[]>
-}

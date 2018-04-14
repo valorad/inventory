@@ -118,36 +118,15 @@ class BaseItem {
 
     // extract needed info from mongoose query result
     for (let item of metBaseItems) {
-      let ext = {};
-      for (let key of baseItemAction.fileds) {
 
-        ext[key] = item[key];
-      }
-
+      let ext = this.extractInfo(item);
       extractedItems.push(ext);
     }
 
     // attach details
     for (let item of extractedItems) {
-
-      let detailAction = this.selectAction(item.category);
-
-      if (detailAction) {
-
-        let rawDetail = await detailAction.getSingle(item.dbname);
-
-        if (rawDetail && rawDetail.length > 0) {
-          let detail = rawDetail[0];
-          item.detail = detail;
-
-        } else {
-          item.detail = {};
-        }
-
-      }
+      item.detail = await this.attachDetail(item);
     }
-
-
     return extractedItems;
 
     // e.g. front-end request
@@ -171,11 +150,99 @@ class BaseItem {
 
   };
 
-  getSingle = (obj: any, args: any, context: any, info: any) => {
+  getSingle: IQuery["getSingle"] = async (obj: any, args: any, context: any, info: any) => {
 
-    // let dbanme = args.dbanme;
-    // console.log(id);
-    return this.data;
+    let baseItem: any = {};
+    let metBaseItems = await baseItemAction.getSingle(args.dbname);
+
+    if (metBaseItems) {
+      // extract needed info from mongoose query result
+      let rawItem = metBaseItems[0];
+      baseItem = this.extractInfo(rawItem);
+
+      // attach details
+      baseItem.detail = await this.attachDetail(rawItem);
+    }
+
+    return baseItem;
+
+
+    // e.g. front-end request
+    // query getItem($dbname: String) {
+    //   baseItems: baseItem(dbname: $dbname) {
+    //     dbname
+    //     value
+    //     weight
+    //     category
+    //     detail
+    //   }
+    // }
+
+    // ----- params -----
+
+    // {
+    //   "dbname": "item-t60_pa_chest-t5"
+    // }
+
+
+  };
+
+  delete: IMutation["delete"] = async (obj: any, args: any, context: any, info: any) => {
+    
+    let conditions: any = {};
+    let matchInfo: any[] = [];
+
+    if (args.conditions) {
+      conditions = JSON.parse(args.conditions);
+    }
+
+    let metBaseItems = await baseItemAction.getList(conditions);
+    for (let item of metBaseItems) {
+      // store matched item dbname and category
+      matchInfo.push(
+        {
+          dbname: item.dbname,
+          category: item.category
+        }
+      );
+
+    }
+
+    // delete details
+    for (let item of matchInfo) {
+      let action = this.selectAction(item.category);
+      let detailDelResult = await action.delete({dbname: item.dbname});
+      if (detailDelResult) {
+        // delete base
+        let baseDelResult = await baseItemAction.delete(conditions);
+        if (baseDelResult) {
+          return {
+            message: `Successfully deleted selected baseItems`,
+            status: 'success',
+            rmCount: baseDelResult.n || 0
+          };
+        } else {
+          return {
+            message: `Deletion failure: base info`,
+            status: 'failure',
+            rmCount: 0
+          };
+        }
+      } else {
+        return {
+          message: `Deletion failure: details`,
+          status: 'failure',
+          rmCount: 0
+        };
+      }
+
+    }
+
+    return {
+      message: `Deletion failure: info mismatch`,
+      status: 'failure',
+      rmCount: 0
+    };
 
   };
 
@@ -198,34 +265,39 @@ class BaseItem {
     return action;
   };
 
+  extractInfo = (qResultItem: any) => {
+    let ext = {};
+    for (let key of baseItemAction.fileds) {
+      ext[key] = qResultItem[key];
+    }
+    return ext;
+  };
+
+  attachDetail = async (baseItem: any) => {
+    let detail: any = {};
+    let detailAction = this.selectAction(baseItem.category);
+    if (detailAction) {
+
+      let rawDetail = await detailAction.getSingle(baseItem.dbname);
+
+      if (rawDetail && rawDetail.length > 0) {
+        detail = rawDetail[0];
+      }
+
+    }
+    return detail;
+  };
+
   resolvers = {
     Query: {
       baseItem: this.getSingle,
       baseItems: this.getList
     },
     Mutation: {
-      add: this.add
+      add: this.add,
+      delete: this.delete
     }
   }
-
-
-  
-  // get schema() {
-  //   return makeExecutableSchema(
-  //     {
-  //       typeDefs: this.types,
-  //       resolvers: this.resolvers
-  //     }
-  //   );
-
-  // }
-
-  // Object.assign(schema._typeMap.JSON, {
-  //   name: 'JSON',
-  //   serialize: GraphQLJSON.serialize,
-  //   parseValue: GraphQLJSON.parseValue,
-  //   parseLiteral: GraphQLJSON.parseLiteral
-  // })
 
   schema = makeExecutableSchema({typeDefs: this.types, resolvers: this.resolvers})
 
