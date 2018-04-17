@@ -6,6 +6,9 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 import { actor } from "./actor";
 import { refItem } from "./ref-item";
 import { baseItem } from "./base-item";
+import { gear } from "./gear";
+import { consumable } from "./consumable";
+import { book } from "./book";
 
 class API {
 
@@ -25,6 +28,9 @@ class API {
     this.routerInstance.use('/actor', actor.routes(), actor.allowedMethods());
     this.routerInstance.use('/refItem', refItem.routes(), refItem.allowedMethods());
     this.routerInstance.use('/baseItem', baseItem.routes(), baseItem.allowedMethods());
+    this.routerInstance.use('/gear', gear.routes(), gear.allowedMethods());
+    this.routerInstance.use('/consumable', consumable.routes(), consumable.allowedMethods());
+    this.routerInstance.use('/book', book.routes(), book.allowedMethods());
 
 
     // this.routerInstance.get('/graphql', graphqlKoa({ schema: schema }));
