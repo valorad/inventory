@@ -1,6 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools'; 
 import GraphQLJSON from 'graphql-type-json';
 
+import { IMutation, IQuery } from "./type.interface";
 import * as typeDefs from "./type.graphql";
 import { Action } from "./action";
 
@@ -26,14 +27,57 @@ class BaseItem {
     }
   }
 
+  getList: IQuery["getList"] = async (obj, args) => {
+    let conditions: any = {};
+
+    if (args.conditions) {
+      conditions = JSON.parse(args.conditions);
+    }
+
+    return await this.action.getList(conditions, args.page);
+
+  };
+
+  add: IMutation["add"] = async (obj, args) => {
+
+    let input:any = args.input;
+    return await this.action.add(input);
+
+    // front-end request exmple:
+    // mutation addItem($info: newBaseItem!) {
+    //   add(input: $info) {
+    //     message,
+    //     status,
+    //     id
+    //   }
+    // }
+
+  };
+
+  getSingle: IQuery["getSingle"] = async (obj, args) => {
+    let dbname = args.dbname;
+    if (dbname) {
+      return await this.action.getSingle(dbname);
+    }
+    return [];
+  };
+
+  delete: IMutation["delete"] = async (obj, args) => {
+
+    let conditions = args.conditions;
+    let delResult = await this.action.delete(conditions);
+
+    return delResult;
+  };
+
   resolvers = {
     Query: {
-      baseItem: this.action.getSingle,
-      baseItems: this.action.getList
+      baseItem: this.getSingle,
+      baseItems: this.getList
     },
     Mutation: {
-      add: this.action.add,
-      delete: this.action.delete
+      add: this.add,
+      delete: this.delete
     }
   }
 

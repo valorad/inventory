@@ -1,4 +1,4 @@
-import { IMutation, IQuery } from "./type.interface";
+import { IBaseItem } from "./type.interface";
 
 // actions
 import { BaseItemAction } from "../../action/base-item.action";
@@ -10,22 +10,11 @@ const baseItemAction = new BaseItemAction();
 
 export class Action {
 
-  add: IMutation["add"] = async (obj, args) => {
+  add = async (input: IBaseItem) => {
     
-    // front-end request exmple:
-    // mutation addItem($info: newBaseItem!) {
-    //   add(input: $info) {
-    //     message,
-    //     status,
-    //     id
-    //   }
-    // }
-
-    // then args.input is what posted from front-end
-
     // insert into baseItems collection
     
-    let newBaseItem = await baseItemAction.add(args.input);
+    let newBaseItem = await baseItemAction.add(input);
 
     if (newBaseItem) {
       // according to "category", insert detail info to corresponing col.
@@ -35,7 +24,7 @@ export class Action {
 
         let newDetail = await detailAction.add({
           dbname: newBaseItem.dbname,
-          ...args.input.detail
+          ...input.detail
         });
 
         if (newDetail) {
@@ -46,7 +35,7 @@ export class Action {
           };
         } else {
           return {
-            message: `Failed to asign detail to baseItem "${args.input.dbname}"`,
+            message: `Failed to asign detail to baseItem "${input.dbname}"`,
             status: 'failure',
             id: newBaseItem._id
           };
@@ -62,7 +51,7 @@ export class Action {
 
     } else {
       return {
-        message: `Failed to create new baseItem "${args.input.dbname}"`,
+        message: `Failed to create new baseItem "${input.dbname}"`,
         status: 'failure',
         id: null
       };
@@ -83,15 +72,9 @@ export class Action {
 
   };
 
-  getList: IQuery["getList"] = async (obj, args) => {
+  getList = async (conditions = {}, page?) => {
 
-    let conditions: any = {};
-
-    if (args.conditions) {
-      conditions = JSON.parse(args.conditions);
-    }
-
-    let metBaseItems = await baseItemAction.getList({}, args.page);
+    let metBaseItems = await baseItemAction.getList(conditions, page);
     let extractedItems: any[] = [];
 
     // extract needed info from mongoose query result
@@ -128,10 +111,10 @@ export class Action {
 
   };
 
-  getSingle: IQuery["getSingle"] = async (obj: any, args: any, context: any, info: any) => {
+  getSingle = async (dbname: string) => {
 
     let baseItem: any = {};
-    let metBaseItems = await baseItemAction.getSingle(args.dbname);
+    let metBaseItems = await baseItemAction.getSingle(dbname);
 
     if (metBaseItems) {
       // extract needed info from mongoose query result
@@ -165,13 +148,12 @@ export class Action {
 
   };
 
-  delete: IMutation["delete"] = async (obj: any, args: any, context: any, info: any) => {
+  delete = async (conditions: any) => {
     
-    let conditions: any = {};
     let matchInfo: any[] = [];
 
-    if (args.conditions) {
-      conditions = JSON.parse(args.conditions);
+    if (conditions && (typeof conditions === 'string')) {
+      conditions = JSON.parse(conditions);
     }
 
     let metBaseItems = await baseItemAction.getList(conditions);
