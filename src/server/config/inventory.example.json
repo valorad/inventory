@@ -4,7 +4,7 @@
       "port": 3000
     },
     "mongo": {
-      "collections": {
+      "db": {
         "main": "inventory",
         "auth": "admin",
         "test": "test"
