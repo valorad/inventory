@@ -66,6 +66,27 @@ class RefItem {
 
     });
 
+    this.router.patch('id/:_id', async (ctx) => {
+      let _id: string = ctx.params._id;
+
+      let updatedRefItems = await this.action.updateSingle(_id, ctx.request.body);
+      if (updatedRefItems) {
+        let updatedItem = updatedRefItems[0];
+        ctx.body = {
+          message: `Successfully updated ref-item ${updatedItem.dbname}`,
+          status: "success",
+          id: updatedItem._id
+        };
+        return;
+      } else {
+        ctx.body = {
+          message: `Failed to update ref-item ${_id}`,
+          status: "failure",
+          id: _id
+        };
+      }
+    });
+
     this.router.delete('/delete/:_id', async (ctx) => {
 
       let token = {_id: ctx.params._id};
