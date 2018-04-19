@@ -116,7 +116,7 @@ export class Action {
     let baseItem: any = {};
     let metBaseItems = await baseItemAction.getSingle(dbname);
 
-    if (metBaseItems) {
+    if (metBaseItems && metBaseItems[0]) {
       // extract needed info from mongoose query result
       let rawItem = metBaseItems[0];
       baseItem = this.extractInfo(rawItem);

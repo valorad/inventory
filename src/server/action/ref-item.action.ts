@@ -5,6 +5,8 @@ import { refItems } from '../database/schema/ref-items';
 
 export class RefItemAction implements IAction {
 
+  fields: string[] = ["item", "owner"];
+
   getAll = async () => {
     return await Query.getList(refItems);
   };
@@ -30,7 +32,7 @@ export class RefItemAction implements IAction {
     let newRefItem = await Query.addRecord(
       refItems,
       info,
-      ["item", "owner"]
+      this.fields
     );
     return newRefItem;
   };
