@@ -1,22 +1,40 @@
-import { IBaseItem } from "./type.interface";
+import { IBaseItem, INewBaseItem } from "./type.interface";
 
 // actions
 import { BaseItemAction } from "../../action/base-item.action";
+import { TranslationAction } from "../../action/translation.action";
 import { GearAction } from "../../action/gear.action";
 import { ConsumableAction } from "../../action/consumable.action";
 import { BookAction } from "../../action/book.action";
 
 const baseItemAction = new BaseItemAction();
+const translationAction = new TranslationAction();
+
+interface ITranslatedEffect {
+
+  effect: string,
+  name: string
+
+}
 
 export class Action {
 
-  add = async (input: IBaseItem) => {
+  add = async (input: INewBaseItem) => {
     
     // insert into baseItems collection
     
     let newBaseItem = await baseItemAction.add(input);
 
     if (newBaseItem) {
+
+      // create translations
+      if (input.translations) {
+        await translationAction.add({
+          dbname: newBaseItem.dbname,
+          ...input.translations
+        });
+      }
+      
       // according to "category", insert detail info to corresponing col.
       let detailAction = this.selectAction(newBaseItem.category)
 
@@ -72,21 +90,51 @@ export class Action {
 
   };
 
-  getList = async (conditions = {}, page?) => {
+  getList = async (conditions = {}, page?, lang = "en") => {
 
     let metBaseItems = await baseItemAction.getList(conditions, page);
-    let extractedItems: any[] = [];
+    let extractedItems: IBaseItem[] = [];
 
     // extract needed info from mongoose query result
     for (let item of metBaseItems) {
 
-      let ext = this.extractInfo(item);
+      let ext = this.extractInfo(item, baseItemAction.fields) as IBaseItem;
+
+      // attach i18n info of base
+      let translations = await translationAction.getSingle(ext.dbname);
+      if (translations && translations[0]) {
+        ext.name = translations[0]["name"][lang];
+        ext.description = translations[0]["description"][lang];
+      }
+
       extractedItems.push(ext);
     }
+
+
 
     // attach details
     for (let item of extractedItems) {
       item.detail = await this.attachDetail(item);
+      // attach i18n info of detail type or equip
+      if (item.detail["type"]) {
+        
+        let translations = await translationAction.getSingle(`type-${item.detail["type"]}`);
+        if (translations && translations[0]) {
+          item.detail["typeName"] = translations[0]["name"][lang];
+        }
+      }
+
+      if (item.detail["equip"]) {
+        let translations = await translationAction.getSingle(`equip-${item.detail["equip"]}`);
+        if (translations && translations[0]) {
+          item.detail["equipName"] = translations[0]["name"][lang];
+        }
+      }
+
+      if (item.detail["effects"]) {
+        item.detail["effectsI18n"] = await this.translateEffects(item.detail["effects"], lang);
+      }
+
     }
     return extractedItems;
 
@@ -111,7 +159,7 @@ export class Action {
 
   };
 
-  getSingle = async (dbname: string) => {
+  getSingle = async (dbname: string, lang = "en") => {
 
     let baseItem: any = {};
     let metBaseItems = await baseItemAction.getSingle(dbname);
@@ -119,10 +167,38 @@ export class Action {
     if (metBaseItems && metBaseItems[0]) {
       // extract needed info from mongoose query result
       let rawItem = metBaseItems[0];
-      baseItem = this.extractInfo(rawItem);
+      baseItem = this.extractInfo(rawItem, baseItemAction.fields) as IBaseItem;
+
+      // attach i18n info
+      let translations = await translationAction.getSingle(baseItem.dbname);
+      
+      if (translations && translations[0]) {
+        baseItem.name = translations[0]["name"][lang];
+        baseItem.description = translations[0]["description"][lang];
+      }
 
       // attach details
       baseItem.detail = await this.attachDetail(rawItem);
+
+      // attach i18n info of detail type or equip
+      if (baseItem.detail["type"]) {
+        let translations = await translationAction.getSingle(baseItem.detail["type"]);
+        if (translations && translations[0]) {
+          baseItem.detail["typeName"] = translations[0]["name"][lang];
+        }
+      }
+
+      if (baseItem.detail["equip"]) {
+        let translations = await translationAction.getSingle(baseItem.detail["equip"]);
+        if (translations && translations[0]) {
+          baseItem.detail["equipName"] = translations[0]["name"][lang];
+        }
+      }
+
+      if (baseItem.detail["effects"]) {
+        baseItem.detail.effectsI18n = await this.translateEffects(baseItem.detail.effects, lang);
+      }
+
     }
 
     return baseItem;
@@ -225,9 +301,9 @@ export class Action {
     return action;
   };
 
-  extractInfo = (qResultItem: any) => {
+  extractInfo = (qResultItem: any, fields: string[]) => {
     let ext = {};
-    for (let key of baseItemAction.fileds) {
+    for (let key of fields) {
       ext[key] = qResultItem[key];
     }
     return ext;
@@ -241,11 +317,32 @@ export class Action {
       let rawDetail = await detailAction.getSingle(baseItem.dbname);
 
       if (rawDetail && rawDetail.length > 0) {
-        detail = rawDetail[0];
+        detail = this.extractInfo(rawDetail[0], detailAction.fields);
       }
 
     }
     return detail;
+  };
+
+  translateEffects = async (effects: string[], lang = "en") => {
+    let effectsI18n: ITranslatedEffect[] = [];
+    // e.g.
+    // {
+    //   effect: "effect-increse_intelligence",
+    //   name: "提升智力"
+    // }
+
+    for (let effect of effects) {
+      // effect is of type string
+      let effectTranslation = await translationAction.getSingle(effect);
+      let effectI18n: ITranslatedEffect = { effect: effect, name: "" };
+      if (effectTranslation && effectTranslation[0]) {
+        effectI18n.name = effectTranslation[0]["name"][lang];
+      }
+      effectsI18n.push(effectI18n);
+    }
+
+    return effectsI18n;
   };
 
 

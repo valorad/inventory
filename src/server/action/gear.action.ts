@@ -4,6 +4,8 @@ import { IAction } from "./interface/action.interface";
 import { gears } from '../database/schema/gears';
 
 export class GearAction implements IAction {
+
+  fields = ["dbname", "rating", "type", "equip", "effects"]
   
   getList = async (conditions: any = {}, page?: number) => {
     let result = await Query.getList(
@@ -25,7 +27,7 @@ export class GearAction implements IAction {
     let newGear = await Query.addRecord(
       gears,
       info,
-      ["dbname", "rating", "type", "equip", "effects"]
+      this.fields
     );
     return newGear;
   };

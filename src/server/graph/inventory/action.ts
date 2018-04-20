@@ -9,7 +9,7 @@ const refAction = new RefItemAction();
 const actorAction = new ActorAction();
 
 export class Action {
-  getList = async (conditions: any, page?: number) => {
+  getList = async (conditions: any, page?: number, lang = "en") => {
 
     let inventoryItems: IInventoryVerboseItem[] = [];
 
@@ -67,7 +67,7 @@ export class Action {
         // import actions from base-item graph and query base-item
         // extract result and get it extended to 'inventoryItems'
         const baseItemAction = new BaseItemGraphAction();
-        singleInv.item.base = await baseItemAction.getSingle(refItem.item);
+        singleInv.item.base = await baseItemAction.getSingle(refItem.item, lang);
 
 
       }
@@ -129,7 +129,7 @@ export class Action {
 
 
 
-  extractInfo = (qResultItem: any, fields) => {
+  extractInfo = (qResultItem: any, fields: string[]) => {
     let ext = {};
     for (let key of fields) {
       ext[key] = qResultItem[key];

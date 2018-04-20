@@ -5,7 +5,7 @@ import { baseItems } from '../database/schema/base-items';
 
 export class BaseItemAction implements IAction {
 
-  fileds: string[] = ["dbname", "value", "weight", "category"];
+  fields: string[] = ["dbname", "value", "weight", "category"];
 
   getAll = async () => {
     return await Query.getList(baseItems);
@@ -31,7 +31,7 @@ export class BaseItemAction implements IAction {
     let newBaseItem = await Query.addRecord(
       baseItems,
       info,
-      this.fileds
+      this.fields
     );
     return newBaseItem;
   };

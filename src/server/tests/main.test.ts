@@ -3,6 +3,7 @@ import { connection, Mongoose } from 'mongoose';
 
 // actions
 import { ActorAction } from "../action/actor.action";
+import { TranslationAction } from "../action/translation.action";
 import { Action as BaseItemGraphAction } from "../graph/base-item/action";
 import { Action as InvGraphAction } from "../graph/inventory/action"
 
@@ -16,6 +17,37 @@ beforeAll(async () => {
 });
 
 describe("inventory test", () => {
+
+  const menuTranslation = [
+    {
+      dbname: "type-lightarmor",
+      name: {
+        en: "Light Armor",
+        zh: "轻甲"
+      }
+    },
+    {
+      dbname: "type-grenade",
+      name: {
+        en: "Grenade",
+        zh: "手榴弹"
+      }
+    },
+    {
+      dbname: "equip-body",
+      name: {
+        en: "body",
+        zh: "身体"
+      }
+    },
+    {
+      dbname: "effect-increse_intelligence",
+      name: {
+        en: "Increase intelligence",
+        zh: "提升智力"
+      }
+    }
+  ];
 
   const actor = {
     dbname: "cortana"
@@ -37,12 +69,18 @@ describe("inventory test", () => {
       weight: 5,
       category: "gears",
       detail: {
-        type: "armor",
+        type: "type-lightarmor",
         rating: 50,
-        equip: "body",
+        equip: "equip-body",
         effects: [
           "effect-increse_intelligence"
         ]
+      },
+      translations: {
+        name: {
+          en: "EDI's body",
+          zh: "EDI 的护甲"
+        }
       }
     },
     consumable: {
@@ -51,15 +89,25 @@ describe("inventory test", () => {
       weight: 3,
       category: "consumables",
       detail: {
-        type: "grenade",
+        type: "type-grenade",
         effects: []
       }
     }
   };
 
-  const baseItemGraphAction = new BaseItemGraphAction();
   const actorAction = new ActorAction();
+  const translationAction = new TranslationAction();
+  const baseItemGraphAction = new BaseItemGraphAction();
   const invGraphAction = new InvGraphAction();
+
+  // import menu translations
+  test("Import menu translations", async () => {
+    for (let trans of menuTranslation) {
+      let newTrans = await translationAction.add(trans);
+    }
+    let transList = await translationAction.getList();
+    expect(transList.length).toEqual(4);
+  });
 
   // create an actor
   test("Create Cortana", () => {
@@ -110,12 +158,18 @@ describe("inventory test", () => {
   // query actor inventory info, should contain the item just added:
   // (query item base info from invAction)
   test("Make sure edi's armor is in Cortana's bag, and not altered", async () => {
-    let invItems = await invGraphAction.getList({holder: "cortana"});
+    let invItems = await invGraphAction.getList({holder: "cortana"}, undefined, "zh");
     if (invItems) {
       let armor = invItems[0]; // we know it's on position 0 because we only gave her 1 armor.
       let itembase: any = armor.item.base || {};
       let itemtype = itembase.detail.type;
       expect(itemtype).toBe(baseItemSample.gear.detail.type);
+      // test menu translation
+      let itemtypeName = itembase.detail.typeName;
+      expect(itemtypeName).toBe(menuTranslation[0].name.zh);
+      // test item detail translation
+      expect(itembase.name).toBe(baseItemSample.gear.translations.name.zh);
+      
     } else {
       throw new Error("Cannot find Cortana's inventory");
     }
@@ -170,6 +224,16 @@ describe("inventory test", () => {
       throw new Error("failed to get detail");
     }
 
+  });
+
+  // delete menu translations
+  test("Delete all translations", async () => {
+    let delResult = await translationAction.delete({});
+    if (delResult) {
+      expect(delResult.n).toBeGreaterThanOrEqual(4);
+    } else {
+      throw new Error("Failed to delete menu translations");
+    }
   });
 
 });

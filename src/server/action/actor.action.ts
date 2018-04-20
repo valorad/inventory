@@ -6,6 +6,8 @@ import { ObjectId } from "bson";
 
 export class ActorAction implements IAction {
 
+  fields = ["dbname", "icon", "equiped"];
+
   getAll = async () => {
     return await Query.getList(actors);
   };
@@ -19,7 +21,7 @@ export class ActorAction implements IAction {
     let newActor = await Query.addRecord(
       actors,
       info,
-      ["dbname", "icon", "equiped"],
+      this.fields,
       (actorToSave: any) => {
 
         if (!actorToSave.equiped) {

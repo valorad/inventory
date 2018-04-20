@@ -1,15 +1,15 @@
 import { Query } from "../util/query";
 import { IAction } from "./interface/action.interface";
 // import schemas
-import { consumables } from '../database/schema/consumables';
+import { translations } from '../database/schema/translations';
 
-export class ConsumableAction implements IAction {
+export class TranslationAction implements IAction {
 
-  fields = ["dbname", "type", "effects"]
-  
+  fields = ["dbname", "name", "description"];
+
   getList = async (conditions: any = {}, page?: number) => {
     let result = await Query.getList(
-      consumables,
+      translations,
       {
         conditions,
         page,
@@ -20,25 +20,25 @@ export class ConsumableAction implements IAction {
   };
 
   getSingle = async (dbname: string = "") => {
-    return await Query.getDetail(consumables, {dbname});
+    return await Query.getDetail(translations, {dbname});
   };
 
   add = async (info: any) => {
-    let newConsumable = await Query.addRecord(
-      consumables,
+    let newTranslation = await Query.addRecord(
+      translations,
       info,
       this.fields
     );
-    return newConsumable;
+    return newTranslation;
   };
 
   updateSingle = async (dbname: string, token: any) => {
-    return await Query.setRecord(consumables, {dbname}, token);
+    return await Query.setRecord(translations, {dbname}, token);
   };
 
   delete = async (token: any) => {
 
-    let delResult = await Query.deleteRecord(consumables, token);
+    let delResult = await Query.deleteRecord(translations, token);
     return delResult;
 
   };
