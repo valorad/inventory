@@ -142,9 +142,9 @@ name表（可能会是个外置json文件）dbname, en{name, description, catego
 - ✔️ 数据库设计
 - ✔️ 业务逻辑(action)单元测试
 - 接口： 
-  - graph： inventory（增删改查）
+  - ✔️ graph： inventory（增删改查）
   - ✔️ 路由
-- language文件
+- actor 和 book content的translation
 
 # License
 
