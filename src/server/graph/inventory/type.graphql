@@ -1,0 +1,37 @@
+scalar JSON
+
+type BaseItem {
+  dbname: String
+  value: Int
+  weight: Float
+  category: String
+  detail: JSON
+}
+
+
+type RefItem {
+  refID: ID,
+  owner: String,
+  num: Int,
+  dbname: String,
+  base: BaseItem
+}
+
+type InventoryVerboseItem {
+  holder: String,
+  item: RefItem
+}
+
+type InvItem {
+  holder: String,
+  item: RefItem
+}
+
+type Query {
+  inventoryItems(conditions: JSON, page: Int): [InventoryVerboseItem]
+}
+
+type Mutation {
+  gift(refItemName: String, holder: String): InvItem
+  remove(refItemName: String, holder: String): InvItem
+}

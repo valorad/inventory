@@ -6,7 +6,7 @@ import * as typeDefs from "./type.graphql";
 import { Action } from "./action";
 
 
-class BaseItem {
+class BaseItemGraph {
 
   action = new Action();
 
@@ -15,17 +15,17 @@ class BaseItem {
   types: any = typeDefs; // workaround for stupid typescript module
   // in fact, 'types' is of type 'DocumentNode'
 
-  data: any = {
-    dbname: "item-t60_pa_chest",
-    value: 2517,
-    weight: 30.5,
-    category: "gears",
-    detail: {
-      rating: 105,
-      type: "type-powerarmor",
-      equip: "body"
-    }
-  }
+  // data: any = {
+  //   dbname: "item-t60_pa_chest",
+  //   value: 2517,
+  //   weight: 30.5,
+  //   category: "gears",
+  //   detail: {
+  //     rating: 105,
+  //     type: "type-powerarmor",
+  //     equip: "body"
+  //   }
+  // }
 
   getList: IQuery["getList"] = async (obj, args) => {
     let conditions: any = {};
@@ -85,4 +85,4 @@ class BaseItem {
 
 }
 
-export const baseItem = new BaseItem().schema;
+export const baseItemGraph = new BaseItemGraph().schema;

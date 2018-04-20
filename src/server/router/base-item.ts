@@ -3,7 +3,7 @@ import * as bodyParser from 'koa-bodyparser';
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 
 // graphs
-import { baseItem as schema } from "../graph/base-item";
+import { baseItemGraph as schema } from "../graph/base-item";
 
 class BaseItem {
 

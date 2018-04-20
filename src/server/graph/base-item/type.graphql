@@ -8,24 +8,6 @@ type BaseItem {
   detail: JSON
 }
 
-# type Gear {
-#   rating: Int
-#   type: String
-#   equip: String
-#   effects: [String]
-# }
-
-# type Consumable {
-#   type: String
-#   effects: [String]
-# }
-
-# type Book {
-#   content: String
-# }
-
-# union Detail = Gear | Consumable | Book
-
 type AddCallback {
   message: String
   status: String

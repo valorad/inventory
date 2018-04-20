@@ -2,32 +2,7 @@ import { InventoryAction } from "../../action/inventory.action";
 import { RefItemAction } from "../../action/ref-item.action";
 import { ActorAction } from "../../action/actor.action";
 import { Action as BaseItemGraphAction } from "../base-item/action";
-
-interface IInventoryItems {
-  holder: string,
-  item: {
-    refID?: string,
-    owner: string,
-    num: number,
-    dbname: string,
-    // item base info
-    base?: {
-      baseID?: string,
-      value: number,
-      weight: number,
-      category: string,
-      detail?: {
-        // gear + comsumable
-        rating?: number
-        type?: string
-        equip?: string
-        effects?: string[]
-        // book
-        content?: string
-      }
-    }
-  }
-}
+import { IInventoryVerboseItem } from "./type.interface";
 
 const invAction = new InventoryAction();
 const refAction = new RefItemAction();
@@ -36,7 +11,7 @@ const actorAction = new ActorAction();
 export class Action {
   getList = async (conditions: any, page?: number) => {
 
-    let inventoryItems: IInventoryItems[] = [];
+    let inventoryItems: IInventoryVerboseItem[] = [];
 
     // output example:
     // [
@@ -107,6 +82,22 @@ export class Action {
 
   /**
    * (Usually used by console or quest)
+   * (Similar to player.additem in ElderScroll games console)
+   * Gift the holder a new Item. The target actor is holding his own item.
+   */
+  gift = async (refItemName: string, holder: string) => {
+    // create a ref item
+    let newRefItem = await refAction.add({item: refItemName, owner: holder});
+    if (newRefItem) {
+      // add that ref-item to inventory
+      let newInvItem = await invAction.add({item: newRefItem._id, holder});
+      return newInvItem;
+    }
+    return null;
+  };
+
+  /**
+   * (Usually used by console or quest)
    * (Similar to player.removeitem in ElderScroll games console)
    * (But can only remove all)
    * Delete Inv item from the world. 
@@ -136,21 +127,7 @@ export class Action {
     return null;
   };
 
-  /**
-   * (Usually used by console or quest)
-   * (Similar to player.additem in ElderScroll games console)
-   * Gift the holder a new Item. The target actor is holding his own item.
-   */
-  gift = async (item: string, holder: string) => {
-    // create a ref item
-    let newRefItem = await refAction.add({item, owner: holder});
-    if (newRefItem) {
-      // add that ref-item to inventory
-      let newInvItem = await invAction.add({item: newRefItem._id, holder});
-      return newInvItem;
-    }
-    return null;
-  };
+
 
   extractInfo = (qResultItem: any, fields) => {
     let ext = {};

@@ -1,5 +1,11 @@
 import * as Router from 'koa-router';
+import * as bodyParser from 'koa-bodyparser';
+import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 
+// graphs
+import { invItemGraph as schema } from "../graph/inventory";
+
+// actions
 import { InventoryAction as Action } from "../action/inventory.action";
 
 class InventoryItem {
@@ -7,6 +13,9 @@ class InventoryItem {
   action = new Action();
 
   constructor() {
+
+    this.router.get('/graph', graphqlKoa({ schema: schema }));
+    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/invItem/graph' }));
 
     this.router.get('/', async (ctx) => {
       ctx.status = 200;
@@ -43,6 +52,8 @@ class InventoryItem {
       }
       
     });
+
+    this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
 
     this.router.post('/add', async (ctx) => {
 
@@ -114,4 +125,4 @@ class InventoryItem {
 
 }
 
-export const refItem = new InventoryItem().router;
+export const invItem = new InventoryItem().router;
