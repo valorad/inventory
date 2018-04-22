@@ -1,4 +1,4 @@
-import { IBaseItem } from "./type.interface";
+import { IBaseItem, INewBaseItem } from "./type.interface";
 
 // actions
 import { BaseItemAction } from "../../action/base-item.action";
@@ -10,11 +10,11 @@ const baseItemAction = new BaseItemAction();
 
 export class Action {
 
-  add = async (input: IBaseItem) => {
+  add = async (input: INewBaseItem, lang: string = "en") => {
     
     // insert into baseItems collection
     
-    let newBaseItem = await baseItemAction.add(input);
+    let newBaseItem: INewBaseItem = await baseItemAction.add(input);
 
     if (newBaseItem) {
       // according to "category", insert detail info to corresponing col.
@@ -28,16 +28,22 @@ export class Action {
         });
 
         if (newDetail) {
+
+          // books need to add translations
+          if (newBaseItem.category === "books") {
+
+          }
+
           return {
             message: `Successfully created new baseItem "${newBaseItem.dbname}" with id "${newBaseItem._id}"`,
             status: 'success',
-            id: newBaseItem._id
+            id: newBaseItem["_id"]
           };
         } else {
           return {
             message: `Failed to asign detail to baseItem "${input.dbname}"`,
             status: 'failure',
-            id: newBaseItem._id
+            id: newBaseItem["_id"]
           };
         }
 
@@ -45,7 +51,7 @@ export class Action {
         return {
           message: `Failed to find appropriate action when trying to create new baseItem "${newBaseItem.dbname}"`,
           status: 'failure',
-          id: newBaseItem._id
+          id: newBaseItem["_id"]
         };
       }
 

@@ -26,12 +26,40 @@ interface IDeleteCallback {
   rmCount: number
 }
 
+interface INewGear {
+  rating: number
+  type: string
+  equip: string
+  effects: string[]
+}
+
+interface INewConsumable {
+  type: string
+  effects: string[]
+}
+
+interface INewBook {
+  content: string,
+  translations?: {
+    en?: string,
+    zh?: string
+  }
+}
+
 export interface IBaseItem {
   dbname: string
   value: number
   weight: number
   category: string
   detail: IGear | IConsumable | IBook
+}
+
+export interface INewBaseItem {
+  dbname: string
+  value: number
+  weight: number
+  category: string
+  detail: INewGear | INewConsumable | INewBook
 }
 
 export interface IQuery {
