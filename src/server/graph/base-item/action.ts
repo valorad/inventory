@@ -19,7 +19,7 @@ interface ITranslatedEffect {
 
 export class Action {
 
-  add = async (input: INewBaseItem, lang: string = "en") => {
+  add = async (input: INewBaseItem) => {
     
     // insert into baseItems collection
     
@@ -31,8 +31,18 @@ export class Action {
       if (input.translations) {
         await translationAction.add({
           dbname: newBaseItem.dbname,
-          ...input.translations
+          name: input.translations.name,
+          description: input.translations.description
         });
+
+        // books need to add translations
+        if (newBaseItem.category === "books" && input.detail["content"]) {
+          await translationAction.add({
+            dbname: input.detail["content"],
+            description: input.translations.bookContent
+          });
+        }
+
       }
       
       // according to "category", insert detail info to corresponing col.
@@ -46,14 +56,8 @@ export class Action {
         });
 
         if (newDetail) {
-
-          // books need to add translations
-          if (newBaseItem.category === "books") {
-
-          }
-
           return {
-            message: `Successfully created new baseItem "${newBaseItem.dbname}" with id "${newBaseItem._id}"`,
+            message: `Successfully created new baseItem "${newBaseItem.dbname}" with id "${newBaseItem["_id"]}"`,
             status: 'success',
             id: newBaseItem["_id"]
           };
@@ -141,6 +145,14 @@ export class Action {
         item.detail["effectsI18n"] = await this.translateEffects(item.detail["effects"], lang);
       }
 
+      // attach i18n info of book content
+      if (item.detail["content"]) {
+        let translations = await translationAction.getSingle(item.detail["content"]);
+        if (translations && translations[0]) {
+          item.detail["contentDetail"] = translations[0]["description"][lang];
+        }
+      }
+
     }
     return extractedItems;
 
@@ -203,6 +215,14 @@ export class Action {
 
       if (baseItem.detail["effects"]) {
         baseItem.detail.effectsI18n = await this.translateEffects(baseItem.detail.effects, lang);
+      }
+
+      // attach i18n info of book content
+      if (baseItem.detail["content"]) {
+        let translations = await translationAction.getSingle(baseItem.detail["content"]);
+        if (translations && translations[0]) {
+          baseItem.detail["contentDetail"] = translations[0]["description"][lang];
+        }
       }
 
     }

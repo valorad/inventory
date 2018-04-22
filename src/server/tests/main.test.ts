@@ -60,7 +60,17 @@ describe("inventory test", () => {
       weight: 1,
       category: "books",
       detail: {
-        content: "Dark-bro rules: 1. No black sacrament on kittens. 2. No D.."
+        content: "content-darkbro_tenant"
+      },
+      translations: {
+        name: {
+          en: "Dark Brotherhood tenant",
+          zh: "黑暗兄弟会教义"
+        },
+        bookContent: {
+          en: "Dark-bro rules: 1. No black sacrament on kittens. 2. No D..",
+          zh: "黑兄规矩： 1. 不准在喵喵身上执行黑暗仪式 2.没有得到.."
+        }
       }
     },
     gear: {
@@ -106,7 +116,7 @@ describe("inventory test", () => {
       let newTrans = await translationAction.add(trans);
     }
     let transList = await translationAction.getList();
-    expect(transList.length).toEqual(4);
+    expect(transList.length).toBeGreaterThanOrEqual(4);
   });
 
   // create an actor
@@ -120,9 +130,18 @@ describe("inventory test", () => {
   describe("Create base-items", () => {
     
 
-    test("create a dark-brotherhood tenant", async () => {
+    test("create a dark-brotherhood tenant", async (done) => {
       let item = await baseItemGraphAction.add(baseItemSample.book);
-      expect(item).toBeTruthy();
+      
+      // Test book i18n
+      let queryItem = await baseItemGraphAction.getSingle(baseItemSample.book.dbname);
+      if (queryItem) {
+        console.log(queryItem);
+        expect(queryItem.detail.contentDetail).toBe(baseItemSample.book.translations.bookContent.en);
+        done();
+      } else {
+        throw new Error("Cannot perform single query");
+      }
     });
 
     test("create edi's chest armor", async () => {

@@ -1,4 +1,5 @@
 interface IGear {
+  dbname?: string,
   rating: number,
   type: string,
   typeName: string,
@@ -8,13 +9,16 @@ interface IGear {
 }
 
 interface IConsumable {
+  dbname?: string,
   type: string,
   typeName: string,
   effects: string[]
 }
 
 interface IBook {
-  content: string
+  dbname?: string,
+  content: string,
+  contentDetail: string
 }
 
 interface IAddCallback {
@@ -42,11 +46,7 @@ interface INewConsumable {
 }
 
 interface INewBook {
-  content: string,
-  translations?: {
-    en?: string,
-    zh?: string
-  }
+  content: string
 }
 
 export interface IBaseItem {
@@ -73,8 +73,12 @@ export interface INewBaseItem {
     description?: {
       en?: string,
       zh?: string
+    },
+    bookContent?: {
+      en?: string,
+      zh?: string
     }
-  }
+  },
   detail: INewGear | INewConsumable | INewBook
 }
 
