@@ -24,6 +24,7 @@ export class Action {
     // insert into baseItems collection
     
     let newBaseItem: INewBaseItem = await baseItemAction.add(input);
+    let newDetail: any = null;
 
     if (newBaseItem) {
 
@@ -50,40 +51,19 @@ export class Action {
 
       if (detailAction) {
 
-        let newDetail = await detailAction.add({
+        newDetail = await detailAction.add({
           dbname: newBaseItem.dbname,
           ...input.detail
         });
 
-        if (newDetail) {
-          return {
-            message: `Successfully created new baseItem "${newBaseItem.dbname}" with id "${newBaseItem["_id"]}"`,
-            status: 'success',
-            id: newBaseItem["_id"]
-          };
-        } else {
-          return {
-            message: `Failed to asign detail to baseItem "${input.dbname}"`,
-            status: 'failure',
-            id: newBaseItem["_id"]
-          };
-        }
-
-      } else {
-        return {
-          message: `Failed to find appropriate action when trying to create new baseItem "${newBaseItem.dbname}"`,
-          status: 'failure',
-          id: newBaseItem["_id"]
-        };
       }
 
-    } else {
-      return {
-        message: `Failed to create new baseItem "${input.dbname}"`,
-        status: 'failure',
-        id: null
-      };
     }
+
+    return {
+      newBaseItem,
+      newDetail
+    };
 
     // Then front-end will receive: 
     // {
@@ -253,6 +233,8 @@ export class Action {
   delete = async (conditions: any) => {
     
     let matchInfo: any[] = [];
+    let detailDelResult: any = null;
+    let baseDelResult: any = null;
 
     if (conditions && (typeof conditions === 'string')) {
       conditions = JSON.parse(conditions);
@@ -270,41 +252,38 @@ export class Action {
 
     }
 
-    // delete details
+    
     for (let item of matchInfo) {
+      // delete details
       let action = this.selectAction(item.category);
-      let detailDelResult = await action.delete({dbname: item.dbname});
+      
+      // delete content translation first if is a book
+      if (item.category === "books") {
+        let bookDetail = await action.getSingle(item.dbname);
+        if (bookDetail && bookDetail.content) {
+          await translationAction.delete({
+            dbname: bookDetail.content
+          })
+        }
+      }
+
+      detailDelResult = await action.delete({dbname: item.dbname});
+
       if (detailDelResult) {
         // delete base
-        let baseDelResult = await baseItemAction.delete(conditions);
-        if (baseDelResult) {
-          return {
-            message: `Successfully deleted selected baseItems`,
-            status: 'success',
-            rmCount: baseDelResult.n || 0
-          };
-        } else {
-          return {
-            message: `Deletion failure: base info`,
-            status: 'failure',
-            rmCount: 0
-          };
-        }
-      } else {
-        return {
-          message: `Deletion failure: details`,
-          status: 'failure',
-          rmCount: 0
-        };
+        baseDelResult = await baseItemAction.delete(conditions);
+        // delete base translation
+        await translationAction.delete({
+          dbname: item.dbname
+        });
       }
 
     }
 
     return {
-      message: `Deletion failure: info mismatch`,
-      status: 'failure',
-      rmCount: 0
-    };
+      detailDelResult,
+      baseDelResult
+    }
 
   };
 

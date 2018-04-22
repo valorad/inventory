@@ -3,7 +3,8 @@ scalar JSON
 type BaseItem {
   lang: String
   dbname: String
-  name: String
+  name: String,
+  description: String,
   value: Int
   weight: Float
   category: String
@@ -24,8 +25,6 @@ type DeleteCallback {
 
 input newBaseItem {
   dbname: String
-  name: String
-  description: String
   value: Int
   weight: Float
   category: String

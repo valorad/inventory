@@ -38,10 +38,42 @@ class BaseItemGraph {
 
   };
 
+
+  getSingle: IQuery["getSingle"] = async (obj, args) => {
+    let dbname = args.dbname;
+    if (dbname) {
+      return await this.action.getSingle(dbname);
+    }
+    return {};
+  };
+
   add: IMutation["add"] = async (obj, args) => {
 
     let input:any = args.input;
-    return await this.action.add(input);
+    let addResult = await this.action.add(input);
+    let newBaseItem = addResult.newBaseItem;
+    let newDetail = addResult.newDetail;
+    if (newBaseItem) {
+      if (newDetail) {
+        return {
+          message: `Successfully created new baseItem "${newBaseItem.dbname}" with id "${newBaseItem["_id"]}"`,
+          status: 'success',
+          id: newBaseItem["_id"]
+        };
+      } else {
+        return {
+          message: `Failed to asign detail to baseItem "${input.dbname}"`,
+          status: 'failure',
+          id: newBaseItem["_id"]
+        };
+      }
+    } else {
+      return {
+        message: `Failed to create new baseItem "${input.dbname}"`,
+        status: 'failure',
+        id: null
+      };
+    }
 
     // front-end request exmple:
     // mutation addItem($info: newBaseItem!) {
@@ -54,20 +86,39 @@ class BaseItemGraph {
 
   };
 
-  getSingle: IQuery["getSingle"] = async (obj, args) => {
-    let dbname = args.dbname;
-    if (dbname) {
-      return await this.action.getSingle(dbname);
-    }
-    return [];
-  };
-
   delete: IMutation["delete"] = async (obj, args) => {
 
     let conditions = args.conditions;
-    let delResult = await this.action.delete(conditions);
-
-    return delResult;
+    let delResults = await this.action.delete(conditions);
+    if (delResults) {
+      if (delResults.detailDelResult) {
+        if (delResults.baseDelResult) {
+          return {
+            message: `Successfully deleted selected baseItems`,
+            status: 'success',
+            rmCount: delResults.baseDelResult.n || 0
+          };
+        } else {
+          return {
+            message: `Deletion failure: base info`,
+            status: 'failure',
+            rmCount: 0
+          };
+        }
+      } else {
+        return {
+          message: `Deletion failure: details`,
+          status: 'failure',
+          rmCount: 0
+        };
+      }
+    } else {
+      return {
+        message: `Deletion failure: info mismatch`,
+        status: 'failure',
+        rmCount: 0
+      };
+    }
   };
 
   resolvers = {

@@ -119,13 +119,17 @@ describe("inventory test", () => {
   const actorGraphAction = new ActorGraphAction();
 
   // import menu translations
-  test("Import menu translations", async () => {
-    for (let trans of menuTranslation) {
-      let newTrans = await translationAction.add(trans);
-    }
-    let transList = await translationAction.getList();
-    expect(transList.length).toBeGreaterThanOrEqual(4);
-  });
+  test(
+    "Import menu translations",
+    async () => {
+      for (let trans of menuTranslation) {
+        let newTrans = await translationAction.add(trans);
+      }
+      let transList = await translationAction.getList();
+      expect(transList.length).toBeGreaterThanOrEqual(4);
+    },
+    1*60*1000
+  );
 
   // create an actor
   test("Create Cortana", async () => {
@@ -137,27 +141,28 @@ describe("inventory test", () => {
   // create base-items - a book, a gear and a consumable
   describe("Create base-items", () => {
     
-    test("create a dark-brotherhood tenant", async (done) => {
-      let item = await baseItemGraphAction.add(baseItemSample.book);
+    test("create a dark-brotherhood tenant", async () => {
+      let addResult = await baseItemGraphAction.add(baseItemSample.book);
       
       // Test book i18n
       let queryItem = await baseItemGraphAction.getSingle(baseItemSample.book.dbname);
       if (queryItem) {
         expect(queryItem.detail.contentDetail).toBe(baseItemSample.book.translations.bookContent.en);
-        done();
       } else {
         throw new Error("Cannot perform single query");
       }
     });
 
     test("create edi's chest armor", async () => {
-      let item = await baseItemGraphAction.add(baseItemSample.gear);
-      expect(item).toBeTruthy();
+      let addResult = await baseItemGraphAction.add(baseItemSample.gear);
+      expect(addResult.newBaseItem).toBeTruthy();
+      expect(addResult.newDetail).toBeTruthy();
     });
 
     test("create a nuke grenade of Nvidia TitanV", async () => {
-      let item = await baseItemGraphAction.add(baseItemSample.consumable);
-      expect(item).toBeTruthy();
+      let addResult = await baseItemGraphAction.add(baseItemSample.consumable);
+      expect(addResult.newBaseItem).toBeTruthy();
+      expect(addResult.newDetail).toBeTruthy();
     });
 
   });
@@ -223,7 +228,8 @@ describe("inventory test", () => {
     results.push(await baseItemGraphAction.delete({dbname: "item-titanV"}));
 
     for (let result of results) {
-      expect(result.rmCount).toEqual(1);
+
+      expect(result.baseDelResult.n).toEqual(1);
       return;
     }
 
