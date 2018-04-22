@@ -33,3 +33,13 @@ export interface INewActor {
     }
   }
 }
+
+export interface IQuery {
+  getList: (obj: any, args: {conditions?: string, page?: number, lang?: string}, context?: any, info?: any) => Promise<any[]>,
+  getSingle: (obj: any, args: {dbname?: string, lang?: string}, context?: any, info?: any) => Promise<any>
+}
+
+export interface IMutation {
+  add: (obj: any, args: {input: INewActor}, context?: any, info?: any) => Promise<IAddCallback>,
+  delete: (obj: any, args: {conditions?: string}, context?: any, info?: any) => Promise<IDeleteCallback>
+}

@@ -1,0 +1,43 @@
+scalar JSON
+
+type AddCallback {
+  message: String
+  status: String
+  id: ID
+}
+
+type DeleteCallback {
+  message: String
+  status: String
+  rmCount: Int
+}
+
+type Actor {
+  dbname: String
+  icon: String
+  equiped: JSON
+  name: String
+  biography: String
+}
+
+input newActor {
+  dbname: String
+  icon: String
+  equiped: JSON
+  translations: translations
+}
+
+input translations {
+  name: JSON,
+  biography: JSON
+}
+
+type Query {
+  actors: (conditions: JSON, page: Int, lang: String): [Actor]
+  actor: (dbname: String, lang: String): Actor
+}
+
+type Mutation {
+  add: (input: newActor): AddCallback,
+  delete: (conditions: JSON): DeleteCallback
+}

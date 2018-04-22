@@ -20,19 +20,8 @@ export class Action {
         });
       }
 
-      return {
-        message: `Successfully created new actor "${newActor.dbname}" with id "${newActor["_id"]}"`,
-        status: 'success',
-        id: newActor["_id"]
-      };
-
-    } else {
-      return {
-        message: `Failed to create new actor "${input.dbname}"`,
-        status: 'success',
-        id: null
-      };
     }
+    return newActor;
   };
 
   getList = async (conditions: any = {}, page?: number, lang: string = "en") => {
@@ -60,6 +49,29 @@ export class Action {
       await this.translate(actor, lang);
     }
     return actor;
+  };
+
+  delete = async (conditions: any) => {
+    let matchInfo: any[] = [];
+
+    if (conditions && (typeof conditions === 'string')) {
+      conditions = JSON.parse(conditions);
+    }
+
+    let metActors = await actorAction.getList(conditions) as IActor[];
+
+    for (let actor of metActors) {
+      // delete translation
+      await translationAction.delete({
+        dbname: actor.dbname
+      })
+    }
+
+    // delete met actors
+    let delResult = await actorAction.delete(conditions);
+
+    return delResult;
+
   };
 
   extractInfo = (qResultItem: any, fields: string[]) => {
