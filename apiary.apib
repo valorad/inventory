@@ -1,0 +1,74 @@
+FORMAT: 1A
+HOST: http://localhost:3000
+
+# @valorad/inventory
+
+高仿SkyUI 5的Angular物品栏. An Inventory highly resembles SkyUI5 .
+
+# Group Actors
+
+## GraphQL [/api/actor/graph]
+玩家的增加、删除与查询
+
+### 【查】List All Actors  [POST]
+根据条件查询玩家，返回列表
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "query getActors($conditions: JSON, $page: Int, $lang: String) { actors: actors(conditions: $conditions, page: $page, lang: $lang) { dbname, icon, equiped, name, biography }}",
+            "graphql_Arg": { }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "actors": [
+                    {
+                        "dbname": string,
+                        "icon": string,
+                        "equiped": {
+                          "body": ObjectId,
+                          "head": ObjectId,
+                          "back": ObjectId,
+                          "heart": ObjectId,
+                          "foot": ObjectId
+                        },
+                        "name": string,
+                        "biography": string
+                    }
+                ]
+            }
+        }
+
+### 【增】Add a new actor [POST]
+
+增加玩家
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "mutation addActor($info: newActor!) { add(input: $info) { message, status, id } } ",
+            "graphql_Arg": {
+                "info": {
+                  "dbname": "actor-testy",
+                  "translations": {
+                    "name": "testy",
+                    "biography": "{en: \"testy\",zh: \"测妈妈\"}"
+                  }
+                }
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "add": {
+              "message": "Successfully created new actor \"actor-testy\" with id \"5adc50f75e7ec335a59cffd9\"",
+              "status": "success",
+              "id": "5adc50f75e7ec335a59cffd9"
+            }
+          }
+        }
