@@ -9,6 +9,7 @@ import { baseItem } from "./base-item";
 import { gear } from "./gear";
 import { consumable } from "./consumable";
 import { book } from "./book";
+import { invItem } from "./inventory";
 
 class API {
 
@@ -31,6 +32,7 @@ class API {
     this.routerInstance.use('/gear', gear.routes(), gear.allowedMethods());
     this.routerInstance.use('/consumable', consumable.routes(), consumable.allowedMethods());
     this.routerInstance.use('/book', book.routes(), book.allowedMethods());
+    this.routerInstance.use('/invItem', invItem.routes(), invItem.allowedMethods());
 
 
     // this.routerInstance.get('/graphql', graphqlKoa({ schema: schema }));

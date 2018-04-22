@@ -5,6 +5,8 @@ import { books } from '../database/schema/books';
 
 export class BookAction implements IAction {
 
+  fields = ["dbname", "content"];
+
   getList = async (conditions: any = {}, page?: number) => {
     let result = await Query.getList(
       books,
@@ -25,7 +27,7 @@ export class BookAction implements IAction {
     let newBook = await Query.addRecord(
       books,
       info,
-      ["dbname", "content"]
+      this.fields
     );
     return newBook;
   };

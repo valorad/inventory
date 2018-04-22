@@ -1,5 +1,5 @@
-import { BaseItemAction as Action } from "../action/base-item.action";
-import { Query } from "../util";
+import { BaseItemAction as Action } from "../../action/base-item.action";
+import { Query } from "../../util";
 
 const action = new Action();
 

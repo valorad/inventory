@@ -1,5 +1,5 @@
-import { ConsumableAction as Action } from "../action/consumable.action";
-import { Query } from "../util";
+import { ConsumableAction as Action } from "../../action/consumable.action";
+import { Query } from "../../util";
 
 const action = new Action();
 

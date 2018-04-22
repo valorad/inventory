@@ -1,5 +1,5 @@
-import { GearAction as Action } from "../action/gear.action";
-import { Query } from "../util";
+import { GearAction as Action } from "../../action/gear.action";
+import { Query } from "../../util";
 
 const action = new Action();
 

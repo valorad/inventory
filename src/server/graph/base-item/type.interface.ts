@@ -1,12 +1,15 @@
 interface IGear {
-  rating: number
-  type: string
-  equip: string
+  rating: number,
+  type: string,
+  typeName: string,
+  equip: string,
+  equipName: string,
   effects: string[]
 }
 
 interface IConsumable {
-  type: string
+  type: string,
+  typeName: string,
   effects: string[]
 }
 
@@ -27,9 +30,9 @@ interface IDeleteCallback {
 }
 
 interface INewGear {
-  rating: number
-  type: string
-  equip: string
+  rating: number,
+  type: string,
+  equip: string,
   effects: string[]
 }
 
@@ -47,28 +50,43 @@ interface INewBook {
 }
 
 export interface IBaseItem {
-  dbname: string
-  value: number
-  weight: number
-  category: string
+  lang: string,
+  dbname: string,
+  name: string,
+  description: string,
+  value: number,
+  weight: number,
+  category: string,
   detail: IGear | IConsumable | IBook
 }
 
 export interface INewBaseItem {
-  dbname: string
-  value: number
-  weight: number
-  category: string
+  dbname: string,
+  value: number,
+  weight: number,
+  category: string,
+  translations?: {
+    name: {
+      en?: string,
+      zh?: string
+    },
+    description?: {
+      en?: string,
+      zh?: string
+    }
+  }
   detail: INewGear | INewConsumable | INewBook
 }
 
+
+
 export interface IQuery {
-  getList: (obj: any, args: {conditions?: string, page?: number}, context?: any, info?: any) => Promise<any[]>,
-  getSingle: (obj: any, args: {dbname?: string}, context?: any, info?: any) => Promise<any[]>
+  getList: (obj: any, args: {conditions?: string, page?: number, lang?: string}, context?: any, info?: any) => Promise<any[]>,
+  getSingle: (obj: any, args: {dbname?: string, lang?: string}, context?: any, info?: any) => Promise<any[]>
 }
 
 export interface IMutation {
-  add: (obj: any, args: {input: IBaseItem}, context?: any, info?: any) => Promise<IAddCallback>,
+  add: (obj: any, args: {input: INewBaseItem}, context?: any, info?: any) => Promise<IAddCallback>,
   delete: (obj: any, args: {conditions?: string}, context?: any, info?: any) => Promise<IDeleteCallback>
 }
 

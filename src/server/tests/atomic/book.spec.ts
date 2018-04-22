@@ -1,5 +1,5 @@
-import { BookAction as Action } from "../action/book.action";
-import { Query } from "../util";
+import { BookAction as Action } from "../../action/book.action";
+import { Query } from "../../util";
 
 const action = new Action();
 

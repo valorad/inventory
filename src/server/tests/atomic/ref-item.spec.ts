@@ -1,4 +1,4 @@
-import { RefItemAction as Action } from "../action/ref-item.action";
+import { RefItemAction as Action } from "../../action/ref-item.action";
 
 const action = new Action();
 

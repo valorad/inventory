@@ -1,4 +1,5 @@
 export interface IAction {
+  fields: string[],
   getAll?: () => any,
   getSingle: () => any,
   add: (info: any) => any,

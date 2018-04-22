@@ -1,4 +1,4 @@
-import { ActorAction as Action } from "../action/actor.action";
+import { ActorAction as Action } from "../../action/actor.action";
 
 const action = new Action();
 

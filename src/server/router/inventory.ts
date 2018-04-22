@@ -1,17 +1,26 @@
 import * as Router from 'koa-router';
+import * as bodyParser from 'koa-bodyparser';
+import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 
-import { RefItemAction as Action } from "../action/ref-item.action";
+// graphs
+import { invItemGraph as schema } from "../graph/inventory";
 
-class RefItem {
+// actions
+import { InventoryAction as Action } from "../action/inventory.action";
+
+class InventoryItem {
   router = new Router();
   action = new Action();
 
   constructor() {
 
+    this.router.get('/graph', graphqlKoa({ schema: schema }));
+    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/invItem/graph' }));
+
     this.router.get('/', async (ctx) => {
       ctx.status = 200;
       ctx.body = {
-        msg: "refItems works!"
+        message: "inventory works!"
       }
     });
 
@@ -20,9 +29,9 @@ class RefItem {
       ctx.body = result;
     });
 
-    this.router.get('/owner/:dbname', async (ctx) => {
+    this.router.get('/holder/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
-      let result = await this.action.getList({ owner: dbname });
+      let result = await this.action.getList({ holder: dbname });
       ctx.body = result;
     });
 
@@ -44,21 +53,23 @@ class RefItem {
       
     });
 
+    this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
+
     this.router.post('/add', async (ctx) => {
 
-      let newRefItem = await this.action.add(ctx.request.body);
+      let newInvItem = await this.action.add(ctx.request.body);
 
-      if (newRefItem) {
+      if (newInvItem) {
         ctx.body = {
-          msg: `Successfully given ${newRefItem.owner} a new ${newRefItem.item} with id "${newRefItem._id}"`,
+          message: `Successfully added ${newInvItem.item} with id "${newInvItem._id}" to ${newInvItem.holder}'s inventory `,
           status: 'success',
-          id: newRefItem._id
+          id: newInvItem._id
         };
         return;
       } else {
         ctx.status = 500;
         ctx.body = {
-          msg: `Failed to give ${ctx.request.body.owner} a new ${ctx.request.body.item}`,
+          message: `Failed to add ${ctx.request.body.item} to ${ctx.request.body.holder}'s inventory `,
           status: 'failure',
           id: null
         }
@@ -69,18 +80,18 @@ class RefItem {
     this.router.patch('id/:_id', async (ctx) => {
       let _id: string = ctx.params._id;
 
-      let updatedRefItems = await this.action.updateSingle(_id, ctx.request.body);
-      if (updatedRefItems) {
-        let updatedItem = updatedRefItems[0];
+      let updatedInvItems = await this.action.updateSingle(_id, ctx.request.body);
+      if (updatedInvItems) {
+        let updatedItem = updatedInvItems[0];
         ctx.body = {
-          message: `Successfully updated ref-item ${updatedItem.dbname}`,
+          message: `Successfully updated inv-item ${updatedItem.dbname}`,
           status: "success",
           id: updatedItem._id
         };
         return;
       } else {
         ctx.body = {
-          message: `Failed to update ref-item ${_id}`,
+          message: `Failed to update inv-item ${_id}`,
           status: "failure",
           id: _id
         };
@@ -94,7 +105,7 @@ class RefItem {
 
       if (delResult) {
         ctx.body = {
-          msg: `Successfully deleted ref-item ${ctx.params._id}`,
+          msg: `Successfully deleted inv-item ${ctx.params._id}`,
           status: 'success',
           rmCount: delResult.n
         };
@@ -102,7 +113,7 @@ class RefItem {
       } else {
         ctx.status = 500;
         ctx.body = {
-          msg: `Failed to delete ref-item ${ctx.params._id}`,
+          msg: `Failed to delete inv-item ${ctx.params._id}`,
           status: 'failure',
           rmCount: 0
         }
@@ -114,4 +125,4 @@ class RefItem {
 
 }
 
-export const refItem = new RefItem().router;
+export const invItem = new InventoryItem().router;

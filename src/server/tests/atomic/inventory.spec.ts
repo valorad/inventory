@@ -1,5 +1,5 @@
-import { InventoryAction as Action } from "../action/inventory.action";
-import { Query } from "../util";
+import { InventoryAction as Action } from "../../action/inventory.action";
+import { Query } from "../../util";
 
 const action = new Action();
 
