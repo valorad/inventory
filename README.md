@@ -33,6 +33,26 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 另外我不是美工。比如《巫师3》的：每一件物品都是图标。我这个手残让我画那么多图标？emmmmmm...
 
+
+# To Do:
+
+前端：
+
+- 界面：首页
+- 界面：物品栏页（物品详情 增加物品-控制台 删除物品-R-移动端-更多）
+
+后台：
+
+- ✔️ 数据库设计
+- ✔️ 业务逻辑(action)单元测试
+- ✔️ i18n框架
+- 数据库文档
+- 接口： 
+  - ✔️ graph
+  - ✔️ 路由
+  - 接口文档
+
+
 ## 思路
 
 ### 前端
@@ -79,9 +99,7 @@ pc端界面和老滚基本一致，只是：
 
 使用nodejs后台，koa + GraphQL 框架
 
-后台数据库用mongo，数据集正在设计。
-
----------------------------------------
+后台数据库用mongo
 
 物品栏里展示的是ref，而不是base
 
@@ -89,7 +107,7 @@ pc端界面和老滚基本一致，只是：
 
 后台数据集：
 
-![dbDataflow](https://i.imgur.com/CUS2vJY.png)
+![dbDataflow](https://i.imgur.com/6q7Dtrw.png)
 
 物品item base表： dbname, value, weight, category(填数据集名称(gears, comsumables, books))
 
@@ -119,32 +137,16 @@ consumables表 (包括potion、scroll、food、ingredients)，在type字段里�
 
 - 交易原理也类似。当交易发生时，refitem的num减少1。如果num减少到0，则删除这个refitem，并且在inventories表中遍历并删除记录。紧接着，创建一个新refitem，num是1，item是这样东西，而owner是接收人。
 
-books: ..., content(书的内容)
+books: ..., content(书的内容ID，书具体内容在translations数据集中)
 
-玩家Actor ref表: dbname, icon, description
+玩家Actors: dbname, icon, equiped(装备中的装备)
 
 物品ref表： dbname(外键连物品base表 dbname), owner(外键连玩家Actor ref表 dbname)
 num(个数)。
 
-物品inventory表：存放玩家的物品栏数据。(item: 外链refItems的主键_id，holder:外连actors的dbname)inventory没有了，num由前端计算相同物品（item相同，owner也相同）的所有ref的num相加
+物品inventory表：存放玩家的物品栏数据。(item: 外链refItems的主键_id，holder:外连actors的dbname)inventory，num由前端计算相同物品（item相同，owner也相同）的所有ref的num相加
 
-name表（可能会是个外置json文件）dbname, en{name, description, categoies, types, effects}, zh{name, description, categories, types, effects}
-
-# To Do:
-
-前端：
-
-- 界面：首页
-- 界面：物品栏页（物品详情 增加物品-控制台 删除物品-R-移动端-更多）
-
-后台：
-
-- ✔️ 数据库设计
-- ✔️ 业务逻辑(action)单元测试
-- 接口： 
-  - ✔️ graph： inventory（增删改查）
-  - ✔️ 路由
-- actor 和 book content的translation
+translation表 存放翻译字符串。
 
 # License
 
