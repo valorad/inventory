@@ -28,16 +28,16 @@ input newActor {
 }
 
 input translations {
-  name: JSON,
+  name: JSON
   biography: JSON
 }
 
 type Query {
-  actors: (conditions: JSON, page: Int, lang: String): [Actor]
-  actor: (dbname: String, lang: String): Actor
+  actors(conditions: JSON, page: Int, lang: String): [Actor]
+  actor(dbname: String, lang: String): Actor
 }
 
 type Mutation {
-  add: (input: newActor): AddCallback,
-  delete: (conditions: JSON): DeleteCallback
+  add(input: newActor): AddCallback
+  delete(conditions: JSON): DeleteCallback
 }

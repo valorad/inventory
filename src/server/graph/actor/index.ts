@@ -13,12 +13,13 @@ class ActorGraph {
 
   getList: IQuery["getList"] = async (obj, args) => {
     let conditions: any = {};
+    let lang = args.lang || "en";
 
     if (args.conditions) {
       conditions = JSON.parse(args.conditions);
     }
 
-    return await this.action.getList(conditions, args.page);
+    return await this.action.getList(conditions, args.page, lang);
 
   };
 
@@ -74,8 +75,8 @@ class ActorGraph {
 
   resolvers = {
     Query: {
-      baseItem: this.getSingle,
-      baseItems: this.getList
+      actor: this.getSingle,
+      actors: this.getList
     },
     Mutation: {
       add: this.add,
@@ -87,4 +88,4 @@ class ActorGraph {
 
 }
 
-export const baseItemGraph = new ActorGraph().schema;
+export const actorGraph = new ActorGraph().schema;
