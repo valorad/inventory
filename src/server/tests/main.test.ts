@@ -4,6 +4,7 @@ import { connection, Mongoose } from 'mongoose';
 // actions
 import { ActorAction } from "../action/actor.action";
 import { TranslationAction } from "../action/translation.action";
+import { Action as ActorGraphAction } from "../graph/actor/action"
 import { Action as BaseItemGraphAction } from "../graph/base-item/action";
 import { Action as InvGraphAction } from "../graph/inventory/action"
 
@@ -50,7 +51,13 @@ describe("inventory test", () => {
   ];
 
   const actor = {
-    dbname: "cortana"
+    dbname: "actor-cortana",
+    translations: {
+      name: {
+        en: "Cortana",
+        zh: "小娜"
+      }
+    }
   }
 
   const baseItemSample = {
@@ -109,6 +116,7 @@ describe("inventory test", () => {
   const translationAction = new TranslationAction();
   const baseItemGraphAction = new BaseItemGraphAction();
   const invGraphAction = new InvGraphAction();
+  const actorGraphAction = new ActorGraphAction();
 
   // import menu translations
   test("Import menu translations", async () => {
@@ -120,23 +128,21 @@ describe("inventory test", () => {
   });
 
   // create an actor
-  test("Create Cortana", () => {
-    
-    let cortana = actorAction.add(actor);
-    expect(cortana).toBeTruthy();
+  test("Create Cortana", async () => {
+    let addResult = await actorGraphAction.add(actor);
+    let queryActor = await actorGraphAction.getSingle("actor-cortana", "zh");
+    expect(queryActor.name).toBe(actor.translations.name.zh);
   });
 
   // create base-items - a book, a gear and a consumable
   describe("Create base-items", () => {
     
-
     test("create a dark-brotherhood tenant", async (done) => {
       let item = await baseItemGraphAction.add(baseItemSample.book);
       
       // Test book i18n
       let queryItem = await baseItemGraphAction.getSingle(baseItemSample.book.dbname);
       if (queryItem) {
-        console.log(queryItem);
         expect(queryItem.detail.contentDetail).toBe(baseItemSample.book.translations.bookContent.en);
         done();
       } else {
@@ -159,14 +165,14 @@ describe("inventory test", () => {
   // add a gear to actor's inventory (create corresponding ref-items)
   // actor equips that gear
   test("Add edi's chest armor to Cortana's inventory, then Cortana wears it", async () => {
-    let newInv = await invGraphAction.gift("item-edi_body", "cortana");
+    let newInv = await invGraphAction.gift("item-edi_body", "actor-cortana");
     expect(newInv).toBeTruthy();
-    let newInvVerbose = await invGraphAction.getList({holder: "cortana", item: newInv.item});
+    let newInvVerbose = await invGraphAction.getList({holder: "actor-cortana", item: newInv.item});
     if (newInvVerbose[0]) {
       let itembase: any = newInvVerbose[0].item.base;
       let equip = itembase.detail.equip;
 
-      let eResult = actorAction.equip("cortana", newInv._id, equip);
+      let eResult = actorAction.equip("actor-cortana", newInv._id, equip);
       expect(eResult).toBeTruthy();
     } else {
       throw new Error("Failed to fetch detailed info of the inv-item");
@@ -177,7 +183,7 @@ describe("inventory test", () => {
   // query actor inventory info, should contain the item just added:
   // (query item base info from invAction)
   test("Make sure edi's armor is in Cortana's bag, and not altered", async () => {
-    let invItems = await invGraphAction.getList({holder: "cortana"}, undefined, "zh");
+    let invItems = await invGraphAction.getList({holder: "actor-cortana"}, undefined, "zh");
     if (invItems) {
       let armor = invItems[0]; // we know it's on position 0 because we only gave her 1 armor.
       let itembase: any = armor.item.base || {};
@@ -198,12 +204,12 @@ describe("inventory test", () => {
   // delete the gear inv-item, actor's equiped gear should auto-unequip
   // then actor's inventory should be empty
   test("Remove the armor Cortana just received", async () => {
-    let rmInvItem = await invGraphAction.remove("item-edi_body", "cortana");
+    let rmInvItem = await invGraphAction.remove("item-edi_body", "actor-cortana");
     expect(rmInvItem).toBeTruthy();
     
-    expect(await actorAction.isEquiping("cortana", rmInvItem)).toBeFalsy();
+    expect(await actorAction.isEquiping("actor-cortana", rmInvItem)).toBeFalsy();
 
-    let invItems = await invGraphAction.getList({holder: "cortana"});
+    let invItems = await invGraphAction.getList({holder: "actor-cortana"});
     expect(invItems.length).toBeLessThanOrEqual(0);
   });
 

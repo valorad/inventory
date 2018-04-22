@@ -100,7 +100,7 @@ export class Action {
 
   };
 
-  getList = async (conditions = {}, page?, lang = "en") => {
+  getList = async (conditions: any = {}, page?: number, lang = "en") => {
 
     let metBaseItems = await baseItemAction.getList(conditions, page);
     let extractedItems: IBaseItem[] = [];

@@ -12,6 +12,18 @@ export class ActorAction implements IAction {
     return await Query.getList(actors);
   };
 
+  getList = async(conditions: any = {}, page?: number) => {
+    let result = await Query.getList(
+      actors,
+      {
+        conditions,
+        page,
+        perPage: 10
+      }
+    );
+    return result;
+  };
+
   getSingle = async (dbname: string = "") => {
     return await Query.getDetail(actors, {dbname});
   };
