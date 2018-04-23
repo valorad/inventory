@@ -26,7 +26,7 @@ class Actor {
     });
 
     this.router.get('/all', async (ctx) => {
-      let result = this.action.getAll();
+      let result = await this.action.getAll();
       ctx.body = result;
     });
 

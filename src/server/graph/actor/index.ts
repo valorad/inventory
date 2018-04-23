@@ -25,8 +25,9 @@ class ActorGraph {
 
   getSingle: IQuery["getSingle"] = async (obj, args) => {
     let dbname = args.dbname;
+    let lang = args.lang || "en";
     if (dbname) {
-      return await this.action.getSingle(dbname);
+      return await this.action.getSingle(dbname, lang);
     }
     return {};
   };
@@ -34,6 +35,18 @@ class ActorGraph {
   add: IMutation["add"] = async (obj, args) => {
 
     let input = args.input;
+    let translations = input.translations;
+
+    if (translations) {
+      if (translations.name && (typeof translations.name === 'string')) {
+        translations.name = JSON.parse(translations.name);
+      }
+
+      if (translations.biography && (typeof translations.biography === 'string')) {
+        translations.biography = JSON.parse(translations.biography);
+      }
+    }
+
     let newActor = await this.action.add(input);
     if (newActor) {
 
@@ -45,7 +58,7 @@ class ActorGraph {
     } else {
       return {
         message: `Failed to create new actor "${input.dbname}"`,
-        status: 'success',
+        status: 'failed',
         id: null
       };
     }

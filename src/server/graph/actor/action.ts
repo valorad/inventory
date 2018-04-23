@@ -44,6 +44,7 @@ export class Action {
   getSingle = async (dbname: string, lang = "en") => {
     let actor = {} as IActor;
     let metActors = await actorAction.getSingle(dbname) as IActor[];
+
     if (metActors && metActors[0]) {
       actor = this.extractInfo(metActors[0], actorAction.fields) as IActor;
       await this.translate(actor, lang);
@@ -86,9 +87,11 @@ export class Action {
     // attach i18n info of actor
     let translations = await translationAction.getSingle(actor.dbname);
     if (translations && translations[0]) {
+      console.log(translations[0]);
       actor.name = translations[0]["name"][lang];
       actor.biography = translations[0]["description"][lang];
     }
+    console.log(actor);
   };
 
 

@@ -38,6 +38,6 @@ type Query {
 }
 
 type Mutation {
-  add(input: newActor): AddCallback
+  add(input: newActor!): AddCallback
   delete(conditions: JSON): DeleteCallback
 }
