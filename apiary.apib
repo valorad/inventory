@@ -6,11 +6,26 @@ HOST: http://localhost:3000
 高仿SkyUI 5的Angular物品栏. An Inventory highly resembles SkyUI5 .
 
 # Group Actors
+玩家操作提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
+
+## Router Index [/api/actor/]
+
+尝试访问actor路由（测试用）
+
+### Touch  [GET]
++ Response 200 (application/json)
+
+        {
+            msg: "actor works!"
+        }
+        
+
 
 ## GraphQL [/api/actor/graph]
-玩家的增加、删除与查询
 
-### 【查】List All Actors  [POST]
+玩家的增加、删除与查询。使用graphql，会涉及多个数据集
+
+### 【查】List all actors  [POST]
 根据条件查询玩家，返回列表
 
 + Request (application/json)
@@ -26,8 +41,8 @@ HOST: http://localhost:3000
             "data": {
                 "actors": [
                     {
-                        "dbname": string,
-                        "icon": string,
+                        "dbname": "actor-testy",
+                        "icon": "path/to/avatar.jpg",
                         "equiped": {
                           "body": ObjectId,
                           "head": ObjectId,
@@ -35,11 +50,38 @@ HOST: http://localhost:3000
                           "heart": ObjectId,
                           "foot": ObjectId
                         },
-                        "name": string,
-                        "biography": string
+                        "name": "测妈妈",
+                        "biography": "测妈妈"
                     }
                 ]
             }
+        }
+        
+### 【查】List an actor  [POST]
+根据条件查询玩家，返回单个玩家
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "query getActor($dbname: String, $lang: String) { actor: actor(dbname: $dbname, lang: $lang) { dbname, icon, equiped, name, biography, } }",
+            "graphql_Arg": {
+              "dbname": "actor-testy",
+              "lang": "zh"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "actor": {
+              "dbname": "actor-testy",
+              "icon": null,
+              "equiped": {},
+              "name": "测妈妈",
+              "biography": "测妈妈"
+            }
+          }
         }
 
 ### 【增】Add a new actor [POST]
@@ -52,11 +94,11 @@ HOST: http://localhost:3000
             "graphql_Exp": "mutation addActor($info: newActor!) { add(input: $info) { message, status, id } } ",
             "graphql_Arg": {
                 "info": {
-                  "dbname": "actor-testy",
-                  "translations": {
-                    "name": "testy",
-                    "biography": "{en: \"testy\",zh: \"测妈妈\"}"
-                  }
+                    "dbname": "actor-testy",
+                    "translations": {
+                      "name": "{\"en\": \"testy\",\"zh\": \"测妈妈\"}",
+                      "biography": "{\"en\": \"testy\",\"zh\": \"测妈妈\"}"
+                    }
                 }
             }
         }
@@ -71,4 +113,126 @@ HOST: http://localhost:3000
               "id": "5adc50f75e7ec335a59cffd9"
             }
           }
+        },
+        
+        {
+          "data": {
+            "add": null
+          },
+          "errors": [
+            {
+              "message": "Unexpected token e in JSON at position 1",
+              "locations": [
+                {
+                  "line": 10,
+                  "column": 3
+                }
+              ],
+              "path": [
+                "add"
+              ]
+            }
+          ]
+        }
+        
+### 【删】Delete actors [POST]
+删除指定条件的玩家。警告：设置条件为"{}"将删除所有玩家！
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "mutation deleteActor($conditions: JSON!) { delete(conditions: $conditions) { message, status, rmCount } } ",
+            "graphql_Arg": {
+                "conditions": "{\"dbname\": \"actor-testy\"}"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "delete": {
+              "message": "Succesfully deleted selected actors",
+              "status": "success",
+              "rmCount": 1
+            }
+          }
+        }
+
+
+
+## Get all actors - unconditionally [/api/actor/all]
+
+获取所有玩家（无条件，无投影，无分页）
+
+### Get all actors  [GET]
++ Response 200 (application/json)
+
+        {
+            msg: "actor works!"
+        }
+        
+
+## Get an actor by dbname [/api/actor/dbname/{dbname}]
+
+按*dbname*查找玩家信息
+
+### Get an actor by dbname  [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "_id": "5add8f6fdd194218735485e3",
+                "dbname": "actor-testy"
+            }
+        ]
+        
+        
+## Add a new actor [/api/actor/add]
+
+向actors数据集中增加记录。
+
+注意不会向其他数据集增加记录，那种情况请使用graph。
+
+### Add a new Actor  [POST]
+
++ Request (application/json)
+
+        {
+          "dbname": "actor-olaf"
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully created new actor \"actor-olaf\" with id \"5addb4aedd194218735485e5\"",
+          "status": "success",
+          "id": "5addb4aedd194218735485e5"
+        },
+        {
+          "message": "Failed to create actor \"actor-olaf\" ",
+          "status": "failure",
+          "id": null
+        }
+        
+
+## Delete an actor [/api/actor/delete/{name}]
+
+从actors数据集中删除记录。
+
+注意不会删除其他数据集中的记录，那种情况请使用graph。
+
+### Delete an actor  [DELETE]
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully deleted actor "actor-olaf"",
+          "status": "success",
+          "rmCount": 1
+        },
+        {
+          "message": "Failed to delete actor \"actor-olaf\" ",
+          "status": "failure",
+          "rmCount": 0
         }
