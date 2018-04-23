@@ -11,7 +11,7 @@ class RefItem {
     this.router.get('/', async (ctx) => {
       ctx.status = 200;
       ctx.body = {
-        msg: "refItems works!"
+        message: "refItems works!"
       }
     });
 
@@ -50,7 +50,7 @@ class RefItem {
 
       if (newRefItem) {
         ctx.body = {
-          msg: `Successfully given ${newRefItem.owner} a new ${newRefItem.item} with id "${newRefItem._id}"`,
+          message: `Successfully given ${newRefItem.owner} a new ${newRefItem.item} with id "${newRefItem._id}"`,
           status: 'success',
           id: newRefItem._id
         };
@@ -58,7 +58,7 @@ class RefItem {
       } else {
         ctx.status = 500;
         ctx.body = {
-          msg: `Failed to give ${ctx.request.body.owner} a new ${ctx.request.body.item}`,
+          message: `Failed to give ${ctx.request.body.owner} a new ${ctx.request.body.item}`,
           status: 'failure',
           id: null
         }
@@ -66,7 +66,7 @@ class RefItem {
 
     });
 
-    this.router.patch('id/:_id', async (ctx) => {
+    this.router.patch('/id/:_id', async (ctx) => {
       let _id: string = ctx.params._id;
 
       let updatedRefItems = await this.action.updateSingle(_id, ctx.request.body);
@@ -87,14 +87,14 @@ class RefItem {
       }
     });
 
-    this.router.delete('/delete/:_id', async (ctx) => {
+    this.router.delete('/id/:_id', async (ctx) => {
 
       let token = {_id: ctx.params._id};
       let delResult = await this.action.delete(token);
 
       if (delResult) {
         ctx.body = {
-          msg: `Successfully deleted ref-item ${ctx.params._id}`,
+          message: `Successfully deleted ref-item ${ctx.params._id}`,
           status: 'success',
           rmCount: delResult.n
         };
@@ -102,7 +102,7 @@ class RefItem {
       } else {
         ctx.status = 500;
         ctx.body = {
-          msg: `Failed to delete ref-item ${ctx.params._id}`,
+          message: `Failed to delete ref-item ${ctx.params._id}`,
           status: 'failure',
           rmCount: 0
         }

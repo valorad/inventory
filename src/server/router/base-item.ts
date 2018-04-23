@@ -15,7 +15,7 @@ class BaseItem {
     this.router.get('/', async (ctx) => {
       ctx.status = 200;
       ctx.body = {
-        msg: "base-item works!"
+        message: "base-item works!"
       }
     });
 

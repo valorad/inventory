@@ -21,7 +21,7 @@ class API {
     this.routerInstance.get('/', async (ctx) => {
       ctx.status = 200;
       ctx.body = {
-        msg: "api works!"
+        message: "api works!"
       }
     });
 

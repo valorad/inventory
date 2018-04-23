@@ -21,7 +21,7 @@ class Actor {
     this.router.get('/', async (ctx) => {
       ctx.status = 200;
       ctx.body = {
-        msg: "actor works!"
+        message: "actor works!"
       }
     });
 
@@ -30,7 +30,7 @@ class Actor {
       ctx.body = result;
     });
 
-    this.router.get('/name/:dbname', async (ctx) => {
+    this.router.get('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
       let result = await this.action.getSingle(dbname);
       ctx.body = result;
@@ -50,9 +50,8 @@ class Actor {
         };
         return;
       } else {
-        ctx.status = 500;
         ctx.body = {
-          msg: `Failed to create actor "${ctx.request.body.dbname}"`,
+          message: `Failed to create actor "${ctx.request.body.dbname}"`,
           status: 'failure',
           id: null
         }
@@ -60,22 +59,21 @@ class Actor {
 
     });
 
-    this.router.delete('/delete/:name', async (ctx) => {
+    this.router.delete('/dbname/:dbname', async (ctx) => {
 
-      let token = {dbname: ctx.params.name};
+      let token = {dbname: ctx.params.dbname};
       let delResult = await this.action.delete(token);
 
       if (delResult) {
         ctx.body = {
-          msg: `Successfully deleted actor "${ctx.params.name}"`,
+          message: `Successfully deleted actor "${ctx.params.dbname}"`,
           status: 'success',
           rmCount: delResult.n
         };
         return;
       } else {
-        ctx.status = 500;
         ctx.body = {
-          msg: `Failed to delete actor "${ctx.params.name}"`,
+          message: `Failed to delete actor "${ctx.params.dbname}"`,
           status: 'failure',
           rmCount: 0
         }

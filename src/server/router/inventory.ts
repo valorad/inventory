@@ -77,7 +77,7 @@ class InventoryItem {
 
     });
 
-    this.router.patch('id/:_id', async (ctx) => {
+    this.router.patch('/id/:_id', async (ctx) => {
       let _id: string = ctx.params._id;
 
       let updatedInvItems = await this.action.updateSingle(_id, ctx.request.body);
@@ -98,14 +98,14 @@ class InventoryItem {
       }
     });
 
-    this.router.delete('/delete/:_id', async (ctx) => {
+    this.router.delete('/id/:_id', async (ctx) => {
 
       let token = {_id: ctx.params._id};
       let delResult = await this.action.delete(token);
 
       if (delResult) {
         ctx.body = {
-          msg: `Successfully deleted inv-item ${ctx.params._id}`,
+          message: `Successfully deleted inv-item ${ctx.params._id}`,
           status: 'success',
           rmCount: delResult.n
         };
@@ -113,7 +113,7 @@ class InventoryItem {
       } else {
         ctx.status = 500;
         ctx.body = {
-          msg: `Failed to delete inv-item ${ctx.params._id}`,
+          message: `Failed to delete inv-item ${ctx.params._id}`,
           status: 'failure',
           rmCount: 0
         }
