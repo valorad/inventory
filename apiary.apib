@@ -16,7 +16,7 @@ HOST: http://localhost:3000
 + Response 200 (application/json)
 
         {
-            msg: "actor works!"
+            "message": "actor works!"
         }
         
 
@@ -168,9 +168,16 @@ HOST: http://localhost:3000
 ### Get all actors  [GET]
 + Response 200 (application/json)
 
-        {
-            msg: "actor works!"
-        }
+        [
+            {
+                "_id": "5add8f6fdd194218735485e3",
+                "dbname": "actor-testy"
+            },
+            {
+                "_id": "5add8f6fdd194218735485e4",
+                "dbname": "actor-olaf"
+            }
+        ]
         
 
 ## Get an actor by dbname [/api/actor/dbname/{dbname}]
@@ -227,7 +234,7 @@ HOST: http://localhost:3000
 + Response 200 (application/json)
 
         {
-          "message": "Successfully deleted actor "actor-olaf"",
+          "message": "Successfully deleted actor \"actor-olaf\"",
           "status": "success",
           "rmCount": 1
         },
@@ -235,4 +242,229 @@ HOST: http://localhost:3000
           "message": "Failed to delete actor \"actor-olaf\" ",
           "status": "failure",
           "rmCount": 0
+        }
+        
+# Group Inventory
+物品栏操作。提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
+
+## Router Index [/api/invItem/]
+
+尝试访问actor路由（测试用）
+
+### Touch  [GET]
++ Response 200 (application/json)
+
+        {
+            "message": "inventory works!"
+        }
+        
+## GraphQL [/api/invItem/graph]
+
+增加、删除与查询玩家的物品栏。使用graphql，会涉及多个数据集。
+
+### 【查】get Inv-item List  [POST]
+根据条件查询玩家的物品栏，返回列表
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "...",
+            "graphql_Arg": { }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+
+            }
+        }
+        
+### 【增】Add item  [POST]
+赠送玩家一件新物品
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "..",
+            "graphql_Arg": {
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+
+          }
+        }
+
+        
+### 【删】Delete Inv-item [POST]
+删除玩家物品栏中的冗余信息
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "..",
+            "graphql_Arg": {
+                "conditions": ""
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+
+          }
+        }
+
+# Group Base-item
+基础物品信息操作。提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
+
+## GraphQL [/api/invItem/graph]
+
+增加、删除与查询玩家的物品栏。使用graphql，会涉及多个数据集。
+
+### 【查】Get base-item list  [POST]
+根据条件查询物品基本信息，返回列表
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "query getActors($conditions: JSON, $page: Int, $lang: String) { actors: actors(conditions: $conditions, page: $page, lang: $lang) { dbname, icon, equiped, name, biography }}",
+            "graphql_Arg": {
+              "lang": "zh",
+              "conditions": "{\"dbname\": \"item-iron_helmet\"}"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "baseItems": [
+              {
+                "dbname": "item-iron_helmet",
+                "name": "铁制头盔",
+                "description": "",
+                "value": 100,
+                "weight": 10,
+                "category": "gears",
+                "detail": {
+                  "rating": 10,
+                  "type": "type-heavy_armor",
+                  "typeName": "重甲",
+                  "equip": "equip-head",
+                  "equipName": "头部",
+                  "effects": [],
+                  "effectsI18n": []
+                }
+              }
+            ]
+          }
+        }
+        
+### 【查】Get a base-item  [POST]
+查询单个物品基本信息，返回单件物品
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "query getItem($dbname: String, $lang: String) { baseItem: baseItem(dbname: $dbname, lang: $lang) { dbname, name, description, value, weight, category, detail { type, typeName, effects, effectsI18n { effect, name } } } }",
+            "graphql_Arg": {
+              "dbname": "item-stimpack"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "baseItem": {
+              "dbname": "item-stimpack",
+              "name": "Stimpack",
+              "description": "",
+              "value": 110,
+              "weight": 1,
+              "category": "consumables",
+              "detail": {
+                "type": "type-potion",
+                "typeName": "Potions",
+                "effects": [
+                  "effect-resotre_health"
+                ],
+                "effectsI18n": [
+                  {
+                    "effect": "effect-resotre_health",
+                    "name": "Restore health"
+                  }
+                ]
+              }
+            }
+          }
+        }
+        
+### 【增】Add a base-item  [POST]
+增加一个新物品信息
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "mutation createItem($input: newBaseItem!) { add: add(input: $input) { message, status, id } }",
+            "graphql_Arg": {
+              "input": {
+                "dbname": "item-iron_helmet",
+                "value": 100,
+                "weight": 10,
+                "category": "gears",
+                "translations": {
+                  "name": "{\"en\": \"Iron helmet\", \"zh\": \"铁制头盔\"}"
+                },
+                "detail": {
+                  "rating": 10,
+                  "type": "type-heavy_armor",
+                  "equip": "equip-head"
+                }
+              }
+            }
+
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "add": {
+              "message": "Successfully created new baseItem \"item-iron_helmet\" with id \"5adeba4ef790322434dd6af7\"",
+              "status": "success",
+              "id": "5adeba4ef790322434dd6af7"
+            }
+          }
+        }
+
+        
+### 【删】Delete base-items [POST]
+删除满足条件的物品信息
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "mutation deleteItem($conditions: JSON) { delete: delete(conditions: $conditions) { message, status, rmCount } }",
+            "graphql_Arg": {
+                "conditions": "{\"dbname\": \"item-iron_helmet\"}"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "delete": {
+              "message": "Successfully deleted selected baseItems",
+              "status": "success",
+              "rmCount": 1
+            }
+          }
         }
