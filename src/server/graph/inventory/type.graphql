@@ -28,10 +28,10 @@ type InvItem {
 }
 
 type Query {
-  inventoryItems(conditions: JSON, page: Int): [InventoryVerboseItem]
+  inventoryItems(conditions: JSON, page: Int, lang: String): [InventoryVerboseItem]
 }
 
 type Mutation {
-  gift(refItemName: String, holder: String): InvItem
-  remove(refItemName: String, holder: String): InvItem
+  gift(itemName: String, holder: String): InvItem
+  remove(itemName: String, holder: String): InvItem
 }

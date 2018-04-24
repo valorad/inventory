@@ -14,20 +14,21 @@ class InventoryGraph {
   getList: IQuery["getList"] = async (obj, args) => {
 
     let conditions: any = {};
+    let lang = args.lang || "en";
 
     if (args.conditions) {
       conditions = JSON.parse(args.conditions);
     }
 
-    return await this.action.getList(conditions, args.page);
+    return await this.action.getList(conditions, args.page, lang);
   };
 
   gift: IMutation["gift"] = async (obj, args) => {
-    return await this.action.gift(args.refItemName, args.holder);
+    return await this.action.gift(args.itemName, args.holder);
   };
 
   remove: IMutation["remove"] = async (obj, args) => {
-    return await this.action.remove(args.refItemName, args.holder);
+    return await this.action.remove(args.itemName, args.holder);
   };
 
 

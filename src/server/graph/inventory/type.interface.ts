@@ -30,11 +30,11 @@ export interface IInventoryVerboseItem {
 }
 
 export interface IQuery {
-  getList: (obj: any, args: {conditions?: string, page?: number}, context?: any, info?: any) => Promise<any[]>,
+  getList: (obj: any, args: {conditions?: string, page?: number, lang?: string}, context?: any, info?: any) => Promise<any[]>,
   // getSingle: (obj: any, args: {dbname?: string}, context?: any, info?: any) => Promise<any[]>
 }
 
 export interface IMutation {
-  gift: (obj: any, args: {refItemName: string, holder: string}, context?: any, info?: any) => Promise<IInvItem>,
-  remove: (obj: any, args: {refItemName: string, holder: string}, context?: any, info?: any) => Promise<IInvItem>
+  gift: (obj: any, args: {itemName: string, holder: string}, context?: any, info?: any) => Promise<IInvItem>,
+  remove: (obj: any, args: {itemName: string, holder: string}, context?: any, info?: any) => Promise<IInvItem>
 }

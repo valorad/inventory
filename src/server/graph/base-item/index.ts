@@ -29,27 +29,41 @@ class BaseItemGraph {
 
   getList: IQuery["getList"] = async (obj, args) => {
     let conditions: any = {};
+    let lang = args.lang || "en";
 
     if (args.conditions) {
       conditions = JSON.parse(args.conditions);
     }
 
-    return await this.action.getList(conditions, args.page);
+    return await this.action.getList(conditions, args.page, lang);
 
   };
 
 
   getSingle: IQuery["getSingle"] = async (obj, args) => {
     let dbname = args.dbname;
+    let lang = args.lang || "en";
     if (dbname) {
-      return await this.action.getSingle(dbname);
+      return await this.action.getSingle(dbname, lang);
     }
     return {};
   };
 
   add: IMutation["add"] = async (obj, args) => {
 
-    let input:any = args.input;
+    let input: any = args.input;
+    let translations = input.translations;
+
+    if (translations) {
+      if (translations.name && (typeof translations.name === 'string')) {
+        translations.name = JSON.parse(translations.name);
+      }
+
+      if (translations.description && (typeof translations.description === 'string')) {
+        translations.description = JSON.parse(translations.description);
+      }
+    }
+
     let addResult = await this.action.add(input);
     let newBaseItem = addResult.newBaseItem;
     let newDetail = addResult.newDetail;
@@ -74,15 +88,6 @@ class BaseItemGraph {
         id: null
       };
     }
-
-    // front-end request exmple:
-    // mutation addItem($info: newBaseItem!) {
-    //   add(input: $info) {
-    //     message,
-    //     status,
-    //     id
-    //   }
-    // }
 
   };
 

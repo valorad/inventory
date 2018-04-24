@@ -1,14 +1,13 @@
 scalar JSON
 
 type BaseItem {
-  lang: String
   dbname: String
   name: String,
   description: String,
   value: Int
   weight: Float
   category: String
-  detail: JSON
+  detail: Detail
 }
 
 type AddCallback {
@@ -32,13 +31,29 @@ input newBaseItem {
   detail: newDetail
 }
 
-input newDetail {
+type Detail {
   # gear + comsumable
   rating: Int
   type: String
   typeName: String
   equip: String
   equipName: String
+  effects: [String]
+  effectsI18n: [TranslatedEffect]
+  # book
+  content: String
+}
+
+type TranslatedEffect {
+  effect: String
+  name: String
+}
+
+input newDetail {
+  # gear + comsumable
+  rating: Int
+  type: String
+  equip: String
   effects: [String]
   # book
   content: String
@@ -50,12 +65,12 @@ input translations {
 }
 
 type Query {
-  baseItem(dbname: String): BaseItem
-  baseItems(conditions: JSON, page: Int): [BaseItem]
+  baseItem(dbname: String, lang: String): BaseItem
+  baseItems(conditions: JSON, page: Int, lang: String): [BaseItem]
 }
 
 type Mutation {
-  add(input: newBaseItem): AddCallback
+  add(input: newBaseItem!): AddCallback
   delete(conditions: JSON): DeleteCallback
 }
 
