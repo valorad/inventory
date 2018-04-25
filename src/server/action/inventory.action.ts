@@ -5,7 +5,7 @@ import { inventories } from '../database/schema/inventories';
 
 export class InventoryAction implements IAction {
 
-  fields: string[] = ["item", "holder"];
+  fields: string[] = ["item", "holder", "refs"];
 
   getAll = async () => {
     return await Query.getList(inventories);
@@ -31,10 +31,7 @@ export class InventoryAction implements IAction {
     let newInventoryItem = await Query.addRecord(
       inventories,
       info,
-      this.fields,
-      (invToSave: any) => {
-        invToSave.item = Query.toObjID(invToSave.item);
-      }
+      this.fields
     );
     return newInventoryItem;
   };

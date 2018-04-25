@@ -10,6 +10,10 @@ const schema = new Schema({
   holder: {
     type: String,
     required: true
+  },
+  refs: {
+    type: [Schema.Types.ObjectId],
+    default: []
   }
 });
 

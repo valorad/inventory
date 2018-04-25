@@ -91,7 +91,7 @@ export const inventorySpec = describe("Inventory inspections", () => {
   });
 
   test("(delete) Dogmeat's Arrow ammo out", async () => {
-    let item = Query.toObjID("tucktucktuck");
+    let item = "tucktucktuck";
     let holder = "dogmeat";
     let delResult = await action.delete({
       item,
