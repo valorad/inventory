@@ -33,7 +33,8 @@ type IRMResult {
 }
 
 type Query {
-  inventoryItems(conditions: JSON, page: Int, lang: String): [InvVerboseItem]
+  invItems(conditions: JSON, page: Int, lang: String): [InvVerboseItem]
+  invItem(itemName: String, holder: String, lang: String): InvVerboseItem
 }
 
 type Mutation {

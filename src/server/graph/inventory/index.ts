@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools'; 
 import GraphQLJSON from 'graphql-type-json';
 
-import { IMutation, IQuery } from "./type.interface";
+import { IMutation, IQuery, IInvVerboseItem } from "./type.interface";
 import * as typeDefs from "./type.graphql";
 import { Action } from "./action";
 
@@ -21,6 +21,16 @@ class InventoryGraph {
     }
 
     return await this.action.getList(conditions, args.page, lang);
+  };
+
+  getSingle: IQuery["getSingle"] = async (obj, args) => {
+    let itemName = args.itemName;
+    let holder = args.holder;
+    let lang = args.lang || "en";
+    if (itemName && holder) {
+      return await this.action.getSingle(itemName, lang);
+    }
+    return {} as IInvVerboseItem;
   };
 
   gift: IMutation["gift"] = async (obj, args) => {
