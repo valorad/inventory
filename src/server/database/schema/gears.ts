@@ -17,7 +17,7 @@ const schema = new Schema({
     required: true
   },
   equip: {
-    type: String,
+    type: [String],
     required: true
   },
   effects: {

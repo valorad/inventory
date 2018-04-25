@@ -1,4 +1,4 @@
-import { IBaseItem, INewBaseItem } from "./type.interface";
+import { IBaseItem, INewBaseItem, ITranslatedEffect, ITranslatedEquip } from "./type.interface";
 
 // actions
 import { BaseItemAction } from "../../action/base-item.action";
@@ -9,13 +9,6 @@ import { BookAction } from "../../action/book.action";
 
 const baseItemAction = new BaseItemAction();
 const translationAction = new TranslationAction();
-
-interface ITranslatedEffect {
-
-  effect: string,
-  name: string
-
-}
 
 export class Action {
 
@@ -108,17 +101,14 @@ export class Action {
       // attach i18n info of detail type or equip
       if (item.detail["type"]) {
         
-        let translations = await translationAction.getSingle(`type-${item.detail["type"]}`);
+        let translations = await translationAction.getSingle(item.detail["type"]);
         if (translations && translations[0]) {
           item.detail["typeName"] = translations[0]["name"][lang];
         }
       }
 
       if (item.detail["equip"]) {
-        let translations = await translationAction.getSingle(`equip-${item.detail["equip"]}`);
-        if (translations && translations[0]) {
-          item.detail["equipName"] = translations[0]["name"][lang];
-        }
+        item.detail["equipI18n"] = this.translateEquips(item.detail["equip"], lang);
       }
 
       if (item.detail["effects"]) {
@@ -187,10 +177,7 @@ export class Action {
       }
 
       if (baseItem.detail["equip"]) {
-        let translations = await translationAction.getSingle(baseItem.detail["equip"]);
-        if (translations && translations[0]) {
-          baseItem.detail["equipName"] = translations[0]["name"][lang];
-        }
+        baseItem.detail["equipI18n"] = this.translateEquips(baseItem.detail["equip"], lang);
       }
 
       if (baseItem.detail["effects"]) {
@@ -327,6 +314,21 @@ export class Action {
 
     }
     return detail;
+  };
+
+  translateEquips = async (equip: string[], lang = "en") => {
+    let tranlsatedEquip: ITranslatedEquip[] = [];
+    for (let slot of equip) {
+      let translations = await translationAction.getSingle(slot);
+      if (translations && translations[0]) {
+        let translation = translations[0]["name"][lang];
+        tranlsatedEquip.push({
+          equip: slot,
+          name: translation
+        });
+      }
+    }
+    return tranlsatedEquip;
   };
 
   translateEffects = async (effects: string[], lang = "en") => {

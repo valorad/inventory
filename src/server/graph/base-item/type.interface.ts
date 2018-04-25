@@ -1,11 +1,14 @@
+
+
 interface IGear {
   dbname?: string,
   rating: number,
   type: string,
   typeName: string,
   equip: string,
-  equipName: string,
+  equipI18n: ITranslatedEquip[],
   effects: string[]
+  effectsI18n: ITranslatedEffect[],
 }
 
 interface IConsumable {
@@ -36,7 +39,7 @@ interface IDeleteCallback {
 interface INewGear {
   rating: number,
   type: string,
-  equip: string,
+  equip: string[],
   effects: string[]
 }
 
@@ -49,8 +52,17 @@ interface INewBook {
   content: string
 }
 
+export interface ITranslatedEffect {
+  effect: string,
+  name: string
+}
+
+export interface ITranslatedEquip {
+  equip: string,
+  name: string
+}
+
 export interface IBaseItem {
-  lang: string,
   dbname: string,
   name: string,
   description: string,

@@ -4,6 +4,6 @@ export interface IGear extends Document {
   dbname: string,
   rating: number,
   type: string,
-  equip: string,
+  equip: string[],
   effects: string[]
 }

@@ -91,27 +91,32 @@ export class ActorAction implements IAction {
     return null;
   };
 
-  equip = async (actorName: string, invItemID: ObjectId, equiptTo: string) => {
+  equip = async (actorName: string, invItemID: ObjectId, equiptTo: string[]) => {
     let actors = await this.getSingle(actorName);
     if (actors && actors[0]) {
       let actor = actors[0];
-      actor.equiped[equiptTo] = invItemID;
+      for (let pos of equiptTo) {
+        actor.equiped[pos] = invItemID;
+      }
       return actor.equiped;
     }
-    return null;
+    return {};
   };
 
-  unequipFrom = async (actorName: string, equiptTo?: string) => {
+  unequipFrom = async (actorName: string, equiptTo?: string[]) => {
     let actors = this.getSingle(actorName);
     if (actors) {
       let actor = actors[0];
+
       if (equiptTo) {
-        actor.equiped[equiptTo] = null;
+        for (let pos of equiptTo) {
+          delete actor.equiped[pos];
+        }    
       }
       
       return actor.equiped;
     }
-    return null;
+    return {};
   };
 
   unequip = async (actorName: string, invItemID: ObjectId) => {
@@ -120,7 +125,7 @@ export class ActorAction implements IAction {
       let actor = actors[0];
       for (let key in actor.equiped) {
         if (actor.equiped[key] === invItemID) {
-          actor.equiped[key] = null;
+          delete actor.equiped[key];
           return actor.equiped;
         }
       }

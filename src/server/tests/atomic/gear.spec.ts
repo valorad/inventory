@@ -7,7 +7,7 @@ const data = {
   dbname: "item-weapon-crossbow",
   rating: 35,
   type: "crossbow",
-  equip: "bothhands"
+  equip: ["equip-lefthand", "equip-righthand"]
 }
 
 export const gearSpec = describe("Gear inspections", () => {

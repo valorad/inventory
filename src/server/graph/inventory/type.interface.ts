@@ -1,4 +1,5 @@
 import { ObjectId } from "bson";
+import { ITranslatedEffect, ITranslatedEquip } from "../base-item/type.interface"
 
 export interface IInvItem {
   item: string,
@@ -7,16 +8,10 @@ export interface IInvItem {
 }
 
 export interface IRefItem {
-  item: string,
-  owner: string,
-  num: number
-}
-
-export interface IRefItem {
   refID?: string,
   owner: string,
   num: number,
-  dbname: string
+  item: string
 }
 
 export interface IInvVerboseItem {
@@ -34,8 +29,10 @@ export interface IInvVerboseItem {
       // gear + comsumable
       rating?: number
       type?: string
-      equip?: string
-      effects?: string[]
+      equip?: string[]
+      equipI18n?: ITranslatedEquip[]
+      effects?: string[],
+      effectsI18n: ITranslatedEffect[]
       // book
       content?: string
     }
@@ -49,7 +46,7 @@ interface IRMResult {
 
 export interface IQuery {
   getList: (obj: any, args: {conditions?: string, page?: number, lang?: string}, context?: any, info?: any) => Promise<IInvVerboseItem[]>,
-  // getSingle: (obj: any, args: {dbname?: string}, context?: any, info?: any) => Promise<any[]>
+  getSingle: (obj: any, args: {itemName: string, holder: string, lang: string}, context?: any, info?: any) => Promise<IInvVerboseItem>
 }
 
 export interface IMutation {

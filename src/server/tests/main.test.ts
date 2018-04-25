@@ -88,7 +88,10 @@ describe("inventory test", () => {
       detail: {
         type: "type-lightarmor",
         rating: 50,
-        equip: "equip-body",
+        equip: [
+          "equip-body",
+          "equip-foot"
+        ],
         effects: [
           "effect-increse_intelligence"
         ]
@@ -174,8 +177,7 @@ describe("inventory test", () => {
 
     let itembase = newInvVerbose.base;
     if (itembase && itembase.detail && itembase.detail.equip) {
-      let equip = itembase.detail.equip;
-      let eResult = actorAction.equip("actor-cortana", newInv["_id"], equip);
+      let eResult = actorAction.equip("actor-cortana", newInv["_id"], itembase.detail.equip);
       expect(eResult).toBeTruthy();
     } else {
       throw new Error("base-item detail structure error");

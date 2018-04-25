@@ -37,11 +37,16 @@ type Detail {
   type: String
   typeName: String
   equip: String
-  equipName: String
+  equipI18n: [TranslatedEquip]
   effects: [String]
   effectsI18n: [TranslatedEffect]
   # book
   content: String
+}
+
+type TranslatedEquip {
+  equip: String
+  name: String
 }
 
 type TranslatedEffect {
@@ -53,7 +58,7 @@ input newDetail {
   # gear + comsumable
   rating: Int
   type: String
-  equip: String
+  equip: [String]
   effects: [String]
   # book
   content: String
