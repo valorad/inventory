@@ -1,4 +1,4 @@
-import { InventoryAction as Action } from "../../action/inventory.action";
+import { InvItemAction as Action } from "../../action/inv-item.action";
 import { Query } from "../../util";
 
 const action = new Action();
@@ -29,7 +29,7 @@ const data = [
   }
 ];
 
-export const inventorySpec = describe("Inventory inspections", () => {
+export const invItemSpec = describe("Inventory inspections", () => {
 
   test("(add) Add data to inventory", async () => {
 
@@ -66,10 +66,10 @@ export const inventorySpec = describe("Inventory inspections", () => {
     }
   });
 
-  test("(updateSingleByConditions) Triss's 'robin___hood' is stolen and 洗白ed by Jessica", async () => {
-    let item = Query.toObjID('robin___hood');
+  test("(update) Triss's 'robin___hood' is stolen and 洗白ed by Jessica", async () => {
+    let item = 'robin___hood';
 
-    let transferedItem = await action.updateSingleByConditions(
+    let transferedItem = await action.update(
       {
         item: item,
         holder: "triss"

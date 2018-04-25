@@ -5,10 +5,10 @@ interface IGear {
   rating: number,
   type: string,
   typeName: string,
-  equip: string,
-  equipI18n: ITranslatedEquip[],
+  equip: string[],
+  equipI18n?: ITranslatedEquip[],
   effects: string[]
-  effectsI18n: ITranslatedEffect[],
+  effectsI18n?: ITranslatedEffect[],
 }
 
 interface IConsumable {

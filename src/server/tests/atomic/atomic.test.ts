@@ -4,7 +4,7 @@ import { connection, Mongoose } from 'mongoose';
 //tests
 import { actorSpec } from "./actor.spec";
 import { refItemSpec } from "./ref-item.spec";
-import { inventorySpec } from "./inventory.spec";
+import { invItemSpec } from "./inv-item.spec";
 import { bookSpec } from "./book.spec";
 import { gearSpec } from "./gear.spec";
 import { consumableSpec } from "./consumable.spec";
@@ -22,7 +22,7 @@ beforeAll(async () => {
 // activated tests
 // actorSpec;
 // refItemSpec;
-// inventorySpec;
+// invItemSpec;
 // bookSpec;
 // gearSpec;
 // consumableSpec;

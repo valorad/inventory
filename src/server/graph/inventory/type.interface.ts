@@ -32,7 +32,7 @@ export interface IInvVerboseItem {
       equip?: string[]
       equipI18n?: ITranslatedEquip[]
       effects?: string[],
-      effectsI18n: ITranslatedEffect[]
+      effectsI18n?: ITranslatedEffect[]
       // book
       content?: string
     }

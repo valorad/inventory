@@ -1,19 +1,19 @@
 import { IAction } from "./interface/action.interface";
 import { Query } from "../util/query";
 // import schemas
-import { inventories } from '../database/schema/inventories';
+import { invItems } from '../database/schema/inv-items';
 
-export class InventoryAction implements IAction {
+export class InvItemAction implements IAction {
 
   fields: string[] = ["item", "holder", "refs"];
 
   getAll = async () => {
-    return await Query.getList(inventories);
+    return await Query.getList(invItems);
   };
 
   getList = async(conditions: any = {}, page?: number) => {
     let result = await Query.getList(
-      inventories,
+      invItems,
       {
         conditions,
         page,
@@ -24,12 +24,12 @@ export class InventoryAction implements IAction {
   };
 
   getSingle = async (_id: string = "") => {
-    return await Query.getDetail(inventories, {_id});
+    return await Query.getDetail(invItems, {_id});
   };
 
   add = async (info: any) => {
     let newInventoryItem = await Query.addRecord(
-      inventories,
+      invItems,
       info,
       this.fields
     );
@@ -38,16 +38,16 @@ export class InventoryAction implements IAction {
 
   updateSingle = async (_id: string, token: any) => {
     let queryObjID = Query.toObjID(_id);
-    return await Query.setRecord(inventories, {_id: queryObjID}, token);
+    return await Query.setRecord(invItems, {_id: queryObjID}, token);
   };
 
-  updateSingleByConditions = async (conditions: any, token: any) => {
-    return await Query.setRecord(inventories, conditions, token);
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(invItems, conditions, token);
   };
 
   delete = async (token: any) => {
 
-    let delResult = await Query.deleteRecord(inventories, token);
+    let delResult = await Query.deleteRecord(invItems, token);
     return delResult;
 
   };

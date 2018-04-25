@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-import { IInventory } from "../interface/inventory.interface";
+import { IInvItem } from "../interface/inv-item.interface";
 
 const schema = new Schema({
   item: {
@@ -17,4 +17,4 @@ const schema = new Schema({
   }
 });
 
-export const inventories = model<IInventory>('inventories', schema, "inventories");
+export const invItems = model<IInvItem>('invItems', schema, "invItems");

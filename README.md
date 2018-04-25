@@ -55,7 +55,7 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 ## 后台数据集
 
-![dbDataflow](https://i.imgur.com/W0YV09E.png)
+![dbDataflow](https://i.imgur.com/fI0uVF4.png)
 
 ## 后台API
 

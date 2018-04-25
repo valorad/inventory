@@ -1,10 +1,10 @@
-import { InventoryAction } from "../../action/inventory.action";
+import { InvItemAction } from "../../action/inv-item.action";
 import { RefItemAction } from "../../action/ref-item.action";
 import { ActorAction } from "../../action/actor.action";
 import { Action as BaseItemGraphAction } from "../base-item/action";
 import { IInvVerboseItem, IRefItem, IInvItem } from "./type.interface";
 
-const invAction = new InventoryAction();
+const invAction = new InvItemAction();
 const refAction = new RefItemAction();
 const actorAction = new ActorAction();
 const baseItemAction = new BaseItemGraphAction();
@@ -85,7 +85,7 @@ export class Action {
         existInvItem[0].refs.push(newRefItem["_id"]);
 
         // apply ref changes to database
-        let updatedInv = await invAction.updateSingleByConditions(
+        let updatedInv = await invAction.update(
           {_id: existInvItem[0]["_id"]},
           {refs: existInvItem[0].refs}
         );
