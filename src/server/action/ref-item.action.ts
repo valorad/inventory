@@ -5,7 +5,7 @@ import { refItems } from '../database/schema/ref-items';
 
 export class RefItemAction implements IAction {
 
-  fields: string[] = ["item", "owner"];
+  fields: string[] = ["item", "owner", "num"];
 
   getAll = async () => {
     return await Query.getList(refItems);
@@ -40,6 +40,10 @@ export class RefItemAction implements IAction {
   updateSingle = async (_id: string, token: any) => {
     let queryObjID = Query.toObjID(_id);
     return await Query.setRecord(refItems, {_id: queryObjID}, token);
+  };
+
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(refItems, conditions, token);
   };
 
   delete = async (token: any) => {

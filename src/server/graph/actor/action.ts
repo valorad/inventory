@@ -87,11 +87,9 @@ export class Action {
     // attach i18n info of actor
     let translations = await translationAction.getSingle(actor.dbname);
     if (translations && translations[0]) {
-      console.log(translations[0]);
       actor.name = translations[0]["name"][lang];
       actor.biography = translations[0]["description"][lang];
     }
-    console.log(actor);
   };
 
 

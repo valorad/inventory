@@ -146,11 +146,9 @@ describe("inventory test", () => {
       
       // Test book i18n
       let queryItem = await baseItemGraphAction.getSingle(baseItemSample.book.dbname);
-      if (queryItem) {
-        expect(queryItem.detail.contentDetail).toBe(baseItemSample.book.translations.bookContent.en);
-      } else {
-        throw new Error("Cannot perform single query");
-      }
+
+      expect(queryItem.detail["contentDetail"]).toBe(baseItemSample.book.translations.bookContent.en);
+
     });
 
     test("create edi's chest armor", async () => {
@@ -172,50 +170,83 @@ describe("inventory test", () => {
   test("Add edi's chest armor to Cortana's inventory, then Cortana wears it", async () => {
     let newInv = await invGraphAction.gift("item-edi_body", "actor-cortana");
     expect(newInv).toBeTruthy();
-    let newInvVerbose = await invGraphAction.getList({holder: "actor-cortana", item: newInv.item});
-    if (newInvVerbose[0]) {
-      let itembase: any = newInvVerbose[0].item.base;
-      let equip = itembase.detail.equip;
+    let newInvVerbose = await invGraphAction.getSingle(newInv.item, "actor-cortana");
 
-      let eResult = actorAction.equip("actor-cortana", newInv._id, equip);
+    let itembase = newInvVerbose.base;
+    if (itembase && itembase.detail && itembase.detail.equip) {
+      let equip = itembase.detail.equip;
+      let eResult = actorAction.equip("actor-cortana", newInv["_id"], equip);
       expect(eResult).toBeTruthy();
     } else {
-      throw new Error("Failed to fetch detailed info of the inv-item");
+      throw new Error("base-item detail structure error");
     }
-    
+
+  });
+
+  // add more than 1 consumables, with multiple refs
+  test("Add item - Titan V * 2, three times", async () => {
+    let refsLength = 3;
+    for (let i = 0; i < refsLength; i++) {
+      await invGraphAction.gift("item-titanV", "actor-cortana", 2);
+    }
+
+    let invList = await invGraphAction.getList({item: "item-titanV", holder: "actor-cortana"});
+
+    if (invList.length > 0) {
+      expect(invList[0].refDetails.length).toEqual(3);
+    } else {
+      throw new Error("Cannot find titanV just given to Cortana");
+    }
+
   });
 
   // query actor inventory info, should contain the item just added:
   // (query item base info from invAction)
   test("Make sure edi's armor is in Cortana's bag, and not altered", async () => {
-    let invItems = await invGraphAction.getList({holder: "actor-cortana"}, undefined, "zh");
-    if (invItems) {
-      let armor = invItems[0]; // we know it's on position 0 because we only gave her 1 armor.
-      let itembase: any = armor.item.base || {};
-      let itemtype = itembase.detail.type;
-      expect(itemtype).toBe(baseItemSample.gear.detail.type);
+
+    let armor = await invGraphAction.getSingle("item-edi_body", "actor-cortana", "zh");
+    if (armor.base && armor.base.detail) {
+      expect(armor.base.detail.type).toBe(baseItemSample.gear.detail.type);
       // test menu translation
-      let itemtypeName = itembase.detail.typeName;
+      let itemtypeName = armor.base.detail["typeName"];
       expect(itemtypeName).toBe(menuTranslation[0].name.zh);
       // test item detail translation
-      expect(itembase.name).toBe(baseItemSample.gear.translations.name.zh);
-      
-    } else {
-      throw new Error("Cannot find Cortana's inventory");
-    }
+      expect(armor.base["name"]).toBe(baseItemSample.gear.translations.name.zh);
 
+    } else {
+      throw new Error("Cannot find Cortana's inventory, or data structure mismatch");
+    }
+    
   });
 
   // delete the gear inv-item, actor's equiped gear should auto-unequip
   // then actor's inventory should be empty
   test("Remove the armor Cortana just received", async () => {
-    let rmInvItem = await invGraphAction.remove("item-edi_body", "actor-cortana");
-    expect(rmInvItem).toBeTruthy();
-    
-    expect(await actorAction.isEquiping("actor-cortana", rmInvItem)).toBeFalsy();
+    let rmResult = await invGraphAction.remove("item-edi_body", "actor-cortana");
+    if (rmResult) {
+      expect(rmResult.rmRefCount).toEqual(1);
+    } else {
+      throw new Error("Failed to fetch ref item list");
+    }
+  });
 
-    let invItems = await invGraphAction.getList({holder: "actor-cortana"});
-    expect(invItems.length).toBeLessThanOrEqual(0);
+  test("Cortana just throwed 5 titanVs away!", async () => {
+    let rmResult = await invGraphAction.remove("item-titanV", "actor-cortana", 5);
+    if (rmResult) {
+      expect(rmResult.rmRefCount).toEqual(2);
+      expect(rmResult.rmInvCount).toEqual(0);
+    } else {
+      throw new Error("Failed to remove item");
+    }
+
+    // then should have only 1 Titan V in inventory
+    let titanV = await invGraphAction.getSingle("item-titanV", "actor-cortana");
+    if (titanV.refDetails && titanV.refDetails.length > 0) {
+      expect(titanV.refDetails[0].num).toEqual(1);
+    } else {
+      throw new Error("Cannot find a titanV");
+    }
+    
   });
 
   // delete all base-items created

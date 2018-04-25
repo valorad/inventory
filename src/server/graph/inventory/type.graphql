@@ -8,30 +8,35 @@ type BaseItem {
   detail: JSON
 }
 
-
 type RefItem {
-  refID: ID,
-  owner: String,
-  num: Int,
-  dbname: String,
+  refID: ID
+  owner: String
+  num: Int
+  dbname: String
+}
+
+type InvVerboseItem {
+  holder: String
+  item: String
+  refDetails: [RefItem]
   base: BaseItem
 }
 
-type InventoryVerboseItem {
-  holder: String,
-  item: RefItem
+type InvItem {
+  holder: String
+  item: String
 }
 
-type InvItem {
-  holder: String,
-  item: RefItem
+type IRMResult {
+  rmRefCount: Int
+  rmInvCount: Int
 }
 
 type Query {
-  inventoryItems(conditions: JSON, page: Int, lang: String): [InventoryVerboseItem]
+  inventoryItems(conditions: JSON, page: Int, lang: String): [InvVerboseItem]
 }
 
 type Mutation {
   gift(itemName: String, holder: String): InvItem
-  remove(itemName: String, holder: String): InvItem
+  remove(itemName: String, holder: String): IRMResult
 }

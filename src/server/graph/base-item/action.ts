@@ -159,7 +159,7 @@ export class Action {
 
   getSingle = async (dbname: string, lang = "en") => {
 
-    let baseItem: any = {};
+    let baseItem = {} as IBaseItem;
     let metBaseItems = await baseItemAction.getSingle(dbname);
 
     if (metBaseItems && metBaseItems[0]) {
@@ -194,7 +194,7 @@ export class Action {
       }
 
       if (baseItem.detail["effects"]) {
-        baseItem.detail.effectsI18n = await this.translateEffects(baseItem.detail.effects, lang);
+        baseItem.detail["effectsI18n"] = await this.translateEffects(baseItem.detail["effects"], lang);
       }
 
       // attach i18n info of book content
