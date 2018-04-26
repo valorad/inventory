@@ -9,7 +9,7 @@ import { baseItem } from "./base-item";
 import { gear } from "./gear";
 import { consumable } from "./consumable";
 import { book } from "./book";
-import { invItem } from "./inventory";
+import { invItem } from "./inv-item";
 
 class API {
 

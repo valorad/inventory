@@ -6,7 +6,7 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 import { invItemGraph as schema } from "../graph/inventory";
 
 // actions
-import { InventoryAction as Action } from "../action/inventory.action";
+import { InvItemAction as Action } from "../action/inv-item.action";
 
 class InventoryItem {
   router = new Router();
