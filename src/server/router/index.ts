@@ -26,13 +26,13 @@ class API {
     });
 
     // sub routes
-    this.routerInstance.use('/actor', actor.routes(), actor.allowedMethods());
-    this.routerInstance.use('/refItem', refItem.routes(), refItem.allowedMethods());
-    this.routerInstance.use('/baseItem', baseItem.routes(), baseItem.allowedMethods());
-    this.routerInstance.use('/gear', gear.routes(), gear.allowedMethods());
-    this.routerInstance.use('/consumable', consumable.routes(), consumable.allowedMethods());
-    this.routerInstance.use('/book', book.routes(), book.allowedMethods());
-    this.routerInstance.use('/invItem', invItem.routes(), invItem.allowedMethods());
+    this.routerInstance.use('/actors', actor.routes(), actor.allowedMethods());
+    this.routerInstance.use('/refItems', refItem.routes(), refItem.allowedMethods());
+    this.routerInstance.use('/baseItems', baseItem.routes(), baseItem.allowedMethods());
+    this.routerInstance.use('/gears', gear.routes(), gear.allowedMethods());
+    this.routerInstance.use('/consumables', consumable.routes(), consumable.allowedMethods());
+    this.routerInstance.use('/books', book.routes(), book.allowedMethods());
+    this.routerInstance.use('/invItems', invItem.routes(), invItem.allowedMethods());
 
 
     // this.routerInstance.get('/graphql', graphqlKoa({ schema: schema }));
