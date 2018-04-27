@@ -104,16 +104,21 @@ export class Query {
   static setRecord = async <T extends Document>(collection: Model<T>, conditions: any, update: any, options: IUpdateOptions = {}) => {
     try {
 
-      let updatedRecords: any[];
+      let updatedRecords: T[];
       if (options.updateAll) {
         let updateResult = await collection.updateMany(conditions, update);
-        updatedRecords = await Query.getList(conditions);
+        updatedRecords = await Query.getList(conditions) as T[];
       } else {
         let updatedDoc = await collection.findOneAndUpdate(
           conditions,
           update
         );
-        updatedRecords = [updatedDoc];
+        if (updatedDoc) {
+          updatedRecords = [updatedDoc];
+        } else {
+          updatedRecords = [];
+        }
+        
       }
 
       return updatedRecords;

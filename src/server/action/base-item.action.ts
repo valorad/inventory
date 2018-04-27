@@ -36,6 +36,10 @@ export class BaseItemAction implements IAction {
     return newBaseItem;
   };
 
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(baseItems, conditions, token, {updateAll: true});
+  };
+
   updateSingle = async (dbname: string, token: any) => {
     let updatedBaseItem = await Query.setRecord(baseItems, {dbname}, token);
     return updatedBaseItem;
