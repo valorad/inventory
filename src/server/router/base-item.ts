@@ -46,14 +46,14 @@ class BaseItem {
       let updatedBaseItems = await this.action.update(conditions, token);
       if (updatedBaseItems) {
         ctx.body = {
-          message: `Successfully updated selected actors`,
+          message: `Successfully updated selected base-items`,
           status: "success",
           altCount: updatedBaseItems.length
         }
       } else {
         ctx.status = 500;
         ctx.body = {
-          message: `Failed to update selected actors`,
+          message: `Failed to update selected base-items`,
           status: "failure",
           altCount: 0
         }

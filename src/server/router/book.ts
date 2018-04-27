@@ -36,14 +36,14 @@ class Book {
       let updatedBooks = await this.action.update(conditions, token);
       if (updatedBooks) {
         ctx.body = {
-          message: `Successfully updated selected actors`,
+          message: `Successfully updated selected books`,
           status: "success",
           altCount: updatedBooks.length
         }
       } else {
         ctx.status = 500;
         ctx.body = {
-          message: `Failed to update selected actors`,
+          message: `Failed to update selected books`,
           status: "failure",
           altCount: 0
         }

@@ -38,7 +38,7 @@ class RefItem {
       
     });
 
-    this.router.post('/add', async (ctx) => {
+    this.router.post('/', async (ctx) => {
 
       let newRefItem = await this.action.add(ctx.request.body);
 

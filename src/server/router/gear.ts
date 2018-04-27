@@ -24,6 +24,33 @@ class Gear {
       }
     });
 
+    // update list
+    this.router.patch("/", async (ctx) => {
+      let conditions: any;
+      let token: any;
+      if (ctx.request.body) {
+        conditions = ctx.request.body.conditions;
+        token = ctx.request.body.token;
+      }
+
+      let updatedGears = await this.action.update(conditions, token);
+      if (updatedGears) {
+        ctx.body = {
+          message: `Successfully updated selected gears`,
+          status: "success",
+          altCount: updatedGears.length
+        }
+      } else {
+        ctx.status = 500;
+        ctx.body = {
+          message: `Failed to update selected gears`,
+          status: "failure",
+          altCount: 0
+        }
+      }
+
+    });
+
     this.router.patch('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
       let updatedGears = await this.action.updateSingle(dbname, ctx.request.body);
