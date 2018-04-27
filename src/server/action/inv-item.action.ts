@@ -42,7 +42,7 @@ export class InvItemAction implements IAction {
   };
 
   update = async (conditions: any, token: any) => {
-    return await Query.setRecord(invItems, conditions, token);
+    return await Query.setRecord(invItems, conditions, token, {updateAll: true});
   };
 
   delete = async (token: any) => {

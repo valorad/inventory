@@ -18,13 +18,6 @@ class InventoryItem {
     this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/invItem/graph' }));
 
     this.router.get('/', async (ctx) => {
-      ctx.status = 200;
-      ctx.body = {
-        message: "inventory works!"
-      }
-    });
-
-    this.router.get('/all', async (ctx) => {
       let result = await this.action.getAll();
       ctx.body = result;
     });
@@ -46,30 +39,28 @@ class InventoryItem {
 
       let result = await this.action.getSingle(_id);
       if (result) {
-        ctx.body = result;
+        ctx.body = result[0] || {};
       } else {
-        ctx.body = [];
+        ctx.status = 500;
+        ctx.body = {};
       }
       
     });
 
-    this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
-
-    this.router.post('/add', async (ctx) => {
+    this.router.post('/', async (ctx) => {
 
       let newInvItem = await this.action.add(ctx.request.body);
 
       if (newInvItem) {
         ctx.body = {
-          message: `Successfully added ${newInvItem.item} with id "${newInvItem._id}" to ${newInvItem.holder}'s inventory `,
+          message: `Successfully created new inv-item "${newInvItem.item}" with id "${newInvItem._id}"`,
           status: 'success',
           id: newInvItem._id
         };
         return;
       } else {
-        ctx.status = 500;
         ctx.body = {
-          message: `Failed to add ${ctx.request.body.item} to ${ctx.request.body.holder}'s inventory `,
+          message: `Failed to create inv-item "${ctx.request.body.item}"`,
           status: 'failure',
           id: null
         }
@@ -77,6 +68,35 @@ class InventoryItem {
 
     });
 
+    this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
+    
+    // update list
+    this.router.patch("/", async (ctx) => {
+      let conditions: any;
+      let token: any;
+      if (ctx.request.body) {
+        conditions = ctx.request.body.conditions;
+        token = ctx.request.body.token;
+      }
+
+      let updatedItems = await this.action.update(conditions, token);
+      if (updatedItems) {
+        ctx.body = {
+          message: `Successfully updated selected inv-items`,
+          status: "success",
+          altCount: updatedItems.length
+        }
+      } else {
+        ctx.status = 500;
+        ctx.body = {
+          message: `Failed to update selected inv-items`,
+          status: "failure",
+          altCount: 0
+        }
+      }
+
+    });
+    
     this.router.patch('/id/:_id', async (ctx) => {
       let _id: string = ctx.params._id;
 
@@ -84,7 +104,7 @@ class InventoryItem {
       if (updatedInvItems) {
         let updatedItem = updatedInvItems[0];
         ctx.body = {
-          message: `Successfully updated inv-item ${updatedItem.dbname}`,
+          message: `Successfully updated inv-item ${updatedItem.item}`,
           status: "success",
           id: updatedItem._id
         };
