@@ -7,6 +7,10 @@ export class BookAction implements IAction {
 
   fields = ["dbname", "content"];
 
+  getAll = async () => {
+    return await Query.getList(books);
+  };
+
   getList = async (conditions: any = {}, page?: number) => {
     let result = await Query.getList(
       books,
@@ -30,6 +34,10 @@ export class BookAction implements IAction {
       this.fields
     );
     return newBook;
+  };
+
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(books, conditions, token, {updateAll: true});
   };
 
   updateSingle = async (dbname: string, token: any) => {
