@@ -75,7 +75,7 @@ export class Action {
    */
   gift = async (itemName: string, holder: string, num = 1) => {
     // create a ref item
-    let newRefItem: IRefItem = await refAction.add({item: itemName, owner: holder, num: num});
+    let newRefItem = await refAction.add({item: itemName, owner: holder, num: num});
     if (newRefItem) {
       // add that ref-item to inventory
       let existInvItem: IInvItem[] = await invAction.getList({item: itemName, holder: holder});
@@ -98,7 +98,7 @@ export class Action {
 
       } else {
         // record does not exist, then create a new one
-        let newInvItem: IInvItem = await invAction.add({
+        let newInvItem = await invAction.add({
           item: itemName,
           holder: holder,
           refs: [newRefItem["_id"]],
@@ -126,7 +126,7 @@ export class Action {
     let invItems: IInvItem[] = await invAction.getList({item: itemName, holder: holder});
     if (invItems && invItems[0]) {
 
-      let refItems: IRefItem[] = [];
+      let refItems: any[] = [];
       let invItem = invItems[0];
       for (let id of invItem.refs) {
         let refItemsMatched = await refAction.getList({_id: id});

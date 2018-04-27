@@ -16,7 +16,7 @@ export class Action {
     
     // insert into baseItems collection
     
-    let newBaseItem: INewBaseItem = await baseItemAction.add(input);
+    let newBaseItem = await baseItemAction.add(input);
     let newDetail: any = null;
 
     if (newBaseItem) {

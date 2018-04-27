@@ -25,8 +25,8 @@ export class Action {
   };
 
   getList = async (conditions: any = {}, page?: number, lang: string = "en") => {
-    let metActors = await actorAction.getList(conditions, page) as IActor[];
-    let extractedActors: IActor[] = [];
+    let metActors = await actorAction.getList(conditions, page);
+    let extractedActors;
     
     for (let actor of metActors) {
       let ext = this.extractInfo(actor, actorAction.fields) as IActor;
@@ -43,7 +43,7 @@ export class Action {
 
   getSingle = async (dbname: string, lang = "en") => {
     let actor = {} as IActor;
-    let metActors = await actorAction.getSingle(dbname) as IActor[];
+    let metActors = await actorAction.getSingle(dbname);
 
     if (metActors && metActors[0]) {
       actor = this.extractInfo(metActors[0], actorAction.fields) as IActor;
@@ -59,7 +59,7 @@ export class Action {
       conditions = JSON.parse(conditions);
     }
 
-    let metActors = await actorAction.getList(conditions) as IActor[];
+    let metActors = await actorAction.getList(conditions);
 
     for (let actor of metActors) {
       // delete translation
@@ -75,7 +75,7 @@ export class Action {
 
   };
 
-  extractInfo = (qResultItem: any, fields: string[]) => {
+  extractInfo = <T>(qResultItem: T, fields: string[]) => {
     let ext = {};
     for (let key of fields) {
       ext[key] = qResultItem[key];

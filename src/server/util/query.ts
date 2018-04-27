@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Document } from "mongoose";
 import { DeleteWriteOpResultObject, ObjectId } from 'mongodb';
 
 interface IMQuery {
@@ -17,7 +17,7 @@ interface IUpdateOptions {
 
 export class Query {
 
-  static getList = async (collection: Model<any>, query: IMQuery = {}) => {
+  static getList = async <T extends Document>(collection: Model<T>, query: IMQuery = {}) => {
 
     let conditions = query.conditions || {};
 
@@ -61,7 +61,7 @@ export class Query {
 
   };
 
-  static getDetail = async (collection: Model<any>, conditions: any = {}) => {
+  static getDetail = async <T extends Document>(collection: Model<T>, conditions: any = {}) => {
     try {
       let result = await collection.find(conditions);
       return result;
@@ -73,7 +73,7 @@ export class Query {
     
   };
 
-  static addRecord = async (collection: Model<any>, source: any, fields: string[], postActions?: (raw: any)=>any) => {
+  static addRecord = async <T extends Document>(collection: Model<T>, source: any, fields: string[], postActions?: (raw: any)=>any) => {
     let recordToSave = {};
     for (let field of fields) {
       recordToSave[field] = source[field];
@@ -101,7 +101,7 @@ export class Query {
    * if top-level key is not atomic(i.e $set, $inc, $push etc.),
    * it will be considered as "$set"
    */
-  static setRecord = async (collection: Model<any>, conditions: any, update: any, options: IUpdateOptions = {}) => {
+  static setRecord = async <T extends Document>(collection: Model<T>, conditions: any, update: any, options: IUpdateOptions = {}) => {
     try {
 
       let updatedRecords: any[];
@@ -123,7 +123,7 @@ export class Query {
     }
   };
 
-  static deleteRecord = async (collection: Model<any>, conditions: any) => {
+  static deleteRecord = async <T extends Document>(collection: Model<T>, conditions: any) => {
 
     try {
       let delResult: DeleteWriteOpResultObject["result"] = await collection.remove(conditions);
