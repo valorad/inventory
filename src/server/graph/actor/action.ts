@@ -86,10 +86,21 @@ export class Action {
   translate = async (actor: IActor, lang: string = "en") => {
     // attach i18n info of actor
     let translations = await translationAction.getSingle(actor.dbname);
+    let name: any = null;
+    let biography: any = null;
+
     if (translations && translations[0]) {
-      actor.name = translations[0]["name"][lang];
-      actor.biography = translations[0]["description"][lang];
+      name = translations[0]["name"][lang];
+      biography = translations[0]["description"][lang];
+
+      // fallback to en
+      if (!name) name = translations[0]["name"]["en"];
+      if (!biography) biography = translations[0]["description"]["en"];
     }
+
+    actor.name = name;
+    actor.biography = biography;
+
   };
 
 

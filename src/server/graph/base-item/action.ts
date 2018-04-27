@@ -86,8 +86,19 @@ export class Action {
       // attach i18n info of base
       let translations = await translationAction.getSingle(ext.dbname);
       if (translations && translations[0]) {
-        ext.name = translations[0]["name"][lang];
-        ext.description = translations[0]["description"][lang];
+
+        let name: any = null;
+        let description: any = null;
+
+        name = translations[0]["name"][lang];
+        description = translations[0]["description"][lang];
+
+        // fallback to en
+        if (!name) name = translations[0]["name"]["en"];
+        if (!description) description = translations[0]["description"]["en"];
+
+        ext.name = name;
+        ext.description = description;
       }
 
       extractedItems.push(ext);
@@ -103,7 +114,15 @@ export class Action {
         
         let translations = await translationAction.getSingle(item.detail["type"]);
         if (translations && translations[0]) {
-          item.detail["typeName"] = translations[0]["name"][lang];
+          
+          let typeName: any = null;
+          typeName = translations[0]["name"][lang];
+
+          // fallback to en
+          if (!typeName) typeName = translations[0]["name"]["en"];
+          
+          item.detail["typeName"] = typeName;
+
         }
       }
 
@@ -119,7 +138,15 @@ export class Action {
       if (item.detail["content"]) {
         let translations = await translationAction.getSingle(item.detail["content"]);
         if (translations && translations[0]) {
-          item.detail["contentDetail"] = translations[0]["description"][lang];
+
+          let contentDetail: any = null;
+          contentDetail = translations[0]["description"][lang];
+
+          // fallback to en
+          if (!contentDetail) contentDetail = translations[0]["description"]["en"];
+
+          item.detail["contentDetail"] = contentDetail;
+
         }
       }
 
@@ -161,8 +188,19 @@ export class Action {
       let translations = await translationAction.getSingle(baseItem.dbname);
       
       if (translations && translations[0]) {
-        baseItem.name = translations[0]["name"][lang];
-        baseItem.description = translations[0]["description"][lang];
+
+        let name: any = null;
+        let description: any = null;
+
+        name = translations[0]["name"][lang];
+        description = translations[0]["description"][lang];
+
+        // fallback to en
+        if (!name) name = translations[0]["name"]["en"];
+        if (!description) description = translations[0]["description"]["en"];
+
+        baseItem.name = name;
+        baseItem.description = description;
       }
 
       // attach details
@@ -172,7 +210,14 @@ export class Action {
       if (baseItem.detail["type"]) {
         let translations = await translationAction.getSingle(baseItem.detail["type"]);
         if (translations && translations[0]) {
-          baseItem.detail["typeName"] = translations[0]["name"][lang];
+
+          let typeName: any = null;
+          typeName = translations[0]["name"][lang];
+
+          // fallback to en
+          if (!typeName) typeName = translations[0]["name"]["en"];
+
+          baseItem.detail["typeName"] = typeName;
         }
       }
 
@@ -188,7 +233,14 @@ export class Action {
       if (baseItem.detail["content"]) {
         let translations = await translationAction.getSingle(baseItem.detail["content"]);
         if (translations && translations[0]) {
-          baseItem.detail["contentDetail"] = translations[0]["description"][lang];
+
+          let contentDetail: any = null;
+          contentDetail = translations[0]["description"][lang];
+
+          // fallback to en
+          if (!contentDetail) contentDetail = translations[0]["description"]["en"];
+
+          baseItem.detail["contentDetail"] = contentDetail;
         }
       }
 
@@ -322,6 +374,10 @@ export class Action {
       let translations = await translationAction.getSingle(slot);
       if (translations && translations[0]) {
         let translation = translations[0]["name"][lang];
+
+        // fallback to en
+        if (!translation) translation = translations[0]["name"]["en"];
+
         tranlsatedEquip.push({
           equip: slot,
           name: translation
@@ -344,7 +400,12 @@ export class Action {
       let effectTranslation = await translationAction.getSingle(effect);
       let effectI18n: ITranslatedEffect = { effect: effect, name: "" };
       if (effectTranslation && effectTranslation[0]) {
-        effectI18n.name = effectTranslation[0]["name"][lang];
+        let translation = effectTranslation[0]["name"][lang];
+
+        // fallback to en
+        if (!translation) translation = effectTranslation[0]["name"]["en"];
+
+        effectI18n.name = translation;
       }
       effectsI18n.push(effectI18n);
     }

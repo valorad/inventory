@@ -84,17 +84,20 @@ export class Action {
 
         existInvItem[0].refs.push(newRefItem["_id"]);
 
+
+
         // apply ref changes to database
         let updatedInv = await invAction.update(
           {_id: existInvItem[0]["_id"]},
           {refs: existInvItem[0].refs}
         );
 
+
         if (updatedInv) {
           return updatedInv[0]
         }
 
-        return {};
+        return {} as IInvItem;
 
       } else {
         // record does not exist, then create a new one
@@ -104,7 +107,7 @@ export class Action {
           refs: [newRefItem["_id"]],
         });
 
-        return newInvItem;
+        return newInvItem || {} as IInvItem;
       }
     }
     return {} as IInvItem;
