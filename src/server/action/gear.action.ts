@@ -5,7 +5,11 @@ import { gears } from '../database/schema/gears';
 
 export class GearAction implements IAction {
 
-  fields = ["dbname", "rating", "type", "equip", "effects"]
+  fields = ["dbname", "rating", "type", "equip", "effects"];
+
+  getAll = async () => {
+    return await Query.getList(gears);
+  };
   
   getList = async (conditions: any = {}, page?: number) => {
     let result = await Query.getList(
@@ -30,6 +34,10 @@ export class GearAction implements IAction {
       this.fields
     );
     return newGear;
+  };
+
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(gears, conditions, token, {updateAll: true});
   };
 
   updateSingle = async (dbname: string, token: any) => {

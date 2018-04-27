@@ -9,16 +9,19 @@ class Gear {
   constructor() {
 
     this.router.get('/', async (ctx) => {
-      ctx.status = 200;
-      ctx.body = {
-        message: "gear works!"
-      }
+      let result = await this.action.getAll();
+      ctx.bodt = result;
     });
 
     this.router.get('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
       let result = await this.action.getList({ dbname });
-      ctx.body = result;
+      if (result) {
+        ctx.body = result[0] || {};
+      } else {
+        ctx.status = 500;
+        ctx.body = {};
+      }
     });
 
     this.router.patch('/dbname/:dbname', async (ctx) => {
@@ -40,8 +43,51 @@ class Gear {
         id: null
       };
 
+    });
+
+    this.router.post('/', async (ctx) => {
+
+      let newGear = await this.action.add(ctx.request.body);
+
+      if (newGear) {
+        ctx.body = {
+          message: `Successfully created new gear "${newGear.dbname}" with id "${newGear._id}"`,
+          status: 'success',
+          id: newGear._id
+        };
+        return;
+      } else {
+        ctx.body = {
+          message: `Failed to create gear "${ctx.request.body.dbname}"`,
+          status: 'failure',
+          id: null
+        }
+      }
 
     });
+
+    this.router.delete('/dbname/:dbname', async (ctx) => {
+
+      let token = {dbname: ctx.params.dbname};
+      let delResult = await this.action.delete(token);
+
+      if (delResult) {
+        ctx.body = {
+          message: `Successfully deleted gear "${ctx.params.dbname}"`,
+          status: 'success',
+          rmCount: delResult.n
+        };
+        return;
+      } else {
+        ctx.body = {
+          message: `Failed to delete gear "${ctx.params.dbname}"`,
+          status: 'failure',
+          rmCount: 0
+        }
+      }
+
+    });
+
 
 
   }
