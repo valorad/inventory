@@ -107,7 +107,7 @@ export class Query {
       let updatedRecords: T[];
       if (options.updateAll) {
         let updateResult = await collection.updateMany(conditions, update);
-        updatedRecords = await Query.getList(conditions) as T[];
+        updatedRecords = await Query.getList(collection) as T[];
       } else {
         let updatedDoc = await collection.findOneAndUpdate(
           conditions,

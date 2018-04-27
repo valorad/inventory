@@ -173,6 +173,7 @@ describe("inventory test", () => {
   test("Add edi's chest armor to Cortana's inventory, then Cortana wears it", async () => {
     let newInv = await invGraphAction.gift("item-edi_body", "actor-cortana");
     expect(newInv).toBeTruthy();
+
     let newInvVerbose = await invGraphAction.getSingle(newInv.item, "actor-cortana");
 
     let itembase = newInvVerbose.base;
