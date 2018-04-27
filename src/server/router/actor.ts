@@ -15,30 +15,30 @@ class Actor {
 
   constructor() {
 
-    this.router.get('/graph', graphqlKoa({ schema: schema }));
-    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/actor/graph' }));
-
     this.router.get('/', async (ctx) => {
-      ctx.status = 200;
-      ctx.body = {
-        message: "actor works!"
-      }
-    });
-
-    this.router.get('/all', async (ctx) => {
       let result = await this.action.getAll();
       ctx.body = result;
     });
 
+    this.router.get('/graph', graphqlKoa({ schema: schema }));
+    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/actor/graph' }));
+
     this.router.get('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
       let result = await this.action.getSingle(dbname);
-      ctx.body = result;
+      if (result) {
+        ctx.body = result[0] || {};
+      } else {
+        ctx.status = 500;
+        ctx.body = {};
+      }
+      
     });
 
     this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
 
-    this.router.post('/add', async (ctx) => {
+    // atomic add
+    this.router.post('/', async (ctx) => {
 
       let newActor = await this.action.add(ctx.request.body);
 
@@ -57,6 +57,53 @@ class Actor {
         }
       }
 
+    });
+
+    // update list
+    this.router.patch("/", async (ctx) => {
+      let conditions: any;
+      let token: any;
+      if (ctx.request.body) {
+        conditions = ctx.request.body.conditions;
+        token = ctx.request.body.token;
+      }
+
+      let updatedActors = await this.action.update(conditions, token);
+      if (updatedActors) {
+        ctx.body = {
+          message: `Successfully updated selected actors`,
+          status: "success",
+          altCount: updatedActors.length
+        }
+      } else {
+        ctx.status = 500;
+        ctx.body = {
+          message: `Failed to update selected actors`,
+          status: "failure",
+          altCount: 0
+        }
+      }
+
+    });
+
+    this.router.patch('/dbname/:dbname', async (ctx) => {
+      let dbname: string = ctx.params.dbname || "";
+      let updatedActors = await this.action.updateSingle(dbname, ctx.request.body);
+      if (updatedActors) {
+        let updatedActor = updatedActors[0];
+        ctx.body = {
+          message: `Successfully updated ${updatedActor.dbname}`,
+          status: "success",
+          id: updatedActor._id
+        };
+        return;
+      }
+
+      ctx.body = {
+        message: `Failed to update ${dbname}`,
+        status: "failure",
+        id: null
+      };
     });
 
     this.router.delete('/dbname/:dbname', async (ctx) => {

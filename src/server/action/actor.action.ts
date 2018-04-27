@@ -54,6 +54,10 @@ export class ActorAction implements IAction {
 
   };
 
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(actors, conditions, token, {updateAll: true});
+  };
+
   updateSingle = async (dbname: string, token: any) => {
     let updatedActor = await Query.setRecord(actors, {dbname}, token);
     return updatedActor;
