@@ -7,6 +7,10 @@ export class TranslationAction implements IAction {
 
   fields = ["dbname", "name", "description"];
 
+  getAll = async () => {
+    return await Query.getList(translations);
+  };
+
   getList = async (conditions: any = {}, page?: number) => {
     let result = await Query.getList(
       translations,
@@ -30,6 +34,10 @@ export class TranslationAction implements IAction {
       this.fields
     );
     return newTranslation;
+  };
+
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(translations, conditions, token, {updateAll: true});
   };
 
   updateSingle = async (dbname: string, token: any) => {
