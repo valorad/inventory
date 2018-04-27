@@ -43,7 +43,7 @@ export class RefItemAction implements IAction {
   };
 
   update = async (conditions: any, token: any) => {
-    return await Query.setRecord(refItems, conditions, token);
+    return await Query.setRecord(refItems, conditions, token, {updateAll: true});
   };
 
   delete = async (token: any) => {

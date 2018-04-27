@@ -9,13 +9,6 @@ class RefItem {
   constructor() {
 
     this.router.get('/', async (ctx) => {
-      ctx.status = 200;
-      ctx.body = {
-        message: "refItems works!"
-      }
-    });
-
-    this.router.get('/all', async (ctx) => {
       let result = await this.action.getAll();
       ctx.body = result;
     });
@@ -37,9 +30,10 @@ class RefItem {
 
       let result = await this.action.getSingle(_id);
       if (result) {
-        ctx.body = result;
+        ctx.body = result[0] || {};
       } else {
-        ctx.body = [];
+        ctx.status = 500;
+        ctx.body = {};
       }
       
     });
@@ -66,6 +60,33 @@ class RefItem {
 
     });
 
+    // update list
+    this.router.patch("/", async (ctx) => {
+      let conditions: any;
+      let token: any;
+      if (ctx.request.body) {
+        conditions = ctx.request.body.conditions;
+        token = ctx.request.body.token;
+      }
+
+      let updatedRefItems = await this.action.update(conditions, token);
+      if (updatedRefItems) {
+        ctx.body = {
+          message: `Successfully updated selected ref-items`,
+          status: "success",
+          altCount: updatedRefItems.length
+        }
+      } else {
+        ctx.status = 500;
+        ctx.body = {
+          message: `Failed to update selected ref-items`,
+          status: "failure",
+          altCount: 0
+        }
+      }
+
+    });
+
     this.router.patch('/id/:_id', async (ctx) => {
       let _id: string = ctx.params._id;
 
@@ -73,7 +94,7 @@ class RefItem {
       if (updatedRefItems) {
         let updatedItem = updatedRefItems[0];
         ctx.body = {
-          message: `Successfully updated ref-item ${updatedItem.dbname}`,
+          message: `Successfully updated ref-item ${updatedItem.item}`,
           status: "success",
           id: updatedItem._id
         };
