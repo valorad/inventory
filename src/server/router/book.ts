@@ -74,13 +74,13 @@ class Book {
 
     this.router.post('/', async (ctx) => {
 
-      let newBaseItem = await this.action.add(ctx.request.body);
+      let newBook = await this.action.add(ctx.request.body);
 
-      if (newBaseItem) {
+      if (newBook) {
         ctx.body = {
-          message: `Successfully created new book "${newBaseItem.dbname}" with id "${newBaseItem._id}"`,
+          message: `Successfully created new book "${newBook.dbname}" with id "${newBook._id}"`,
           status: 'success',
-          id: newBaseItem._id
+          id: newBook._id
         };
         return;
       } else {

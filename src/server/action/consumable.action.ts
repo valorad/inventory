@@ -5,7 +5,11 @@ import { consumables } from '../database/schema/consumables';
 
 export class ConsumableAction implements IAction {
 
-  fields = ["dbname", "type", "effects"]
+  fields = ["dbname", "type", "effects"];
+
+  getAll = async () => {
+    return await Query.getList(consumables);
+  };
   
   getList = async (conditions: any = {}, page?: number) => {
     let result = await Query.getList(
@@ -30,6 +34,10 @@ export class ConsumableAction implements IAction {
       this.fields
     );
     return newConsumable;
+  };
+
+  update = async (conditions: any, token: any) => {
+    return await Query.setRecord(consumables, conditions, token, {updateAll: true});
   };
 
   updateSingle = async (dbname: string, token: any) => {
