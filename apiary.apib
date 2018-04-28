@@ -8,16 +8,24 @@ HOST: http://localhost:3000
 # Group Actors
 玩家操作提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
 
-## Router Index [/api/actor/]
+## Router Index [/api/actors/]
 
-尝试访问actor路由（测试用）
+获取所有玩家(无条件 无投影 无分类)
 
 ### Touch  [GET]
 + Response 200 (application/json)
 
-        {
-            "message": "actor works!"
-        }
+        [
+            {
+                "_id": "5abf508ffbce38654fd3ef9e",
+                "dbname": "actor-valorad",
+                "icon": ""
+            },
+            {
+                "_id": "5ae475bdb2dcbd017c4eda6f",
+                "dbname": "actor-testy"
+            }
+        ]
         
 
 
@@ -160,42 +168,22 @@ HOST: http://localhost:3000
         }
 
 
+## Get an actor by dbname [/api/actors/dbname/{dbname}]
 
-## Get all actors - unconditionally [/api/actor/all]
-
-获取所有玩家（无条件，无投影，无分页）
-
-### Get all actors  [GET]
-+ Response 200 (application/json)
-
-        [
-            {
-                "_id": "5add8f6fdd194218735485e3",
-                "dbname": "actor-testy"
-            },
-            {
-                "_id": "5add8f6fdd194218735485e4",
-                "dbname": "actor-olaf"
-            }
-        ]
-        
-
-## Get an actor by dbname [/api/actor/dbname/{dbname}]
-
-按*dbname*查找玩家信息
+按*dbname*查找玩家信息，返回单个玩家
 
 ### Get an actor by dbname  [GET]
 + Response 200 (application/json)
 
-        [
-            {
-                "_id": "5add8f6fdd194218735485e3",
-                "dbname": "actor-testy"
-            }
-        ]
+
+        {
+            "_id": "5add8f6fdd194218735485e3",
+            "dbname": "actor-testy"
+        }
+
         
         
-## Add a new actor [/api/actor/add]
+## Add a new actor [/api/actors/]
 
 向actors数据集中增加记录。
 
@@ -222,8 +210,38 @@ HOST: http://localhost:3000
           "id": null
         }
         
+## Update an actor [/api/actors/]
 
-## Delete an actor [/api/actor/delete/{name}]
+更新actors数据集中的记录。
+
+### Update an actor  [PATCH]
+
++ Request (application/json)
+
+        {
+          "conditions": {
+            "dbname": "actor-valorad"
+          },
+          "token": {
+            "icon": "/mnt/c/windows/system32/reg32.d1l"
+          }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected actors",
+          "status": "success",
+          "altCount": 2
+        }
+        {
+          "message": "Failed to update selected actors",
+          "status": "failure",
+          "altCount": 0
+        }
+        
+
+## Delete an actor [/api/actors/delete/dbname/{dbname}]
 
 从actors数据集中删除记录。
 
