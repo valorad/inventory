@@ -16,7 +16,7 @@ class BaseItem {
   constructor() {
 
     this.router.get('/graph', graphqlKoa({ schema: schema }));
-    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/baseItem/graph' }));
+    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/baseItems/graph' }));
 
     this.router.get('/', async (ctx) => {
       let result = await this.action.getAll();

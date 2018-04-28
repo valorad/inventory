@@ -44,7 +44,8 @@ class InventoryGraph {
 
   resolvers = {
     Query: {
-      inventoryItems: this.getList
+      invItems: this.getList,
+      invItem: this.getSingle
     },
     Mutation: {
       gift: this.gift,

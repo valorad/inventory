@@ -21,7 +21,7 @@ class Actor {
     });
 
     this.router.get('/graph', graphqlKoa({ schema: schema }));
-    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/actor/graph' }));
+    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/actors/graph' }));
 
     this.router.get('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";

@@ -80,7 +80,7 @@ export const invItemSpec = describe("Inventory inspections", () => {
       let _id = transferedItem[0]._id;
       let robin___hood = await action.getSingle(_id);
       if (robin___hood) {
-        expect(robin___hood[0].owner === transferedItem[0].owner);
+        expect(robin___hood[0]["owner"] === transferedItem[0]["owner"]);
         return;
       }
     }

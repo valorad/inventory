@@ -26,7 +26,7 @@ export class Action {
 
   getList = async (conditions: any = {}, page?: number, lang: string = "en") => {
     let metActors = await actorAction.getList(conditions, page);
-    let extractedActors;
+    let extractedActors: IActor[] = [];
     
     for (let actor of metActors) {
       let ext = this.extractInfo(actor, actorAction.fields) as IActor;

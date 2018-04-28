@@ -15,7 +15,7 @@ class InventoryItem {
   constructor() {
 
     this.router.get('/graph', graphqlKoa({ schema: schema }));
-    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/invItem/graph' }));
+    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/invItems/graph' }));
 
     this.router.get('/', async (ctx) => {
       let result = await this.action.getAll();

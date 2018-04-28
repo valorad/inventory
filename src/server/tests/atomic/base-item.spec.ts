@@ -38,7 +38,7 @@ export const baseItemSpec = describe("Base-item inspections", () => {
     let ironhelmet = await action.getSingle("item-iron_helmet");
 
     if (ironhelmet && updatedBaseItem) {
-      expect(ironhelmet[0].effects === updatedBaseItem[0].effects);
+      expect(ironhelmet[0]["effects"] === updatedBaseItem[0]["effects"]);
     } else {
       throw new Error("Failed to make a discount to iron helmet");
     }
