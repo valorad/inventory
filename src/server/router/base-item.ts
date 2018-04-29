@@ -15,13 +15,13 @@ class BaseItem {
 
   constructor() {
 
-    this.router.get('/graph', graphqlKoa({ schema: schema }));
-    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/baseItems/graph' }));
-
     this.router.get('/', async (ctx) => {
       let result = await this.action.getAll();
-      ctx.bodt = result;
+      ctx.body = result;
     });
+
+    this.router.get('/graph', graphqlKoa({ schema: schema }));
+    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/baseItems/graph' }));
 
     this.router.get('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";

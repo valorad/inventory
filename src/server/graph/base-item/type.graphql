@@ -42,6 +42,7 @@ type Detail {
   effectsI18n: [TranslatedEffect]
   # book
   content: String
+  contentDetail: String
 }
 
 type TranslatedEquip {
@@ -65,8 +66,9 @@ input newDetail {
 }
 
 input translations {
-  name: JSON,
+  name: JSON
   description: JSON
+  bookContent: JSON
 }
 
 type Query {

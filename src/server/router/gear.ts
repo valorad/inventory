@@ -10,7 +10,7 @@ class Gear {
 
     this.router.get('/', async (ctx) => {
       let result = await this.action.getAll();
-      ctx.bodt = result;
+      ctx.body = result;
     });
 
     this.router.get('/dbname/:dbname', async (ctx) => {
