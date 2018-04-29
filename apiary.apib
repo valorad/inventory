@@ -19,17 +19,63 @@ HOST: http://localhost:3000
 + Response 200 (application/json)
 
         [
-            {
-                "_id": "5abf508ffbce38654fd3ef9e",
-                "dbname": "actor-valorad",
-                "icon": ""
-            },
-            {
-                "_id": "5ae475bdb2dcbd017c4eda6f",
-                "dbname": "actor-testy"
-            }
+          {
+            "_id": "5abf508ffbce38654fd3ef9e",
+            "dbname": "actor-valorad",
+            "icon": ""
+          },
+          {
+            "_id": "5ae475bdb2dcbd017c4eda6f",
+            "dbname": "actor-testy"
+          }
         ]
-        
+
+### Add a new Actor  [POST]
+
++ Request (application/json)
+
+        {
+          "dbname": "actor-olaf"
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully created new actor \"actor-olaf\" with id \"5addb4aedd194218735485e5\"",
+          "status": "success",
+          "id": "5addb4aedd194218735485e5"
+        },
+        {
+          "message": "Failed to create actor \"actor-olaf\" ",
+          "status": "failure",
+          "id": null
+        }
+
+### Update actors  [PATCH]
+
++ Request (application/json)
+
+        {
+          "conditions": {
+            "dbname": "actor-valorad"
+          },
+          "token": {
+            "icon": "/mnt/c/windows/system32/reg32.d1l"
+          }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected actors",
+          "status": "success",
+          "altCount": 2
+        }
+        {
+          "message": "Failed to update selected actors",
+          "status": "failure",
+          "altCount": 0
+        }
 
 
 ## GraphQL [/api/actor/graph]
@@ -42,43 +88,43 @@ HOST: http://localhost:3000
 + Request (application/json)
 
         {
-            "graphql_Exp": "query getActors($conditions: JSON, $page: Int, $lang: String) { actors: actors(conditions: $conditions, page: $page, lang: $lang) { dbname, icon, equiped, name, biography }}",
-            "graphql_Arg": { }
+          "graphql_Exp": "query getActors($conditions: JSON, $page: Int, $lang: String) { actors: actors(conditions: $conditions, page: $page, lang: $lang) { dbname, icon, equiped, name, biography }}",
+          "graphql_Arg": { }
         }
 
 + Response 200 (application/json)
 
         {
-            "data": {
-                "actors": [
-                    {
-                        "dbname": "actor-testy",
-                        "icon": "path/to/avatar.jpg",
-                        "equiped": {
-                          "body": ObjectId,
-                          "head": ObjectId,
-                          "back": ObjectId,
-                          "heart": ObjectId,
-                          "foot": ObjectId
-                        },
-                        "name": "测妈妈",
-                        "biography": "测妈妈"
-                    }
-                ]
-            }
+          "data": {
+            "actors": [
+              {
+                "dbname": "actor-testy",
+                "icon": "path/to/avatar.jpg",
+                "equiped": {
+                  "body": ObjectId,
+                  "head": ObjectId,
+                  "back": ObjectId,
+                  "heart": ObjectId,
+                  "foot": ObjectId
+                },
+                "name": "测试人员",
+                "biography": "测试人员A"
+              }
+            ]
+          }
         }
         
-### 【查】List an actor  [POST]
+### 【查】Get an actor  [POST]
 根据条件查询玩家，返回单个玩家
 
 + Request (application/json)
 
         {
-            "graphql_Exp": "query getActor($dbname: String, $lang: String) { actor: actor(dbname: $dbname, lang: $lang) { dbname, icon, equiped, name, biography, } }",
-            "graphql_Arg": {
-              "dbname": "actor-testy",
-              "lang": "zh"
-            }
+          "graphql_Exp": "query getActor($dbname: String, $lang: String) { actor: actor(dbname: $dbname, lang: $lang) { dbname, icon, equiped, name, biography, } }",
+          "graphql_Arg": {
+            "dbname": "actor-testy",
+            "lang": "zh"
+          }
         }
 
 + Response 200 (application/json)
@@ -102,16 +148,16 @@ HOST: http://localhost:3000
 + Request (application/json)
 
         {
-            "graphql_Exp": "mutation addActor($info: newActor!) { add(input: $info) { message, status, id } } ",
-            "graphql_Arg": {
-                "info": {
-                    "dbname": "actor-testy",
-                    "translations": {
-                      "name": "{\"en\": \"testy\",\"zh\": \"测妈妈\"}",
-                      "biography": "{\"en\": \"testy\",\"zh\": \"测妈妈\"}"
-                    }
-                }
+          "graphql_Exp": "mutation addActor($info: newActor!) { add(input: $info) { message, status, id } } ",
+          "graphql_Arg": {
+            "info": {
+              "dbname": "actor-testy",
+              "translations": {
+                "name": "{\"en\": \"testy\",\"zh\": \"测妈妈\"}",
+                "biography": "{\"en\": \"testy\",\"zh\": \"测妈妈\"}"
+              }
             }
+          }
         }
 
 + Response 200 (application/json)
@@ -152,10 +198,10 @@ HOST: http://localhost:3000
 + Request (application/json)
 
         {
-            "graphql_Exp": "mutation deleteActor($conditions: JSON!) { delete(conditions: $conditions) { message, status, rmCount } } ",
-            "graphql_Arg": {
-                "conditions": "{\"dbname\": \"actor-testy\"}"
-            }
+          "graphql_Exp": "mutation deleteActor($conditions: JSON!) { delete(conditions: $conditions) { message, status, rmCount } } ",
+          "graphql_Arg": {
+            "conditions": "{\"dbname\": \"actor-testy\"}"
+          }
         }
 
 + Response 200 (application/json)
@@ -171,7 +217,7 @@ HOST: http://localhost:3000
         }
 
 
-## Get an actor by dbname [/api/actors/dbname/{dbname}]
+## dbname [/api/actors/dbname/{dbname}]
 
 按*dbname*查找玩家信息，返回单个玩家
 
@@ -180,77 +226,11 @@ HOST: http://localhost:3000
 
 
         {
-            "_id": "5add8f6fdd194218735485e3",
-            "dbname": "actor-testy"
+          "_id": "5add8f6fdd194218735485e3",
+          "dbname": "actor-testy"
         }
 
-        
-        
-## Add a new actor [/api/actors/]
-
-向actors数据集中增加记录。
-
-注意不会向其他数据集增加记录，那种情况请使用graph。
-
-### Add a new Actor  [POST]
-
-+ Request (application/json)
-
-        {
-          "dbname": "actor-olaf"
-        }
-
-+ Response 200 (application/json)
-
-        {
-          "message": "Successfully created new actor \"actor-olaf\" with id \"5addb4aedd194218735485e5\"",
-          "status": "success",
-          "id": "5addb4aedd194218735485e5"
-        },
-        {
-          "message": "Failed to create actor \"actor-olaf\" ",
-          "status": "failure",
-          "id": null
-        }
-        
-## Update an actor [/api/actors/]
-
-更新actors数据集中的记录。
-
-### Update an actor  [PATCH]
-
-+ Request (application/json)
-
-        {
-          "conditions": {
-            "dbname": "actor-valorad"
-          },
-          "token": {
-            "icon": "/mnt/c/windows/system32/reg32.d1l"
-          }
-        }
-
-+ Response 200 (application/json)
-
-        {
-          "message": "Successfully updated selected actors",
-          "status": "success",
-          "altCount": 2
-        }
-        {
-          "message": "Failed to update selected actors",
-          "status": "failure",
-          "altCount": 0
-        }
-        
-
-## Delete an actor [/api/actors/delete/dbname/{dbname}]
-
-从actors数据集中删除记录。
-
-注意不会删除其他数据集中的记录，那种情况请使用graph。
-
-### Delete an actor  [DELETE]
+### Delete an actor by dbname  [DELETE]
 
 + Response 200 (application/json)
 
@@ -264,7 +244,289 @@ HOST: http://localhost:3000
           "status": "failure",
           "rmCount": 0
         }
+
+# Group Base-item
+基础物品信息操作。提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
+
+## Router Index [/api/baseItems/]
+包括：
+- 获取所有物品基础信息(无条件 无投影 无分类)
+- 增加物品基础信息
+- 修改物品基础信息
+
+### Get all base-items  [GET]
++ Response 200 (application/json)
+
+        [
+          {
+            "weight": 10,
+            "value": 100,
+            "_id": "5adec3331441e2280493ec53",
+            "dbname": "item-iron_helmet",
+            "category": "gears",
+          },
+          {
+            "weight": 15.8,
+            "value": 650,
+            "_id": "5ae522cd603a66102fae0840",
+            "dbname": "item-weapon-dragonbone_greatsword",
+            "category": "gears",
+          }
+        ]
+
+### add a base-item  [POST]
++ Request (application/json)
+        {
+          "dbname": "item-weapon-dragonbone_greatsword",
+          "category": "gears",
+          "weight": 15.8,
+          "value": 650
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully created new base-item \"item-weapon-dragonbone_greatsword\" with id \"5ae522cd603a66102fae0840\"",
+          "status": "success",
+          "id": "5ae522cd603a66102fae0840"
+        }
+        {
+          "message": "Failed to create base-item \"item-weapon-dragonbone_greatsword\" with id \"5ae522cd603a66102fae0840\"",
+          "status": "failure",
+          "id": null
+        }
+
+### update base-items  [PATCH]
++ Request (application/json)
+        {
+          "conditions": {
+            "dbname": "item-weapon-dragonbone_greatsword"
+          },
+          "token": {
+            "$set": {
+              "value": 998
+            }
+          }
+        }
         
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected base-items",
+          "status": "success",
+          "altCount": 3
+        }
+
+        {
+          "message": "Failed to update selected base-items",
+          "status": "failure",
+          "altCount": 0
+        }
+        
+
+
+        
+## GraphQL [/api/baseItems/graph]
+
+增加、删除与查询玩家的物品栏。使用graphql，会涉及多个数据集。
+
+### 【查】Get base-item list  [POST]
+根据条件查询物品基本信息，返回列表
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "query getItems($conditions: JSON, $page: Int, $lang: String) { baseItems: baseItems(conditions: $conditions, page: $page, lang: $lang) { dbname, name, description, value, weight, category, detail { rating, typeName, equipI18n { name, equip }, effectsI18n { name, effect }, contentDetail } } }",
+            "graphql_Arg": {
+              "lang": "zh",
+              "conditions": "{\"dbname\": \"item-stimpack\"}"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "baseItems": [
+              {
+                "dbname": "item-stimpack",
+                "name": "治疗针",
+                "description": "",
+                "value": 110,
+                "weight": 1,
+                "category": "consumables",
+                "detail": {
+                "rating": null,
+                "typeName": null,
+                "equipI18n": null,
+                "effectsI18n": [
+                  {
+                    "name": "Restore health",
+                    "effect": "effect-resotre_health"
+                  }
+                ],
+                "contentDetail": null
+                }
+              }
+            ]
+          }
+        }
+        
+### 【查】Get a base-item  [POST]
+查询单个物品基本信息，返回单件物品
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "query getItem($dbname: String, $lang: String) { baseItem: baseItem(dbname: $dbname, lang: $lang) { dbname, name, description, value, weight, category, detail { rating, typeName, equipI18n { name, equip }, effectsI18n { name, effect }, contentDetail } } }",
+            "graphql_Arg": {
+              "dbname": "item-stimpack"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "baseItem": {
+              "dbname": "item-stimpack",
+              "name": "Stimpack",
+              "description": "",
+              "value": 110,
+              "weight": 1,
+              "category": "consumables",
+              "detail": {
+                "rating": null,
+                "typeName": "Potions",
+                "effectsI18n": [
+                  {
+                    "name": "Restore health",
+                    "effect": "effect-resotre_health"
+                  }
+                ],
+                "contentDetail": null
+              }
+            }
+          }
+        }
+        
+### 【增】Add a base-item  [POST]
+增加一个新物品信息
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "mutation createItem($input: newBaseItem!) { add: add(input: $input) { message, status, id } }",
+            "graphql_Arg": {
+              "input": {
+                "dbname": "item-iron_helmet",
+                "value": 100,
+                "weight": 10,
+                "category": "gears",
+                "translations": {
+                  "name": "{\"en\": \"Iron helmet\", \"zh\": \"铁制头盔\"}"
+                },
+                "detail": {
+                  "rating": 10,
+                  "type": "type-heavy_armor",
+                  "equip": "equip-head"
+                }
+              }
+            }
+
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "add": {
+              "message": "Successfully created new baseItem \"item-iron_helmet\" with id \"5adeba4ef790322434dd6af7\"",
+              "status": "success",
+              "id": "5adeba4ef790322434dd6af7"
+            }
+          }
+        }
+
+        
+### 【删】Delete base-items [POST]
+删除满足条件的物品信息
+
++ Request (application/json)
+
+        {
+            "graphql_Exp": "mutation deleteItem($conditions: JSON) { delete: delete(conditions: $conditions) { message, status, rmCount } }",
+            "graphql_Arg": {
+                "conditions": "{\"dbname\": \"item-iron_helmet\"}"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "delete": {
+              "message": "Successfully deleted selected baseItems",
+              "status": "success",
+              "rmCount": 1
+            }
+          }
+        }
+
+## dbname query [/api/baseItems/dbname/{dbname}]
+按照*dbname*查询一个物品的基础信息
+
+### Get a base-item  [GET]
+
++ Response 200 (application/json)
+
+        {
+          "weight": 10,
+          "value": 100,
+          "_id": "5adec3331441e2280493ec53",
+          "dbname": "item-iron_helmet",
+          "category": "gears"
+        }
+
+### update a base-item  [PATCH]
+
++ Request (application/json)
+        {
+          "$inc": {
+            "weight": 15
+          }
+        }
+
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully updated base-item item-iron_helmet",
+          "status": "success",
+          "id": "5adec3331441e2280493ec53"
+        }
+
+        {
+          "message": "Failed to update base-item item-iron_helmet",
+          "status": "failure",
+          "id": null
+        }
+
+
+### delete a base-item  [DELETE]
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully deleted base-item \"item-weapon-dragonbone_greatsword\"",
+          "status": "success",
+          "rmCount": 1
+        }
+
+        {
+          "message": "Failed to delete base-item \"item-weapon-dragonbone_greatsword\"",
+          "status": "failure",
+          "id": null
+        }
+
 # Group Inventory
 物品栏操作。提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
 
@@ -341,151 +603,3 @@ HOST: http://localhost:3000
           }
         }
 
-# Group Base-item
-基础物品信息操作。提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
-
-## GraphQL [/api/invItem/graph]
-
-增加、删除与查询玩家的物品栏。使用graphql，会涉及多个数据集。
-
-### 【查】Get base-item list  [POST]
-根据条件查询物品基本信息，返回列表
-
-+ Request (application/json)
-
-        {
-            "graphql_Exp": "query getActors($conditions: JSON, $page: Int, $lang: String) { actors: actors(conditions: $conditions, page: $page, lang: $lang) { dbname, icon, equiped, name, biography }}",
-            "graphql_Arg": {
-              "lang": "zh",
-              "conditions": "{\"dbname\": \"item-iron_helmet\"}"
-            }
-        }
-
-+ Response 200 (application/json)
-
-        {
-          "data": {
-            "baseItems": [
-              {
-                "dbname": "item-iron_helmet",
-                "name": "铁制头盔",
-                "description": "",
-                "value": 100,
-                "weight": 10,
-                "category": "gears",
-                "detail": {
-                  "rating": 10,
-                  "type": "type-heavy_armor",
-                  "typeName": "重甲",
-                  "equip": "equip-head",
-                  "equipName": "头部",
-                  "effects": [],
-                  "effectsI18n": []
-                }
-              }
-            ]
-          }
-        }
-        
-### 【查】Get a base-item  [POST]
-查询单个物品基本信息，返回单件物品
-
-+ Request (application/json)
-
-        {
-            "graphql_Exp": "query getItem($dbname: String, $lang: String) { baseItem: baseItem(dbname: $dbname, lang: $lang) { dbname, name, description, value, weight, category, detail { type, typeName, effects, effectsI18n { effect, name } } } }",
-            "graphql_Arg": {
-              "dbname": "item-stimpack"
-            }
-        }
-
-+ Response 200 (application/json)
-
-        {
-          "data": {
-            "baseItem": {
-              "dbname": "item-stimpack",
-              "name": "Stimpack",
-              "description": "",
-              "value": 110,
-              "weight": 1,
-              "category": "consumables",
-              "detail": {
-                "type": "type-potion",
-                "typeName": "Potions",
-                "effects": [
-                  "effect-resotre_health"
-                ],
-                "effectsI18n": [
-                  {
-                    "effect": "effect-resotre_health",
-                    "name": "Restore health"
-                  }
-                ]
-              }
-            }
-          }
-        }
-        
-### 【增】Add a base-item  [POST]
-增加一个新物品信息
-
-+ Request (application/json)
-
-        {
-            "graphql_Exp": "mutation createItem($input: newBaseItem!) { add: add(input: $input) { message, status, id } }",
-            "graphql_Arg": {
-              "input": {
-                "dbname": "item-iron_helmet",
-                "value": 100,
-                "weight": 10,
-                "category": "gears",
-                "translations": {
-                  "name": "{\"en\": \"Iron helmet\", \"zh\": \"铁制头盔\"}"
-                },
-                "detail": {
-                  "rating": 10,
-                  "type": "type-heavy_armor",
-                  "equip": "equip-head"
-                }
-              }
-            }
-
-        }
-
-+ Response 200 (application/json)
-
-        {
-          "data": {
-            "add": {
-              "message": "Successfully created new baseItem \"item-iron_helmet\" with id \"5adeba4ef790322434dd6af7\"",
-              "status": "success",
-              "id": "5adeba4ef790322434dd6af7"
-            }
-          }
-        }
-
-        
-### 【删】Delete base-items [POST]
-删除满足条件的物品信息
-
-+ Request (application/json)
-
-        {
-            "graphql_Exp": "mutation deleteItem($conditions: JSON) { delete: delete(conditions: $conditions) { message, status, rmCount } }",
-            "graphql_Arg": {
-                "conditions": "{\"dbname\": \"item-iron_helmet\"}"
-            }
-        }
-
-+ Response 200 (application/json)
-
-        {
-          "data": {
-            "delete": {
-              "message": "Successfully deleted selected baseItems",
-              "status": "success",
-              "rmCount": 1
-            }
-          }
-        }
