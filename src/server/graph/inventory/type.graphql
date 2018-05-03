@@ -12,7 +12,7 @@ type RefItem {
   refID: ID
   owner: String
   num: Int
-  dbname: String
+  item: String
 }
 
 type InvVerboseItem {
@@ -24,7 +24,8 @@ type InvVerboseItem {
 
 type InvItem {
   holder: String
-  item: String
+  item: String,
+  refs: [String]
 }
 
 type IRMResult {
@@ -38,6 +39,6 @@ type Query {
 }
 
 type Mutation {
-  gift(itemName: String, holder: String): InvItem
-  remove(itemName: String, holder: String): IRMResult
+  gift(itemName: String, holder: String, num: Int): InvItem
+  remove(itemName: String!, holder: String!, num: Int): IRMResult
 }
