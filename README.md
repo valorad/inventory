@@ -1,7 +1,7 @@
 # inventory
 > 高仿[SkyUI](https://www.nexusmods.com/skyrimspecialedition/mods/12604) 5的[Angular](https://github.com/angular/angular)物品栏.
 > 
-> An Inventory highly resembles [SkyUI](https://www.nexusmods.com/skyrimspecialedition/mods/12604) 5
+> A game-inventory highly resembles [SkyUI](https://www.nexusmods.com/skyrimspecialedition/mods/12604) 5
 
 主要是希望当成 [GraphQL](https://github.com/graphql/graphql-js) 和 [Angular-Redux](https://github.com/angular-redux/store) 的练手项目。
 
@@ -39,19 +39,20 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 前端：
 
 - 界面：首页
+- 界面：登录页（选人）
 - 界面：物品栏页（物品详情 增加物品-控制台 删除物品-R-移动端-更多）
 
 后台：
 
-- ✔️ 数据库设计
-- ✔️ 业务逻辑(action)单元测试
+- 数据库
+  - ✔️ 数据库设计
+  - 数据库文档
+- ✔️ 业务逻辑(action)
 - ✔️ i18n框架
-- 数据库文档
-- 接口： 
-  - ✔️ graph
-  - 路由 - 基础路由
-  - 接口文档
-
+- ✔️ graph
+- ✔️ API： 
+  - ✔️ 路由
+  - ✔️ API文档
 
 ## 后台数据集
 
@@ -59,7 +60,7 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 ## 后台API
 
-请查看 [API 说明文档(WIP)](https://valoradinventory.docs.apiary.io/)
+请查看 [API 说明文档](https://valoradinventory.docs.apiary.io/)
 
 # License
 
