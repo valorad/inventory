@@ -28,17 +28,17 @@ class InventoryGraph {
     let holder = args.holder;
     let lang = args.lang || "en";
     if (itemName && holder) {
-      return await this.action.getSingle(itemName, lang);
+      return await this.action.getSingle(itemName, holder, lang);
     }
     return {} as IInvVerboseItem;
   };
 
   gift: IMutation["gift"] = async (obj, args) => {
-    return await this.action.gift(args.itemName, args.holder);
+    return await this.action.gift(args.itemName, args.holder, args.num);
   };
 
   remove: IMutation["remove"] = async (obj, args) => {
-    return await this.action.remove(args.itemName, args.holder);
+    return await this.action.remove(args.itemName, args.holder, args.num);
   };
 
 

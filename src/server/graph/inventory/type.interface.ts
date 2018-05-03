@@ -50,6 +50,6 @@ export interface IQuery {
 }
 
 export interface IMutation {
-  gift: (obj: any, args: {itemName: string, holder: string}, context?: any, info?: any) => Promise<IInvItem>,
-  remove: (obj: any, args: {itemName: string, holder: string}, context?: any, info?: any) => Promise<IRMResult>
+  gift: (obj: any, args: {itemName: string, holder: string, num?: number}, context?: any, info?: any) => Promise<IInvItem>,
+  remove: (obj: any, args: {itemName: string, holder: string, num?: number}, context?: any, info?: any) => Promise<IRMResult>
 }
