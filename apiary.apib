@@ -275,7 +275,9 @@ HOST: http://localhost:3000
         ]
 
 ### add a base-item  [POST]
+
 + Request (application/json)
+
         {
           "dbname": "item-weapon-dragonbone_greatsword",
           "category": "gears",
@@ -297,7 +299,9 @@ HOST: http://localhost:3000
         }
 
 ### update base-items  [PATCH]
+
 + Request (application/json)
+
         {
           "conditions": {
             "dbname": "item-weapon-dragonbone_greatsword"
@@ -491,6 +495,7 @@ HOST: http://localhost:3000
 ### update a base-item  [PATCH]
 
 + Request (application/json)
+
         {
           "$inc": {
             "weight": 15
@@ -499,6 +504,7 @@ HOST: http://localhost:3000
 
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully updated base-item item-iron_helmet",
           "status": "success",
@@ -515,6 +521,7 @@ HOST: http://localhost:3000
 ### delete a base-item  [DELETE]
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully deleted base-item \"item-weapon-dragonbone_greatsword\"",
           "status": "success",
@@ -555,9 +562,10 @@ HOST: http://localhost:3000
           }
         ]
 
-### Add an inv-item  [GET]
+### Add an inv-item  [POST]
 
 + Request (application/json)
+
         {
           "item": "item-iron_helmet",
           "holder": "actor-testy",
@@ -565,6 +573,7 @@ HOST: http://localhost:3000
         }
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully created new inv-item \"item-iron_helmet\" with id \"5aea74af54dd080f632a9fd2\"",
           "status": "success",
@@ -817,7 +826,9 @@ HOST: http://localhost:3000
 基于item的dbname的查询
 
 ### Get inv-items by item dbname [GET]
+
 + Response 200 (application/json)
+
         [
           {
             "refs": [],
@@ -832,6 +843,7 @@ HOST: http://localhost:3000
 
 ### Get an inv-item by id [GET]
 + Response 200 (application/json)
+
         {
           "refs": [
             "5aea928e6d352c218d1eaaa8"
@@ -844,6 +856,7 @@ HOST: http://localhost:3000
 ### Update an inv-item by id [PATCH]
 
 + Request (application/json)
+
         {
           "$set": {
               "holder": "actor-valorad"
@@ -851,6 +864,7 @@ HOST: http://localhost:3000
         }
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully updated actor-testy's inv-item item-stimpack",
           "status": "success",
@@ -866,6 +880,7 @@ HOST: http://localhost:3000
 ### Delete an inv-item by id [DELETE]
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully deleted inv-item 5aea74af54dd080f632a9fd2",
           "status": "success",
@@ -885,6 +900,7 @@ HOST: http://localhost:3000
 ### Get all books [GET]
 
 + Response 200 (application/json)
+
         [
           {
             "_id": "5aeaa794c530502769e4656c",
@@ -924,12 +940,14 @@ HOST: http://localhost:3000
 ### Add a new book [POST]
 
 + Request (application/json)
+
         {
           "dbname": "item-book-papyrus01",
           "content": "content-papyrus01"
         }
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully created new book \"item-book-papyrus01\" with id \"5aeaa794c530502769e4656c\"",
           "status": "success",
@@ -947,6 +965,7 @@ HOST: http://localhost:3000
 ### Get a book [GET]
 
 + Response 200 (application/json)
+
         {
           "_id": "5aeaa794c530502769e4656c",
           "dbname": "item-book-papyrus01",
@@ -956,11 +975,13 @@ HOST: http://localhost:3000
 ### Update a book [PATCH]
 
 + Request (application/json)
+
         {
           "content": "content-papyrus01"
         }
         
 + Response 200 (application/json)
+
         {
           "message": "Successfully updated book item-book-papyrus01",
           "status": "success",
@@ -976,6 +997,7 @@ HOST: http://localhost:3000
 ### Delete a book [DELETE]
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully deleted book item-book-papyrus01",
           "status": "success",
@@ -995,6 +1017,7 @@ HOST: http://localhost:3000
 ### Get all consumables [GET]
 
 + Response 200 (application/json)
+
         [
           {
             "_id": "5aeaa794c530502769e4651d",
@@ -1034,6 +1057,7 @@ HOST: http://localhost:3000
 
 ### Add a new consumable [POST]
 + Request (application/json)
+
         {
           "dbname": "item-consumable-titanV",
           "type": "grenade"
@@ -1041,6 +1065,7 @@ HOST: http://localhost:3000
         }
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully created new consumable \"item-consumable-titanV\" with id \"5aeaa794c530502769e4651d\"",
           "status": "success",
@@ -1059,6 +1084,7 @@ HOST: http://localhost:3000
 ### Get a consumable [GET]
 
 + Response 200 (application/json)
+
         {
           "_id": "5aeaa794c530502769e4651d",
           "dbname": "item-consumable-titanV",
@@ -1069,11 +1095,13 @@ HOST: http://localhost:3000
 ### Update a consumable [PATCH]
 
 + Request (application/json)
+
         {
           "type": "ammo"
         }
         
 + Response 200 (application/json)
+
         {
           "message": "Successfully updated consumable item-consumable-titanV",
           "status": "success",
@@ -1090,6 +1118,7 @@ HOST: http://localhost:3000
 ### Delete a consumable [DELETE]
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully deleted consumable item-consumable-titanV",
           "status": "success",
@@ -1108,6 +1137,7 @@ HOST: http://localhost:3000
 
 ### Get all gears [GET]
 + Response 200 (application/json)
+
         [
           {
             "_id": "5aeaa794c530502769e4136c",
@@ -1149,6 +1179,7 @@ HOST: http://localhost:3000
 
 ### Add a new gear [POST]
 + Request (application/json)
+
         {
           "dbname": "item-daedric_armor",
           "rating": 75,
@@ -1158,6 +1189,7 @@ HOST: http://localhost:3000
         }
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully created new gear \"item-daedric_armor\" with id \"5aeaa794c530502769e4656c\"",
           "status": "success",
@@ -1175,6 +1207,7 @@ HOST: http://localhost:3000
 ### Get a gear [GET]
 
 + Response 200 (application/json)
+
         {
           "_id": "5aeaa794c530502769e4136c",
           "dbname": "item-daedric_armor",
@@ -1187,11 +1220,13 @@ HOST: http://localhost:3000
 ### Update a gear [PATCH]
 
 + Request (application/json)
+
         {
           "type": "type-light_armor"
         }
         
 + Response 200 (application/json)
+
         {
           "message": "Successfully updated gear item-daedric_armor",
           "status": "success",
@@ -1226,6 +1261,7 @@ HOST: http://localhost:3000
 ### Get all ref-items [GET]
 
 + Response 200 (application/json)
+
         [
           {
             "num": 1,
@@ -1267,6 +1303,7 @@ HOST: http://localhost:3000
 ### Add a new ref-item [POST]
 
 + Request (application/json)
+
         {
           "item": "item-iron_helmet",
           "owner": "actor-testy",
@@ -1274,6 +1311,7 @@ HOST: http://localhost:3000
         }
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully given actor-testy a new item-iron_helmet with id \"5aeaa793d530512769f4136c\"",
           "status": "success",
@@ -1291,6 +1329,7 @@ HOST: http://localhost:3000
 ### Get ref-items by owner [GET]
 
 + Response 200 (application/json)
+
         [
           {
             "num": 1,
@@ -1305,6 +1344,7 @@ HOST: http://localhost:3000
 ### Get ref-items by item [GET]
 
 + Response 200 (application/json)
+
         [
           {
             "num": 1,
@@ -1330,11 +1370,13 @@ HOST: http://localhost:3000
 ### Update a ref-item [PATCH]
 
 + Request (application/json)
+
         {
           "owner": "actor-valorad"
         }
         
 + Response 200 (application/json)
+
         {
           "message": "Successfully updated ref-item item-iron_helmet",
           "status": "success",
@@ -1350,6 +1392,7 @@ HOST: http://localhost:3000
 ### Delete a ref-item [DELETE]
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully deleted ref-item 5aea785aca198113080db4b5",
           "status": "success",
@@ -1369,6 +1412,7 @@ HOST: http://localhost:3000
 ### Get all translations [GET]
 
 + Response 200 (application/json)
+
         [
           {
             "_id": "5aeaa794c530543769e4657b",
@@ -1414,6 +1458,7 @@ HOST: http://localhost:3000
 ### Add a new translation [POST]
 
 + Request (application/json)
+
         {
           "dbname": "item-daedric_armor",
           "name": {
@@ -1427,6 +1472,7 @@ HOST: http://localhost:3000
         }
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully created new translation of \"item-daedric_armor\" with id \"5aeaa794c530543769e4657b\"",
           "status": "success",
@@ -1444,13 +1490,14 @@ HOST: http://localhost:3000
 ### Get a translation [GET]
 
 + Response 200 (application/json)
+
         {
           "_id": "5aeaa794c530543769e4657b",
           "dbname": "item-daedric_armor",
           "name": {
             "en": "Daedric armor",
             "zh": "魔族护甲"
-          }
+          },
           "description": {
             "en": "A well crafted daedric armor, usually worn by fearsome daedric warriors",
             "zh": "质地良好的魔族护甲，常见由可怕的魔族战士装备"
@@ -1460,11 +1507,13 @@ HOST: http://localhost:3000
 ### Update a translation [PATCH]
 
 + Request (application/json)
+
         {
           "description": {}
         }
         
 + Response 200 (application/json)
+
         {
           "message": "Successfully updated translation of item-daedric_armor",
           "status": "success",
@@ -1480,6 +1529,7 @@ HOST: http://localhost:3000
 ### Delete a translation [DELETE]
 
 + Response 200 (application/json)
+
         {
           "message": "Successfully deleted translation of item-daedric_armor",
           "status": "success",
@@ -1491,4 +1541,3 @@ HOST: http://localhost:3000
           "status": "failure",
           "rmCount": 0
         }
-
