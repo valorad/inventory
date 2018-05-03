@@ -31,6 +31,7 @@ export class Action {
         let refItems = await refAction.getList({_id: id});
         if (refItems && refItems[0]) {
           let refItem: any = this.extractInfo(refItems[0], refAction.fields);
+          refItem.refID = refItems[0]["_id"];
           refDetails.push(refItem);
         }
 
@@ -47,6 +48,7 @@ export class Action {
   getSingle = async (itemName: string, holder: string, lang = "en") => {
     let invVerboseItem = {} as IInvVerboseItem;
     let invItems: IInvItem[] = await invAction.getList({item: itemName, holder});
+
     if (invItems && invItems[0]) {
       invVerboseItem = this.extractInfo(invItems[0], invAction.fields) as IInvVerboseItem;
       invVerboseItem.base = await baseItemAction.getSingle(invVerboseItem.item, lang);
@@ -57,6 +59,7 @@ export class Action {
         let refItems = await refAction.getList({_id: id});
         if (refItems && refItems[0]) {
           let refItem: any = this.extractInfo(refItems[0], refAction.fields);
+          refItem.refID = refItems[0]["_id"];
           refDetails.push(refItem);
         }
 
@@ -123,7 +126,8 @@ export class Action {
 
     let removeResult = {
       rmRefCount: 0,
-      rmInvCount: 0
+      rmInvCount: 0,
+      numToRemove: 0
     }
 
     let invItems: IInvItem[] = await invAction.getList({item: itemName, holder: holder});
@@ -152,11 +156,14 @@ export class Action {
         if (refNum <= numToRemove) {
           // 不够减，执行清除
           let refDelResult = await refAction.delete({_id: refItems[i]["_id"]});
+
           if (refDelResult) {
             removeResult.rmRefCount += (refDelResult.n || 0);
           }
           // 清除冗余的invItem信息
           invItem.refs.splice(invItem.refs.indexOf(refItems[i]["_id"]), 1);
+          // apply changes to database
+          invAction.update({_id: invItems[0]["_id"]}, {refs: invItem.refs});
 
           if (invItem.refs.length <= 0) {
             // delete inv record if refs are all cleared out
