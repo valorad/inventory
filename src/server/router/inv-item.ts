@@ -96,6 +96,33 @@ class InventoryItem {
       }
 
     });
+
+    // update list
+    this.router.patch("/", async (ctx) => {
+      let conditions: any;
+      let token: any;
+      if (ctx.request.body) {
+        conditions = ctx.request.body.conditions;
+        token = ctx.request.body.token;
+      }
+
+      let updatedInvItem = await this.action.update(conditions, token);
+      if (updatedInvItem) {
+        ctx.body = {
+          message: `Successfully updated selected inv-items`,
+          status: "success",
+          altCount: updatedInvItem.length
+        }
+      } else {
+        ctx.status = 500;
+        ctx.body = {
+          message: `Failed to update selected inv-items`,
+          status: "failure",
+          altCount: 0
+        }
+      }
+
+    });
     
     this.router.patch('/id/:_id', async (ctx) => {
       let _id: string = ctx.params._id;
@@ -104,7 +131,7 @@ class InventoryItem {
       if (updatedInvItems) {
         let updatedItem = updatedInvItems[0];
         ctx.body = {
-          message: `Successfully updated inv-item ${updatedItem.item}`,
+          message: `Successfully updated ${updatedItem.holder}'s inv-item ${updatedItem.item}`,
           status: "success",
           id: updatedItem._id
         };
