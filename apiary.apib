@@ -1225,25 +1225,142 @@ HOST: http://localhost:3000
 
 ### Get all ref-items [GET]
 
++ Response 200 (application/json)
+        [
+          {
+            "num": 1,
+            "_id": "5aea785aca198113080db4b5",
+            "owner": "actor-testy",
+            "item": "item-iron_helmet"
+          }
+        ]
+
 ### Update ref-items [PATCH]
 
++ Request (application/json)
+
+        {
+          "conditions": {
+            "item": "item-iron_helmet",
+          },
+          "token": {
+            "$set": {
+              "owner": "actor-valorad"
+            }
+          }
+        }
+        
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected ref-items",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update selected ref-items",
+          "status": "failure",
+          "altCount": 0
+        }
+
 ### Add a new ref-item [POST]
+
++ Request (application/json)
+        {
+          "item": "item-iron_helmet",
+          "owner": "actor-testy",
+          "num": 1
+        }
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully given actor-testy a new item-iron_helmet with id \"5aeaa793d530512769f4136c\"",
+          "status": "success",
+          "id": "5aeaa793d530512769f4136c"
+        }
+
+        {
+          "message": "Failed to give actor-testy a new item-iron_helmet",
+          "status": "failure",
+          "id": null
+        }
 
 ## By owner [/api/refItems/owner/{dbname}]
 
 ### Get ref-items by owner [GET]
 
++ Response 200 (application/json)
+        [
+          {
+            "num": 1,
+            "_id": "5aea785aca198113080db4b5",
+            "owner": "actor-testy",
+            "item": "item-iron_helmet"
+          }
+        ]
+
 ## By item [/api/refItems/item/{dbname}]
 
 ### Get ref-items by item [GET]
+
++ Response 200 (application/json)
+        [
+          {
+            "num": 1,
+            "_id": "5aea785aca198113080db4b5",
+            "owner": "actor-testy",
+            "item": "item-iron_helmet"
+          }
+        ]
 
 ## By id [/api/refItems/id/{_id}]
 
 ### Get a ref-item [GET]
 
++ Response 200 (application/json)
+
+        {
+          "num": 1,
+          "_id": "5aea785aca198113080db4b5",
+          "owner": "actor-testy",
+          "item": "item-iron_helmet"
+        }
+
 ### Update a ref-item [PATCH]
 
++ Request (application/json)
+        {
+          "owner": "actor-valorad"
+        }
+        
++ Response 200 (application/json)
+        {
+          "message": "Successfully updated ref-item item-iron_helmet",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update ref-item 5aea785aca198113080db4b5",
+          "status": "failure",
+          "altCount": 0
+        }
+
 ### Delete a ref-item [DELETE]
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully deleted ref-item 5aea785aca198113080db4b5",
+          "status": "success",
+          "rmCount": 1
+        }
+
+        {
+          "message": "Failed to delete ref-item 5aea785aca198113080db4b5",
+          "status": "failure",
+          "rmCount": 0
+        }
 
 # Group Translations
 
