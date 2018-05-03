@@ -26,6 +26,7 @@ if (config) {
   const clientPath = join(__dirname, "../client");
   
   app.use(logger());
+  app.use(cors());
   app.use(bodyParser());
   app.use(serve(clientPath));
   
