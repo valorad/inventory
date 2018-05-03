@@ -32,14 +32,14 @@ class Translation {
 
       if (newTranslation) {
         ctx.body = {
-          message: `Successfully created new translation "${newTranslation.dbname}" with id "${newTranslation._id}"`,
+          message: `Successfully created new translation of "${newTranslation.dbname}" with id "${newTranslation._id}"`,
           status: 'success',
           id: newTranslation._id
         };
         return;
       } else {
         ctx.body = {
-          message: `Failed to create translation "${ctx.request.body.dbname}"`,
+          message: `Failed to create translation of "${ctx.request.body.dbname}"`,
           status: 'failure',
           id: null
         }
@@ -80,7 +80,7 @@ class Translation {
       if (updatedTranslations) {
         let updatedTranslation = updatedTranslations[0];
         ctx.body = {
-          message: `Successfully updated translation ${updatedTranslation.dbname}`,
+          message: `Successfully updated translation of ${updatedTranslation.dbname}`,
           status: "success",
           id: updatedTranslation._id
         };
@@ -88,7 +88,7 @@ class Translation {
       }
 
       ctx.body = {
-        message: `Failed to update translation ${dbname}`,
+        message: `Failed to update translation of ${dbname}`,
         status: "failure",
         id: null
       };
@@ -103,7 +103,7 @@ class Translation {
 
       if (delResult) {
         ctx.body = {
-          message: `Successfully deleted translation ${ctx.params.dbname}`,
+          message: `Successfully deleted translation of ${ctx.params.dbname}`,
           status: 'success',
           rmCount: delResult.n
         };
@@ -111,7 +111,7 @@ class Translation {
       } else {
         ctx.status = 500;
         ctx.body = {
-          message: `Failed to delete translation ${ctx.params.dbname}`,
+          message: `Failed to delete translation of ${ctx.params.dbname}`,
           status: 'failure',
           rmCount: 0
         }

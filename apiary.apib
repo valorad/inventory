@@ -245,7 +245,7 @@ HOST: http://localhost:3000
           "rmCount": 0
         }
 
-# Group Base-item
+# Group Base-items
 基础物品信息操作。提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
 
 ## Router Index [/api/baseItems/]
@@ -527,7 +527,7 @@ HOST: http://localhost:3000
           "id": null
         }
 
-# Group Inventory
+# Group Inv-items
 物品栏操作。提供了Graph，只有在Graph中的操作为多数据集的操作，其余为单数据集操作。
 
 ## Router Index [/api/invItems/]
@@ -877,3 +877,501 @@ HOST: http://localhost:3000
           "status": "failure",
           "rmCount": 0
         }
+
+# Group Books
+
+## Router Index [/api/books/]
+
+### Get all books [GET]
+
++ Response 200 (application/json)
+        [
+          {
+            "_id": "5aeaa794c530502769e4656c",
+            "dbname": "item-book-papyrus01",
+            "content": "content-papyrus01"
+          }
+        ]
+
+### Update books [PATCH]
+
++ Request (application/json)
+
+        {
+          "conditions": {
+            "dbname": "item-book-papyrus01",
+          },
+          "token": {
+            "content": "content-papyrus01_cut"
+          }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected books",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update selected books",
+          "status": "failure",
+          "altCount": 0
+        }
+
+
+### Add a new book [POST]
+
++ Request (application/json)
+        {
+          "dbname": "item-book-papyrus01",
+          "content": "content-papyrus01"
+        }
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully created new book \"item-book-papyrus01\" with id \"5aeaa794c530502769e4656c\"",
+          "status": "success",
+          "id": "5aeaa794c530502769e4656c"
+        }
+
+        {
+          "message": "Failed to create book \"item-book-papyrus01\"",
+          "status": "failure",
+          "id": null
+        }
+
+## By dbname [/api/books/dbname/{dbname}]
+
+### Get a book [GET]
+
++ Response 200 (application/json)
+        {
+          "_id": "5aeaa794c530502769e4656c",
+          "dbname": "item-book-papyrus01",
+          "content": "content-papyrus01"
+        }
+
+### Update a book [PATCH]
+
++ Request (application/json)
+        {
+          "content": "content-papyrus01"
+        }
+        
++ Response 200 (application/json)
+        {
+          "message": "Successfully updated book item-book-papyrus01",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update book item-book-papyrus01",
+          "status": "failure",
+          "altCount": 0
+        }
+
+### Delete a book [DELETE]
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully deleted book item-book-papyrus01",
+          "status": "success",
+          "rmCount": 1
+        }
+
+        {
+          "message": "Failed to delete book item-book-papyrus01",
+          "status": "failure",
+          "rmCount": 0
+        }
+
+# Group Consumables
+
+## Router Index [/api/consumables/]
+
+### Get all consumables [GET]
+
++ Response 200 (application/json)
+        [
+          {
+            "_id": "5aeaa794c530502769e4651d",
+            "dbname": "item-consumable-titanV",
+            "type": "grenade"
+            "effects": []
+          }
+        ]
+
+### Update consumables [PATCH]
+
++ Request (application/json)
+
+        {
+          "conditions": {
+            "dbname": "item-consumable-titanV",
+          },
+          "token": {
+            "effects": ["effect-radiation"]
+          }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected consumables",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update selected consumables",
+          "status": "failure",
+          "altCount": 0
+        }
+
+
+### Add a new consumable [POST]
++ Request (application/json)
+        {
+          "dbname": "item-consumable-titanV",
+          "type": "grenade"
+          "effects": []
+        }
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully created new consumable \"item-consumable-titanV\" with id \"5aeaa794c530502769e4651d\"",
+          "status": "success",
+          "id": "5aeaa794c530502769e4651d"
+        }
+
+        {
+          "message": "Failed to create consumable \"item-consumable-titanV\"",
+          "status": "failure",
+          "id": null
+        }
+
+
+## By dbname [/api/consumables/dbname/{dbname}]
+
+### Get a consumable [GET]
+
++ Response 200 (application/json)
+        {
+          "_id": "5aeaa794c530502769e4651d",
+          "dbname": "item-consumable-titanV",
+          "type": "grenade"
+          "effects": []
+        }
+
+### Update a consumable [PATCH]
+
++ Request (application/json)
+        {
+          "type": "ammo"
+        }
+        
++ Response 200 (application/json)
+        {
+          "message": "Successfully updated consumable item-consumable-titanV",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update consumable item-consumable-titanV",
+          "status": "failure",
+          "altCount": 0
+        }
+
+
+### Delete a consumable [DELETE]
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully deleted consumable item-consumable-titanV",
+          "status": "success",
+          "rmCount": 1
+        }
+
+        {
+          "message": "Failed to delete consumable item-consumable-titanV",
+          "status": "failure",
+          "rmCount": 0
+        }
+
+# Group Gears
+
+## Router Index [/api/gears/]
+
+### Get all gears [GET]
++ Response 200 (application/json)
+        [
+          {
+            "_id": "5aeaa794c530502769e4136c",
+            "dbname": "item-daedric_armor",
+            "rating": 75,
+            "type": "type-heavy_armor",
+            "effects": [],
+            "equip": ["equip-body"]
+          }
+        ]
+
+### Update gears [PATCH]
++ Request (application/json)
+
+        {
+          "conditions": {
+            "dbname": "item-daedric_armor",
+          },
+          "token": {
+            "$mul": {
+              "rating": 2.0
+            }
+          }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected gears",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update selected gears",
+          "status": "failure",
+          "altCount": 0
+        }
+
+### Add a new gear [POST]
++ Request (application/json)
+        {
+          "dbname": "item-daedric_armor",
+          "rating": 75,
+          "type": "type-heavy_armor",
+          "effects": [],
+          "equip": ["equip-body"]
+        }
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully created new gear \"item-daedric_armor\" with id \"5aeaa794c530502769e4656c\"",
+          "status": "success",
+          "id": "5aeaa794c530502769e4136c"
+        }
+
+        {
+          "message": "Failed to create gear \"item-daedric_armor\"",
+          "status": "failure",
+          "id": null
+        }
+
+## By dbname [/api/gears/dbname/{dbname}]
+
+### Get a gear [GET]
+
++ Response 200 (application/json)
+        {
+          "_id": "5aeaa794c530502769e4136c",
+          "dbname": "item-daedric_armor",
+          "rating": 75,
+          "type": "type-heavy_armor",
+          "effects": [],
+          "equip": ["equip-body"]
+        }
+
+### Update a gear [PATCH]
+
++ Request (application/json)
+        {
+          "type": "type-light_armor"
+        }
+        
++ Response 200 (application/json)
+        {
+          "message": "Successfully updated gear item-daedric_armor",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update gear item-daedric_armor",
+          "status": "failure",
+          "altCount": 0
+        }
+
+### Delete a gear [DELETE]
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully deleted gear item-daedric_armor",
+          "status": "success",
+          "rmCount": 1
+        }
+
+        {
+          "message": "Failed to delete gear item-daedric_armor",
+          "status": "failure",
+          "rmCount": 0
+        }
+
+# Group Ref-items
+
+## Router Index [/api/refItems/]
+
+### Get all ref-items [GET]
+
+### Update ref-items [PATCH]
+
+### Add a new ref-item [POST]
+
+## By owner [/api/refItems/owner/{dbname}]
+
+### Get ref-items by owner [GET]
+
+## By item [/api/refItems/item/{dbname}]
+
+### Get ref-items by item [GET]
+
+## By id [/api/refItems/id/{_id}]
+
+### Get a ref-item [GET]
+
+### Update a ref-item [PATCH]
+
+### Delete a ref-item [DELETE]
+
+# Group Translations
+
+## Router Index [/api/translations/]
+
+### Get all translations [GET]
+
++ Response 200 (application/json)
+        [
+          {
+            "_id": "5aeaa794c530543769e4657b",
+            "dbname": "item-daedric_armor",
+            "name": {
+              "en": "Daedric armor",
+              "zh": "魔族护甲"
+            }
+            "description": {
+              "en": "A well crafted daedric armor, usually worn by fearsome daedric warriors",
+              "zh": "质地良好的魔族护甲，常见由可怕的魔族战士装备"
+            }
+          }
+        ]
+        
+### Update translations [PATCH]
+
++ Request (application/json)
+
+        {
+          "conditions": {
+            "dbname": "item-daedric_armor",
+          },
+          "token": {
+            "name.en": "Daedric basic armor"
+          }
+        }
+
++ Response 200 (application/json)
+
+        {
+          "message": "Successfully updated selected translations",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update selected translations",
+          "status": "failure",
+          "altCount": 0
+        }
+        
+### Add a new translation [POST]
+
++ Request (application/json)
+        {
+          "dbname": "item-daedric_armor",
+          "name": {
+            "en": "Daedric armor",
+            "zh": "魔族护甲"
+          }
+          "description": {
+            "en": "A well crafted daedric armor, usually worn by fearsome daedric warriors",
+            "zh": "质地良好的魔族护甲，常见由可怕的魔族战士装备"
+          }
+        }
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully created new translation of \"item-daedric_armor\" with id \"5aeaa794c530543769e4657b\"",
+          "status": "success",
+          "id": "5aeaa794c530543769e4657b"
+        }
+
+        {
+          "message": "Failed to create translation of \"item-daedric_armor\"",
+          "status": "failure",
+          "id": null
+        }
+        
+## By dbname [/api/translations/dbname/{dbname}]
+
+### Get a translation [GET]
+
++ Response 200 (application/json)
+        {
+          "_id": "5aeaa794c530543769e4657b",
+          "dbname": "item-daedric_armor",
+          "name": {
+            "en": "Daedric armor",
+            "zh": "魔族护甲"
+          }
+          "description": {
+            "en": "A well crafted daedric armor, usually worn by fearsome daedric warriors",
+            "zh": "质地良好的魔族护甲，常见由可怕的魔族战士装备"
+          }
+        }
+
+### Update a translation [PATCH]
+
++ Request (application/json)
+        {
+          "description": {}
+        }
+        
++ Response 200 (application/json)
+        {
+          "message": "Successfully updated translation of item-daedric_armor",
+          "status": "success",
+          "altCount": 1
+        }
+
+        {
+          "message": "Failed to update translation of item-daedric_armor",
+          "status": "failure",
+          "altCount": 0
+        }
+
+### Delete a translation [DELETE]
+
++ Response 200 (application/json)
+        {
+          "message": "Successfully deleted translation of item-daedric_armor",
+          "status": "success",
+          "rmCount": 1
+        }
+
+        {
+          "message": "Failed to delete translation of item-daedric_armor",
+          "status": "failure",
+          "rmCount": 0
+        }
+

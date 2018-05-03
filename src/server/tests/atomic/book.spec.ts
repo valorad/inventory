@@ -4,8 +4,8 @@ import { Query } from "../../util";
 const action = new Action();
 
 const data = {
-  dbname: "book_papyrus01",
-  content: "const _8 = require('eight')"
+  dbname: "item-book-papyrus01",
+  content: "content-papyrus01"
 }
 
 export const bookSpec = describe("Book inspections", () => {
@@ -16,13 +16,13 @@ export const bookSpec = describe("Book inspections", () => {
   });
 
   test("(getSingle) Retireve papyrus puzzle 1", async () => {
-    let papyrus = await action.getSingle("book_papyrus01");
+    let papyrus = await action.getSingle("item-book-papyrus01");
     expect(papyrus).toBeTruthy();
   });
 
   test("(updateSingle) hack papyrus puzzle 1", async () => {
-    let updatedBook = await action.updateSingle("book_papyrus01", {content: "Game.player.additem('0x00000f', 1000)"});
-    let pypz1 = await action.getSingle("book_papyrus01");
+    let updatedBook = await action.updateSingle("item-book-papyrus01", {content: "Game.player.additem('0x00000f', 1000)"});
+    let pypz1 = await action.getSingle("item-book-papyrus01");
     if (pypz1 && updatedBook) {
       expect(pypz1[0].content === updatedBook[0].content);
     } else {
@@ -31,7 +31,7 @@ export const bookSpec = describe("Book inspections", () => {
   });
 
   test("(delete) delete papyrus puzzle 1", async () => {
-    let token = {dbname: 'book_papyrus01'};
+    let token = {dbname: 'item-book-papyrus01'};
     let delResult = await action.delete(token);
     if (delResult) {
       expect(delResult.n).toBeGreaterThan(0);
