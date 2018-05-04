@@ -42,11 +42,12 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 - 界面：登录页（选人）
 - 界面：物品栏页（物品详情 增加物品-控制台 删除物品-R-移动端-更多）
 
-后台：
+✔️ 后台：
 
-- 数据库
+- ✔️ 数据库
   - ✔️ 数据库设计
-  - 数据库文档
+  - ✔️ 数据库文档
+  - ✔️ 数据库实现
 - ✔️ 业务逻辑(action)
 - ✔️ i18n框架
 - ✔️ graph
@@ -57,6 +58,8 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 ## 后台数据集
 
 ![dbDataflow](https://i.imgur.com/fI0uVF4.png)
+
+详细请查看[数据库文档](https://github.com/valorad/inventory/tree/master/src/server/database)
 
 ## 后台API
 
