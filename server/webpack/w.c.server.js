@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 const { root } = require('../lib/helpers');
-const serverpath = root('src/server');
+const serverpath = root('src');
 
 let config = {
   mode:"production",
@@ -35,16 +35,7 @@ let config = {
     rules: [
       {
         test: /\.ts$/,
-        use: [
-
-          {
-            loader: 'ts-loader',
-            options: {
-              configFile: resolve(serverpath, 'tsconfig.server.json')
-            }
-          }
-
-        ],
+        use: 'ts-loader',
         exclude:  /node_modules/
       },
       {
@@ -56,7 +47,7 @@ let config = {
   },
 
   plugins: [
-    new CleanWebpackPlugin([`${root("dist/server")}/**`], {root: root("dist"), verbose: false}),
+    new CleanWebpackPlugin([`${root("../dist/server")}/**`], {root: root("../dist"), verbose: true}),
     new CopyWebpackPlugin([
       { 
         from: resolve(serverpath, "config"),
@@ -77,7 +68,7 @@ let config = {
   ],
 
   output: {
-    path: root('dist/server'),
+    path: root('../dist/server'),
     publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].chunk.js'

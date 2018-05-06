@@ -1,26 +1,19 @@
 {
-  "name": "inventory",
+  "name": "inventory-backend",
   "version": "1.0.0",
   "description": "高仿SkyUI 5的Angular物品栏. An Inventory highly resembles SkyUI 5.",
-  "main": "index.js",
-  "directories": {
-    "doc": "doc"
-  },
+  "main": "inventory.js",
   "scripts": {
-    "start": "node dist/server/inventory",
-    "build": "npm run build:s",
-    "build:s": "cross-env NODE_ENV=production webpack --config webpack/w.c.server",
-    "test": "npm run test:s",
-    "test:s": "jest --config jest/j.c.server.js"
+    "start": "node ../dist/server/inventory",
+    "build": "cross-env NODE_ENV=production webpack --config webpack/w.c.server",
+    "test": "jest --config jest/j.c.server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/valorad/inventory.git"
   },
   "keywords": [
-    "angular",
     "graphql",
-    "angular-redux",
     "koa",
     "typescript"
   ],

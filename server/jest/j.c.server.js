@@ -1,8 +1,8 @@
 const config = {
-  rootDir: "../src/server",
+  rootDir: "..",
   globals: {
     "ts-jest": {
-      tsConfigFile: "tsconfig.test.json"
+      tsConfigFile: "./tsconfig.test.json"
     }
   },
   testEnvironment: "node",
