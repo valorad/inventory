@@ -55,6 +55,7 @@ jspm_packages/
 .env
 
 # site specefic
+/dist/**
 *.lock
 package-*.json
 /src/config/**

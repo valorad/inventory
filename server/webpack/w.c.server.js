@@ -10,7 +10,7 @@ const { root } = require('../lib/helpers');
 const serverpath = root('src');
 
 let config = {
-  mode:"production",
+  mode: "production",
 
   entry: {
     'inventory': resolve(serverpath, 'inventory')
@@ -47,7 +47,7 @@ let config = {
   },
 
   plugins: [
-    new CleanWebpackPlugin([`${root("../dist/server")}/**`], {root: root("../dist"), verbose: true}),
+    new CleanWebpackPlugin([`${root("dist")}/**`], {root: root("."), verbose: false}),
     new CopyWebpackPlugin([
       { 
         from: resolve(serverpath, "config"),
@@ -68,7 +68,7 @@ let config = {
   ],
 
   output: {
-    path: root('../dist/server'),
+    path: root('dist'),
     publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[id].[hash].chunk.js'

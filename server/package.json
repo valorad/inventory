@@ -4,7 +4,7 @@
   "description": "高仿SkyUI 5的Angular物品栏. An Inventory highly resembles SkyUI 5.",
   "main": "inventory.js",
   "scripts": {
-    "start": "node ../dist/server/inventory",
+    "start": "node dist/inventory",
     "build": "cross-env NODE_ENV=production webpack --config webpack/w.c.server",
     "test": "jest --config jest/j.c.server.js"
   },
