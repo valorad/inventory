@@ -1,0 +1,40 @@
+/* This file should only be included once! */
+@import './core';
+
+$skyui-primary: mat-palette($mat-grey, 200);
+$skyui-accent:  mat-palette($mat-lightblue, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$skyui-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$skyui-theme: mat-dark-theme($skyui-primary, $skyui-accent, $skyui-warn);
+
+// mat hack
+$localPrimary: map-get(map-get($skyui-theme, primary), 200); 
+$localAccent: map-get(map-get($skyui-theme, accent), 'A200'); 
+$localWarn: map-get(map-get($skyui-theme, warn), 500); 
+$foreground: black;
+
+.mat-grey-lightblue {
+  @include angular-material-theme($skyui-theme);
+  .primary {
+    background-color: $localPrimary;
+  }
+  .primary-text {
+    color: $localPrimary;
+  }
+  .accent {
+    background-color: $localAccent;
+  }
+  .accent-text {
+    color: $localAccent;
+  }
+  .warn {
+    color: $localWarn;
+  }
+}
+
+body {
+  background-color: #212121;
+}

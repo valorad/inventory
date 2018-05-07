@@ -1,0 +1,19 @@
+
+$cell: 100;
+
+.brick {
+  width: #{$cell}px;
+  height: #{$cell}px;
+  opacity: 0.9;
+
+  &.w-2 {
+    width: #{$cell * 2}px;
+  }
+
+  &.v-2 {
+    height: #{$cell * 2}px;
+  }
+
+}
+
+
