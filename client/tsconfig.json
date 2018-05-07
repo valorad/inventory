@@ -1,5 +1,4 @@
 {
-  "baseUrl": "./src",
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es5",

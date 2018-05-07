@@ -110,7 +110,7 @@ let config = {
     ),
 
     new AngularCompilerPlugin({
-      tsConfigPath: root('tsconfig.client.json'),
+      tsConfigPath: root('tsconfig.json'),
       entryModule: root('src/app/app.module#AppModule')
     }),
 
