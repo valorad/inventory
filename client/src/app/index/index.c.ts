@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxMasonryOptions } from 'ngx-masonry';
 
 @Component({
 	selector: 'app-index',
@@ -7,10 +6,6 @@ import { NgxMasonryOptions } from 'ngx-masonry';
 	styleUrls: ['./index.c.scss']
 })
 export class IndexComponent implements OnInit {
-
-	brickOptions: NgxMasonryOptions = {
-		itemSelector: "brick"
-	};
 
 	constructor(
 	) { }

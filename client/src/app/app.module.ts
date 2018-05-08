@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 // other modules
-import { NgxMasonryModule } from 'ngx-masonry';
+
 
 // other components
 import { IndexComponent } from "./index/index.c";
@@ -27,8 +27,6 @@ const matModules = [
     NoopAnimationsModule,
 
     matModules,
-
-    NgxMasonryModule,
 
     appRouter
   ]

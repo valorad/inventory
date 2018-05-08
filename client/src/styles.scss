@@ -2,12 +2,31 @@
 @import './assets/scss/themes/index';
 
 body {
-  background-color: #f0f0f0;
   margin: 0px;
   font-size: 14px;
+  overflow-x: hidden;
 }
 
 div.content {
   max-width: 1200px;
   display: flex;
+}
+
+.flexSpacer {
+  flex-grow: 1;
+}
+
+h1, h2, h3, h4, h5 {
+  font-size: 14px;
+  margin: 0px auto;
+  padding: 0;
+}
+
+picture {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
