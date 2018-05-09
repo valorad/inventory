@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'app-actor-select',
-	templateUrl: './actor-select.c.html',
+	selector: 'actor-select',
+	templateUrl: './select.c.html',
 	styleUrls: [
 		'../list.scss',
-		'./actor-select.c.scss'
+		'./select.c.scss'
 	]
 })
-export class ActorSelectComponent implements OnInit {
+export class SelectComponent implements OnInit {
 
 	dummyPlayers = Array(20).fill({
 		dbname: "actor-dummy",

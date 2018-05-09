@@ -6,7 +6,6 @@ import { actorRouter } from "./actor.r";
 
 // componets
 import { ActorComponent } from './actor.c';
-import { ActorSelectComponent } from "./actor-select/actor-select.c";
 
 @NgModule({
   imports: [
@@ -15,8 +14,7 @@ import { ActorSelectComponent } from "./actor-select/actor-select.c";
     actorRouter
   ],
   declarations: [
-    ActorComponent,
-    ActorSelectComponent
+    ActorComponent
   ]
 })
 export class ActorModule { }

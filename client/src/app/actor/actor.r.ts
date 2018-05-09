@@ -1,7 +1,7 @@
 import { RouterModule, Route } from '@angular/router';
 
 import { ActorComponent } from "./actor.c";
-import { ActorSelectComponent } from "./actor-select/actor-select.c";
+import { SelectComponent } from './select/select.c';
 
 const actorRoutes: Route[] = [
   {
@@ -11,7 +11,10 @@ const actorRoutes: Route[] = [
   },
   {
     path: "select",
-    component: ActorSelectComponent
+    component: SelectComponent
+    // unable to lazyload 2nd depth module because of the weird "Cyclic dependency error"
+    // https://github.com/angular/angular/issues/15652
+    // https://github.com/marcelklehr/toposort/issues/20
   }
 ];
 
