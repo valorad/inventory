@@ -1,12 +1,52 @@
 <section class="app mat-indigo-pink">
-  <header>
-    <mat-toolbar color="primary">
+  <header [class.mainMobile]="mobileQuery.matches">
+    <mat-toolbar color="primary" class="topToolbar">
       <mat-toolbar-row>
-        <span>inventory</span>
+        <nav class="top">
+          <header class="menu">
+            <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+          </header>
+          <header class="brand">
+            <h2>inventory</h2>
+          </header>
+        </nav>
       </mat-toolbar-row>
     </mat-toolbar>
   </header>
-  <main class="router">
-    <router-outlet></router-outlet>
+
+  <main class="app">
+
+    <mat-sidenav-container
+     class="sidenavContainer"
+     [style.marginTop.px]="mobileQuery.matches ? 64 : 64"
+    >
+      <mat-sidenav
+       id="sidenav"
+       class="sideNav"
+       #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+       [fixedInViewport]="mobileQuery.matches"
+       fixedTopGap="64"
+
+      >
+        <mat-nav-list class="sideNavList">
+          <header class="cover">
+            <picture>
+              <img src="../assets/images/login.png" alt="login" class="rounded fluid">
+            </picture>
+            <h1>Log in</h1>
+          </header>
+          <a mat-list-item class="active"><mat-icon>menu</mat-icon><h2>Inventory</h2></a>
+          <a mat-list-item><mat-icon>menu</mat-icon><h2>Editor</h2></a>
+          <a mat-list-item><mat-icon>menu</mat-icon><h2>Github</h2></a>
+          <a mat-list-item><mat-icon>menu</mat-icon><h2>About</h2></a>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+
+    </mat-sidenav-container>
+
   </main>
 </section>

@@ -12,10 +12,6 @@ div.content {
   display: flex;
 }
 
-.flexSpacer {
-  flex-grow: 1;
-}
-
 h1, h2, h3, h4, h5 {
   font-size: 14px;
   margin: 0px auto;
@@ -29,4 +25,16 @@ picture {
 a {
   text-decoration: none;
   cursor: pointer;
+}
+
+.flexSpacer {
+  flex-grow: 1;
+}
+
+.fluid {
+  max-width: 100%;
+}
+
+.rounded {
+  border-radius: 50%;
 }

@@ -45,11 +45,17 @@ $foreground: white;
   }
 
   a {
-    color: $localPrimary;
     font-weight: 400;
-    &:hover {
+    &:hover, &.active {
       font-weight: 700;
-      color: $localPrimary
+    }
+  }
+
+  #sidenav .mat-list-item {
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    &.active, &:hover {
+      color: $localPrimary;
+      font-weight: 700;
     }
   }
 

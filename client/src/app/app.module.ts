@@ -5,6 +5,10 @@ import { AppComponent } from './app.component';
 
 // mat modules
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 // other modules
 
@@ -17,7 +21,11 @@ import { Http404Component } from "./http404/http404.c";
 import { appRouter } from "./app.router";
 
 const matModules = [
-  MatToolbarModule
+  MatToolbarModule,
+  MatSidenavModule,
+  MatButtonModule,
+  MatIconModule,
+  MatListModule
 ]
 
 

@@ -1,3 +1,59 @@
-div.app {
-  text-align: center;
+nav.top {
+  display: flex;
+}
+
+.mainMobile .topToolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+header.menu {
+  display: flex;
+  align-items: center;
+}
+
+header.brand {
+  display: flex;
+  align-items: center;
+  margin-left: 1em;
+}
+
+.sidenavContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sideNav {
+  min-width: 20em;
+
+}
+
+header.cover {
+  padding: 1em 0;
+  picture {
+    width: 5em;
+    height: 5em;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    text-align: center;
+    margin: 1em auto;
+  }
+}
+
+
+.sideNavList {
+  h2 {
+    font-weight: inherit;
+    margin-left: 1em;
+  }
 }
