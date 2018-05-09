@@ -1,9 +1,9 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Route } from '@angular/router';
 
 import { IndexComponent } from './index/index.c';
 import { Http404Component } from './http404/http404.c';
 
-const appRoutes = [
+const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
@@ -12,6 +12,10 @@ const appRoutes = [
   {
     path: 'index',
     component: IndexComponent
+  },
+  {
+    path: 'actors',
+    loadChildren: './actor/actor.m#ActorModule'
   },
   {
     path: '**',
