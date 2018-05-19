@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+
+import { DialogSelectComponent } from './dialog-select/dialog-select.c';
 
 @Component({
 	selector: 'actor-select',
@@ -10,6 +13,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelectComponent implements OnInit {
 
+	constructor (
+		public matDialog: MatDialog
+	) { }
+
+	selectState: any = {};
+
+	openSelectDialog = (dbname: string) => {
+		let dialog = this.matDialog.open(DialogSelectComponent, {
+			data: {
+				dbname
+			}
+		});
+
+		dialog.afterClosed().subscribe(
+			(result) => {
+				this.selectState.dbname = result;
+			}
+		);
+
+	};
+
 	dummyPlayers = Array(20).fill({
 		dbname: "actor-dummy",
 		name: "dummy actor",
@@ -17,10 +41,31 @@ export class SelectComponent implements OnInit {
 		equiped: {},
 		biography: "Hello! I am a dummy."
 	});
-
-	constructor(
-	) { }
 	
 	ngOnInit() {}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

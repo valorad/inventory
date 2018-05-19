@@ -13,8 +13,8 @@ let config = merge(baseConfig, {
 
   output: {
     path: root('dist'),
-    filename: '[name].js',
-    chunkFilename: '[id].chunk.js'
+    filename: '[name].[hash].bundle.js',
+    chunkFilename: '[id].[chunkhash].chunk.js'
   },
 
   devtool: 'eval-source-map',
@@ -34,6 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   config.optimization.minimizer = [
     new UglifyJSPlugin({
       uglifyOptions: {
+        ecma: 6,
         cache: true,
         parallel: true,
         keep_fnames: true

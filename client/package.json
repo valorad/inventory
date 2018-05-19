@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A game-inventory highly resembles SkyUI 5",
   "scripts": {
-    "serve": "cross-env NODE_ENV=development webpack-dev-server --config webpack/w.c.client.spa --hot --inline --progress",
+    "serve": "cross-env NODE_ENV=development webpack-dev-server --config webpack/w.c.client.spa --hot --inline --progress --bail",
     "build": "cross-env NODE_ENV=production webpack --config webpack/w.c.client.spa --progress --profile --bail",
     "test": "jest --config jest/j.c.client.js",
     "test-w": "jest --config jest/j.c.client.js --watch",
@@ -47,6 +47,7 @@
     "postcss-loader": "^2.1.1",
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.7",
+    "script-ext-html-webpack-plugin": "^2.0.1",
     "style-loader": "^0.18.2",
     "typescript": "~2.7.0",
     "uglifyjs-webpack-plugin": "^1.2.2",

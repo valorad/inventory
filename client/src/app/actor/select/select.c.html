@@ -1,12 +1,12 @@
 <section class="select">
   <header>
-    <h1>Choose an actor</h1>
+    <h1>Choose an actor -  selected {{ selectState.dbname }}</h1>
   </header>
   <main>
     <section class="bricks">
 
       <article *ngFor="let actor of dummyPlayers" class="brick primary">
-        <a>
+        <a (click)="openSelectDialog(actor.dbname)">
           <picture class="bg icon">
             <img src="../../../assets/images/login.png" alt="default">
           </picture>

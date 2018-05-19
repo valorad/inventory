@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 
 // mat modules
@@ -32,7 +32,7 @@ const matModules = [
 @NgModule({
   imports: [
     BrowserModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
 
     matModules,
 
@@ -43,7 +43,7 @@ const matModules = [
     AppComponent,
 
     IndexComponent,
-    Http404Component
+    Http404Component,
   ],
   bootstrap: [ AppComponent ]
 })

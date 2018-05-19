@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const { AngularCompilerPlugin } = require('@ngtools/webpack');
 const { root } = require('../lib/helpers');
 
@@ -99,6 +100,20 @@ let config = {
     }
   },
 
+
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       vendor: {
+  //         chunks: 'all',
+  //         test: /[\\/]node_modules[\\/]/,
+  //         name: 'vendor',
+  //         enforce: true
+  //       }
+  //     }
+  //   }
+  // },
+
   plugins: [
 
     // Workaround for angular/angular#11580
@@ -115,7 +130,39 @@ let config = {
     }),
 
     new HtmlWebpackPlugin({
-      template: root('src/index.html')
+      template: 'src/index.html',
+      // unable to lazyload 2nd depth module because of the weird "Cyclic dependency error"
+      // the following is the workround
+      // https://github.com/jantimon/html-webpack-plugin/issues/870
+      // https://github.com/marcelklehr/toposort/issues/20
+      chunksSortMode: function (a, b) {
+        const entryPoints = ["inline", "polyfills", "vendor", "app"];
+        return entryPoints.indexOf(a.names[0]) - entryPoints.indexOf(b.names[0]);
+      },
+
+      inject: 'body',
+      xhtml: true,
+
+      // minify: devMode
+      // ? false
+      // : {
+      //     caseSensitive: true,
+      //     collapseWhitespace: true,
+      //     keepClosingSlash: true
+      //   }
+      minify: {
+        caseSensitive: true,
+        collapseWhitespace: true,
+        keepClosingSlash: true
+      }
+      
+    }),
+
+    new ScriptExtHtmlWebpackPlugin({
+      sync: /inline|polyfills|vendor/,
+      defaultAttribute: 'async',
+      preload: [/polyfills|vendor|app/],
+      prefetch: [/chunk/]
     }),
 
     new MiniCssExtractPlugin({
