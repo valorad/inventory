@@ -82,23 +82,23 @@ let config = {
     }
   },
 
-  optimization: {
-    runtimeChunk: true,
-    splitChunks: {
-      name: true,
-      cacheGroups: {
-        app: {
-          name: "app"
-        },
-        vendor: {
-          name: "vendor"
-        },
-        polyfills: {
-          name: "polyfills"
-        },
-      }
-    }
-  },
+  // optimization: {
+  //   runtimeChunk: true,
+  //   splitChunks: {
+  //     name: true,
+  //     cacheGroups: {
+  //       app: {
+  //         name: "app"
+  //       },
+  //       vendor: {
+  //         name: "vendor"
+  //       },
+  //       polyfills: {
+  //         name: "polyfills"
+  //       },
+  //     }
+  //   }
+  // },
 
 
   // optimization: {
@@ -135,26 +135,27 @@ let config = {
       // the following is the workround
       // https://github.com/jantimon/html-webpack-plugin/issues/870
       // https://github.com/marcelklehr/toposort/issues/20
-      chunksSortMode: function (a, b) {
-        const entryPoints = ["inline", "polyfills", "vendor", "app"];
-        return entryPoints.indexOf(a.names[0]) - entryPoints.indexOf(b.names[0]);
-      },
+      // chunksSortMode: function (a, b) {
+      //   const entryPoints = ["inline", "polyfills", "vendor", "app"];
+      //   return entryPoints.indexOf(a.names[0]) - entryPoints.indexOf(b.names[0]);
+      // },
+      chunksSortMode: "none",
 
       inject: 'body',
       xhtml: true,
 
-      // minify: devMode
-      // ? false
-      // : {
-      //     caseSensitive: true,
-      //     collapseWhitespace: true,
-      //     keepClosingSlash: true
-      //   }
-      minify: {
-        caseSensitive: true,
-        collapseWhitespace: true,
-        keepClosingSlash: true
-      }
+      minify: devMode
+      ? false
+      : {
+          caseSensitive: true,
+          collapseWhitespace: true,
+          keepClosingSlash: true
+        }
+      // minify: {
+      //   caseSensitive: true,
+      //   collapseWhitespace: true,
+      //   keepClosingSlash: true
+      // }
       
     }),
 

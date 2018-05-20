@@ -16,6 +16,10 @@ $localAccent: map-get(map-get($index-theme, accent), 'A200');
 $localWarn: map-get(map-get($index-theme, warn), 500); 
 $foreground: white;
 
+
+@include angular-material-theme($index-theme);
+
+
 .mat-indigo-pink {
   @include angular-material-theme($index-theme);
   .primary {

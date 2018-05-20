@@ -57,6 +57,7 @@ jspm_packages/
 # site specefic
 /dist/**
 /.vscode/**
+/.idea/**
 *.lock
 package-*.json
 /src/server/config/**

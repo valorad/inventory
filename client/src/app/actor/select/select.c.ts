@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material';
 
 import { DialogSelectComponent } from './dialog-select/dialog-select.c';
 
+// import * as tingle from 'tingle.js';
+
+
 @Component({
 	selector: 'actor-select',
 	templateUrl: './select.c.html',
@@ -13,9 +16,14 @@ import { DialogSelectComponent } from './dialog-select/dialog-select.c';
 })
 export class SelectComponent implements OnInit {
 
+	deps: any = {};
+
+
 	constructor (
 		public matDialog: MatDialog
-	) { }
+	) {
+
+	}
 
 	selectState: any = {};
 
@@ -31,6 +39,14 @@ export class SelectComponent implements OnInit {
 				this.selectState.dbname = result;
 			}
 		);
+
+		// let dialog = new tingle.modal({
+		// 	footer: true
+		// });
+
+		// dialog.setContent('<h1>here\'s some content</h1>');
+
+		// dialog.open();
 
 	};
 
