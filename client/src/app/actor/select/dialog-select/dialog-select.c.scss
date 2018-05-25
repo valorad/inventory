@@ -1,0 +1,23 @@
+div.row1 {
+  display: flex;
+  margin: 1em 3em;
+}
+
+.profile {
+  picture {
+    margin: 1em auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 10em;
+    }
+  }
+  h2 {
+    text-align: center;
+  }
+}
+
+footer.select {
+  justify-content: flex-end;
+}

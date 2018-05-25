@@ -1,9 +1,44 @@
 <section class="select">
   <header>
-    dialog-select ok?
+    <!-- <h1>
+      Log in as
+      <span *ngIf="data.name;then hasName else noName"></span>
+      ?
+    </h1>
+
+    <ng-template #hasName>
+      {{ data.name }}
+    </ng-template>
+
+    <ng-template #noName>
+      {{ data0.name }}
+    </ng-template> -->
+    <h1>
+      Log in as {{ data.name }}?
+    </h1>
+
   </header>
-  <footer mat-dialog-actions>
+  <main>
+
+    <div class="row1">
+      <header class="profile">
+        <picture>
+          <img src="../../../../assets/images/login.png" alt="avatar">
+        </picture>
+        <h2>      {{ data.name }}    </h2>
+      </header>
+
+      <blockquote>
+        <p>{{ data.biography }}</p>
+      </blockquote>
+
+    </div>
+
+
+
+  </main>
+  <footer class="select" mat-dialog-actions>
     <button mat-button (click)="cancel()">No</button>
-    <button mat-button >Yes</button>
+    <button mat-button (click)="ok()">Yes</button>
   </footer>
 </section>

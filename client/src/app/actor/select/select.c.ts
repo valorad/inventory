@@ -27,16 +27,17 @@ export class SelectComponent implements OnInit {
 
 	selectState: any = {};
 
-	openSelectDialog = (dbname: string) => {
+	openSelectDialog = (index: number) => {
 		let dialog = this.matDialog.open(DialogSelectComponent, {
-			data: {
-				dbname
-			}
+			data: this.dummyPlayers[index]
 		});
 
 		dialog.afterClosed().subscribe(
 			(result) => {
-				this.selectState.dbname = result;
+				if (result) {
+					this.selectState = result;
+					console.log(result);
+				}
 			}
 		);
 
