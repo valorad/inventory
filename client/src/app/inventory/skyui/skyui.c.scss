@@ -1,0 +1,27 @@
+aside.list {
+  width: 50em;
+  margin: 0 2em;
+  height: calc(100vh - 120px);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-left: 2px solid grey;
+  border-right: 2px solid grey;
+  padding: 2em 0;
+  > header {
+    display: flex;
+  }
+  .divider {
+    border: 1px solid grey;
+  }
+  .filter {
+    display: flex;
+  }
+  .menu {
+    ul {
+      display: flex;
+    }
+  }
+  table {
+    width: 100%;
+  }
+}

@@ -8,7 +8,11 @@ const { root } = require('../lib/helpers');
 const devMode = process.env.NODE_ENV !== 'production';
 
 const globalscss = [
-  root('src/styles.scss')
+  root('src/styles.scss'),
+  // root('src/assets/scss/skyui-icons/**'),
+  root('src/assets/scss/skyui-icons/icomoon-skyui-category.scss'),
+  root('src/assets/scss/skyui-icons/icomoon-skyui-item.scss'),
+  root('src/assets/scss/skyui-icons/icomoon-skyui-misc.scss')
 ];
 
 let config = {

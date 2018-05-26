@@ -47,7 +47,7 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 ![dbDataflow](https://i.imgur.com/fI0uVF4.png)
 
-详细请查看[数据库文档](https://github.com/valorad/inventory/tree/master/src/server/database)
+详细请查看[数据库文档](https://github.com/valorad/inventory/tree/master/server/src/database)
 
 ## 后台API
 

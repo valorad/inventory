@@ -1,5 +1,6 @@
-// md themes
+// mat themes
 @import './assets/scss/themes/index';
+@import './assets/scss/themes/skyui';
 
 body {
   margin: 0px;
@@ -25,6 +26,12 @@ picture {
 a {
   text-decoration: none;
   cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .flexSpacer {

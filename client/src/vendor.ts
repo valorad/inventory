@@ -13,5 +13,9 @@ import 'rxjs';
 // You can import js, ts, css, sass, ...
 import 'hammerjs';
 
+import './assets/scss/skyui-icons/icomoon-skyui-category.scss';
+import './assets/scss/skyui-icons/icomoon-skyui-item.scss';
+import './assets/scss/skyui-icons/icomoon-skyui-misc.scss';
+
 import './styles.scss';
 

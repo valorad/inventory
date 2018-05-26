@@ -18,6 +18,10 @@ const appRoutes: Route[] = [
     loadChildren: './actor/actor.m#ActorModule'
   },
   {
+    path: 'inventory',
+    loadChildren: './inventory/inventory.m#InventoryModule'
+  },
+  {
     path: '**',
     component: Http404Component
   }
