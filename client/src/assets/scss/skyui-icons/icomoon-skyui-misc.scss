@@ -90,13 +90,11 @@ i.icomoon.skyui-misc {
 .icomoon.icon-filter-settings {
   &:before {
     content: unicode($skyui-misc-icon-filter-settings);     
-    color: #999;
   }
 }
 .icomoon.icon-search {
   &:before {
     content: unicode($skyui-misc-icon-search);     
-    color: #333;
   }
 }
 .icomoon.icon-transfer-to {

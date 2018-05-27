@@ -4,10 +4,10 @@
       <h1>title</h1>
       <div class="flexSpacer"></div>
       <div class="filter">
-        <input type="text">
-        <picture> cri  </picture>
+        <input type="text" class="filter" name="filter" placeholder="Filter">
+        <picture> <i class="icomoon skyui-misc icon-search"></i> </picture>
         <div class="divider"></div>
-        <picture> set </picture>
+        <picture> <i class="icomoon skyui-misc icon-filter-settings"></i> </picture>
       </div>
     </header>
     <div class="menu">
@@ -27,7 +27,7 @@
 
     <hr>
     <hr>
-    <table>
+    <!-- <table>
       <thead>
         <tr>
           <td>O</td>
@@ -60,6 +60,42 @@
           <td>100</td>
         </tr>
       </tbody>
+    </table> -->
+    <table cdk-table [dataSource]="dataSource">
+
+      <!-- icon Definition -->
+      <ng-container cdkColumnDef="icon">
+        <td cdk-header-cell *cdkHeaderCellDef> icon </td>
+        <td cdk-cell *cdkCellDef="let row"> {{row.icon}} </td>
+      </ng-container>
+
+      <!-- name Definition -->
+      <ng-container cdkColumnDef="name">
+        <td cdk-header-cell *cdkHeaderCellDef> name </td>
+        <td cdk-cell *cdkCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+
+      <!-- type Definition -->
+      <ng-container cdkColumnDef="type">
+        <td cdk-header-cell *cdkHeaderCellDef> type </td>
+        <td cdk-cell *cdkCellDef="let row"> {{row.type}} </td>
+      </ng-container>
+    
+      <!-- value Definition -->
+      <ng-container cdkColumnDef="value">
+        <td cdk-header-cell *cdkHeaderCellDef> value </td>
+        <td *cdkCellDef="let row"> {{row.value}} </td>
+      </ng-container>
+    
+      <!-- weight Definition -->
+      <ng-container cdkColumnDef="weight">
+        <td cdk-header-cell *cdkHeaderCellDef> weight </td>
+        <td cdk-cell *cdkCellDef="let row"> {{row.weight}} </td>
+      </ng-container>
+    
+      <!-- Header and Row Declarations -->
+      <tr cdk-header-row *cdkHeaderRowDef="columnsToDisplay"></tr>
+      <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay"></tr>
     </table>
 
 

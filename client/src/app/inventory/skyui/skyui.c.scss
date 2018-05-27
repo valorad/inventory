@@ -1,27 +1,71 @@
+$borderStyle: 2px solid grey;
+
 aside.list {
   width: 50em;
   margin: 0 2em;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 92px);
   background: rgba(0, 0, 0, 0.8);
   color: white;
-  border-left: 2px solid grey;
-  border-right: 2px solid grey;
-  padding: 2em 0;
+  border-left: $borderStyle;
+  border-right: $borderStyle;
+  padding: 1em 0;
   > header {
     display: flex;
+    h1 {
+      font-size: 36px;
+      margin-left: 0.3em;
+    }
   }
   .divider {
     border: 1px solid grey;
-  }
-  .filter {
-    display: flex;
   }
   .menu {
     ul {
       display: flex;
     }
+    li {
+      flex: auto;
+      text-align: center;
+      font-size: 32px;
+    }
   }
   table {
     width: 100%;
+  }
+
+  tr {
+    height: 2em;
+    font-size: 16px;
+  }
+
+  tr.cdk-header-row {
+    td {
+      border-bottom: $borderStyle;
+    }
+  }
+
+}
+
+div.filter {
+  display: flex;
+  margin-top: 0.7em;
+  height: 2em;
+  border-top: $borderStyle;
+  border-bottom: $borderStyle;
+  picture {
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    i {
+      margin: 0 0.2em;
+    }
+  }
+  input {
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-align: right;
+    padding: 0 1em;
   }
 }
