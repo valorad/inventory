@@ -27,46 +27,15 @@
 
     <hr>
     <hr>
-    <!-- <table>
-      <thead>
-        <tr>
-          <td>O</td>
-          <td>name</td>
-          <td>type</td>
-          <td>weight</td>
-          <td>value</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>O</td>
-          <td>ebony ore</td>
-          <td>misc</td>
-          <td>1</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>O</td>
-          <td>red apple (5)</td>
-          <td>Food</td>
-          <td>0.5</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>O</td>
-          <td>Crossbow</td>
-          <td>Crossbow</td>
-          <td>20</td>
-          <td>100</td>
-        </tr>
-      </tbody>
-    </table> -->
+
     <table cdk-table [dataSource]="dataSource">
 
       <!-- icon Definition -->
       <ng-container cdkColumnDef="icon">
-        <td cdk-header-cell *cdkHeaderCellDef> icon </td>
-        <td cdk-cell *cdkCellDef="let row"> {{row.icon}} </td>
+        <td class="icon" cdk-header-cell *cdkHeaderCellDef> o </td>
+        <td class="icon" cdk-cell *cdkCellDef="let row">
+          <i class="icomoon skyui-item" [ngClass]="row.icon"></i>
+        </td>
       </ng-container>
 
       <!-- name Definition -->

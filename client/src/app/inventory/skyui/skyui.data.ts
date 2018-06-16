@@ -18,7 +18,7 @@ const invItems: InvItems[] = [
   },
   {
     name: "red apple (5)",
-    type: "Food",
+    type: "food",
     value: 5,
     weight: 0.5
   },
@@ -29,6 +29,17 @@ const invItems: InvItems[] = [
     weight: 20
   }
 ];
+
+interface IconDict {
+  [index: string]: string;
+}
+
+const iconDict: IconDict = {
+  misc: "icon-default-misc",
+  food: "icon-default-food",
+  crossbow: "icon-weapon-crossbow",
+  _default: "icon-default-misc"
+}
 
 
 export class SkyuiDataSource extends DataSource<InvItems> {
@@ -41,7 +52,12 @@ export class SkyuiDataSource extends DataSource<InvItems> {
 
   assignIcon = () => {
     for (let item of invItems) {
-      item.icon = "O";
+      if (item.type && iconDict[item.type]) {
+        item.icon = iconDict[item.type];
+      } else {
+        item.icon = iconDict["_default"];
+      }
+      
     }
   };
 
