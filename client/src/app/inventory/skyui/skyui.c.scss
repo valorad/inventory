@@ -1,5 +1,9 @@
 $borderStyle: 2px solid grey;
 
+section.skyui {
+  display: flex;
+}
+
 aside.list {
   width: 50em;
   margin: 0 2em;
@@ -44,6 +48,54 @@ aside.list {
     }
   }
 
+}
+
+main.list {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  > header {
+    margin-top: 20vh;
+    text-align: center;
+  }
+  picture {
+    font-size: 15em;
+  }
+}
+
+article.detail {
+  max-width: 40em;
+  margin: 0 auto;
+  padding: 1em;
+  border: $borderStyle;
+  border-width: 4px;
+  h2 {
+    text-align: left;
+  }
+  h1 {
+    font-size: 2em;
+    border-bottom: $borderStyle;
+    margin: 0.5em auto;
+    text-transform: uppercase;
+  }
+  ul {
+    display: flex;
+    margin-bottom: 2em;
+  }
+  li {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  span.title {
+    font-size: 18px;
+    margin-right: 1em;
+    text-transform: uppercase;
+  }
+  span.value {
+    font-size: 2em;
+  }
 }
 
 div.filter {
