@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { AngularCompilerPlugin } = require('@ngtools/webpack');
 const { root } = require('../lib/helpers');
 
@@ -86,38 +87,6 @@ let config = {
     }
   },
 
-  // optimization: {
-  //   runtimeChunk: true,
-  //   splitChunks: {
-  //     name: true,
-  //     cacheGroups: {
-  //       app: {
-  //         name: "app"
-  //       },
-  //       vendor: {
-  //         name: "vendor"
-  //       },
-  //       polyfills: {
-  //         name: "polyfills"
-  //       },
-  //     }
-  //   }
-  // },
-
-
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       vendor: {
-  //         chunks: 'all',
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendor',
-  //         enforce: true
-  //       }
-  //     }
-  //   }
-  // },
-
   plugins: [
 
     // Workaround for angular/angular#11580
@@ -155,11 +124,6 @@ let config = {
           collapseWhitespace: true,
           keepClosingSlash: true
         }
-      // minify: {
-      //   caseSensitive: true,
-      //   collapseWhitespace: true,
-      //   keepClosingSlash: true
-      // }
       
     }),
 
@@ -175,7 +139,16 @@ let config = {
       // both options are optional
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
-    })
+    }),
+
+    new CopyWebpackPlugin([
+      { 
+        from: root('src/statics'),
+        to: 'statics',
+        ignore: [".gitkeep"]
+      }
+    ])
+
 
   ]
 
