@@ -139,6 +139,6 @@ content-
 ```
 
 
-[actor-1]:https://github.com/valorad/inventory/blob/master/src/server/database/interface/actor.interface.ts#L4
-[trans-1]:https://github.com/valorad/inventory/blob/master/src/server/database/interface/translation.interface.ts#L3
-[trans-2]:https://github.com/valorad/inventory/blob/master/src/server/database/schema/translations.ts#L5
+[actor-1]:https://github.com/valorad/inventory/blob/master/server/src/database/interface/actor.interface.ts#L4
+[trans-1]:https://github.com/valorad/inventory/blob/master/server/src/database/interface/translation.interface.ts#L3
+[trans-2]:https://github.com/valorad/inventory/blob/master/server/src/database/interface/translation.interface.ts#L5
