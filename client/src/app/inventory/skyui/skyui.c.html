@@ -67,23 +67,74 @@
         <i class="icomoon skyui-item icon-armor-heavy-body" [ngClass]="currentDetail.icon"></i>
       </picture>
       <article class="detail">
-        <h2>Heavy Armor</h2>
+        <h2 [innerHTML]="currentDetail.typeName">Loading item type...</h2>
         <h1 [innerHTML]="currentDetail.name">Loading item name...</h1>
+
         <ul>
-          <li>
-            <span class="title">Armor</span>
-            <span class="value">48</span>
+          <li *ngIf="currentDetail.rating">
+            <span class="title"> Rating </span>
+            <span class="value">{{ currentDetail.rating }}</span>
           </li>
-          <li>
+          <li *ngIf="currentDetail.weight">
             <span class="title">Weight</span>
-            <span class="value">45</span>
+            <span class="value">{{ currentDetail.weight }}</span>
           </li>
-          <li>
+          <li *ngIf="currentDetail.value">
             <span class="title">Value</span>
-            <span class="value">400</span>
+            <span class="value">{{ currentDetail.value }}</span>
           </li>
         </ul>
+
       </article>
     </header>
   </main>
+
+  <!-- <ng-template #detailArmor>
+    <ul>
+      <li>
+        <span class="title">Armor</span>
+        <span class="value">48</span>
+      </li>
+      <li>
+        <span class="title">Weight</span>
+        <span class="value">45</span>
+      </li>
+      <li>
+        <span class="title">Value</span>
+        <span class="value">400</span>
+      </li>
+    </ul>
+  </ng-template>
+
+  <ng-template #detailWeapon>
+    <ul>
+      <li>
+        <span class="title">Damage</span>
+        <span class="value">48</span>
+      </li>
+      <li>
+        <span class="title">Weight</span>
+        <span class="value">45</span>
+      </li>
+      <li>
+        <span class="title">Value</span>
+        <span class="value">400</span>
+      </li>
+    </ul>
+  </ng-template>
+
+  <ng-template #detail0>
+    <ul>
+      <li>
+        <span class="title">Weight</span>
+        <span class="value">45</span>
+      </li>
+      <li>
+        <span class="title">Value</span>
+        <span class="value">400</span>
+      </li>
+    </ul>
+  </ng-template> -->
+
+
 </section>
