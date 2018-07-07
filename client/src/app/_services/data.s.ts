@@ -11,12 +11,6 @@ export class DataService {
     private http: HttpClient
   ) {}
 
-  private extractData = (res: Response) => {
-    let data = res.json() || [];
-    return data;
-  };
-
-
   request = (url: string) => {
 
     let response = this.http.get(url, {observe: "response"});
@@ -29,13 +23,17 @@ export class DataService {
 
     let response = this.http.get(url, {observe: "body"});
 
+    if (extractMethod) {
+      response = response.pipe(
+        map(extractMethod)
+      );
+    }
+
     return response
       .pipe(
-        map(extractMethod || this.extractData),
         distinctUntilChanged(),
         catchError((error) => of(error || "Server Error"))
       );
-
 
   };
 

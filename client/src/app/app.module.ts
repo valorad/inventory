@@ -13,6 +13,8 @@ import { MatListModule } from '@angular/material/list';
 
 // other modules
 
+// services
+import { DataService } from './_services/data.s';
 
 // other components
 import { IndexComponent } from "./index/index.c";
@@ -46,6 +48,9 @@ const matModules = [
 
     IndexComponent,
     Http404Component,
+  ],
+  providers: [
+    DataService
   ],
   bootstrap: [ AppComponent ]
 })
