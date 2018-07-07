@@ -27,11 +27,23 @@ aside.list {
     ul {
       display: flex;
     }
+    i {
+      color: rgba(255, 255, 255, 0.5);
+      transition: inherit;
+    }
+
     li {
       flex: auto;
       text-align: center;
       font-size: 32px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
+    li.active i {
+      color: rgba(255, 255, 255, 1);
+    }
+
   }
   table {
     width: 100%;
@@ -45,6 +57,14 @@ aside.list {
   tr {
     height: 2em;
     font-size: 16px;
+  }
+
+  tr.cdk-row {
+    cursor: pointer;
+  }
+
+  tr.cdk-row:hover {
+    background-color: rgba(255, 255, 255, 0.2);
   }
 
   tr.cdk-header-row {

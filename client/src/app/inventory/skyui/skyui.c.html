@@ -1,7 +1,7 @@
 <section class="skyui">
   <aside class="list">
     <header>
-      <h1>title</h1>
+      <h1 [innerHTML]="currentTab.name">Loading...</h1>
       <div class="flexSpacer"></div>
       <div class="filter">
         <input type="text" class="filter" name="filter" placeholder="Filter">
@@ -12,8 +12,11 @@
     </header>
     <div class="menu">
       <ul>
-        <li><i class="icomoon skyui-category icon-favorites"></i></li>
-        <li><i class="icomoon skyui-category icon-all-inventory"></i></li>
+        <li *ngFor="let tab of tabs" [class.active]="tab.active" (click)="changeCategoryTab(tab.dbname)">
+          <i class="icomoon skyui-category" [ngClass]="tab.icon"></i>
+        </li>
+        <!-- <li><i class="icomoon skyui-category" [ngClass]="icon"></i></li>
+        <li class="active"><i class="icomoon skyui-category icon-all-inventory"></i></li>
         <li><i class="icomoon skyui-category icon-apparel"></i></li>
         <li><i class="icomoon skyui-category icon-potions"></i></li>
         <li><i class="icomoon skyui-category icon-scrolls"></i></li>
@@ -21,7 +24,7 @@
         <li><i class="icomoon skyui-category icon-ingredients"></i></li>
         <li><i class="icomoon skyui-category icon-books"></i></li>
         <li><i class="icomoon skyui-category icon-keys"></i></li>
-        <li><i class="icomoon skyui-category icon-misc"></i></li>
+        <li><i class="icomoon skyui-category icon-misc"></i></li> -->
       </ul>
     </div>
 
