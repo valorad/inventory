@@ -2,15 +2,36 @@ import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../../_services/data.s';
 
-import { SkyuiDataSource } from './skyui.data';
+import { SkyuiDataSource } from './skyui.table';
 
-interface InvItems {
+interface InvItem {
   icon?: string,
   name?: string,
   type?: string,
   value?: number,
   weight?: number
 }
+
+interface InvItemVerbose {
+  holder: string,
+  item: string,
+  refDetails: any[],
+  // item base info
+  base: {
+    dbname: string,
+    value: number,
+    weight: number,
+    category: string,
+    detail?: {
+      rating?: number,
+      type?: string,
+      equipI18n?: any,
+      effectsI18n?: any,
+      content?: string
+    }
+  }
+}
+
 
 interface CategoryTab {
 	dbname: string,
@@ -93,10 +114,14 @@ export class SkyUIComponent implements OnInit {
 
 	currentTab = {} as CategoryTab;
 
+	invItems: InvItem[] = [];
+
+	currentDetail = {};
+
   getInvItems = () => {
-    return new Promise<InvItems[]>((resolve, reject) => {
+    return new Promise<InvItem[]>((resolve, reject) => {
       this.dataService.getData("statics/dummy-items.json").subscribe(
-        (data: InvItems[]) => {
+        (data: InvItem[]) => {
 					resolve(data);
         },
         (error: string) => {
@@ -130,10 +155,17 @@ export class SkyUIComponent implements OnInit {
 		}
 	};
 
+	showDetail = (e: MouseEvent) => {
+		let tr = e.srcElement as HTMLTableRowElement;
+		let index = tr.rowIndex - 1;
+		this.currentDetail = this.invItems[index];
+		console.log(this.currentDetail);
+	};
+
   main = async () => {
     // fetch data
-		let invItems: InvItems[] = (await this.getInvItems()) || [];
-		this.dataSource = new SkyuiDataSource(invItems);
+		this.invItems = (await this.getInvItems()) || [];
+		this.dataSource = new SkyuiDataSource(this.invItems);
 		// activate default tab
 		this.changeCategoryTab("category-all-inventory");
 		
