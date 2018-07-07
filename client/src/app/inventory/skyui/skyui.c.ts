@@ -4,12 +4,30 @@ import { DataService } from '../../_services/data.s';
 
 import { SkyuiDataSource } from './skyui.table';
 
+interface IEquip {
+	name: string,
+	equip: string
+}
+
+interface IEffect {
+	name: string,
+	effect: string
+}
+
 interface InvItem {
-  icon?: string,
-  name?: string,
-  type?: string,
+  icon?: string, // to be assigned in the cdk table
+	name?: string,
+	description?: string,
+	type?: string,
+	typeName?: string,
   value?: number,
-  weight?: number
+	weight?: number,
+	rating?: number,
+	equips: IEquip[]
+	effects: IEffect[],
+	quantity: number,
+	bookContent?: string;
+
 }
 
 interface InvItemVerbose {
@@ -18,16 +36,20 @@ interface InvItemVerbose {
   refDetails: any[],
   // item base info
   base: {
-    dbname: string,
+		dbname: string,
+		name?: string,
+		description?: string,
     value: number,
     weight: number,
     category: string,
     detail?: {
       rating?: number,
-      type?: string,
+			type?: string,
+			typeName: string,
       equipI18n?: any,
       effectsI18n?: any,
-      content?: string
+			content?: string,
+			contentDetail?: string
     }
   }
 }
@@ -47,7 +69,7 @@ interface CategoryTab {
 })
 export class SkyUIComponent implements OnInit {
 
-	columnsToDisplay = ['icon', 'name', 'type', 'value', 'weight'];
+	columnsToDisplay = ['icon', 'name', 'typeName', 'value', 'weight'];
 	dataSource: SkyuiDataSource;
 	tabs: CategoryTab[] = [
 		{
@@ -116,12 +138,12 @@ export class SkyUIComponent implements OnInit {
 
 	invItems: InvItem[] = [];
 
-	currentDetail = {};
+	currentDetail = {} as InvItem;
 
   getInvItems = () => {
-    return new Promise<InvItem[]>((resolve, reject) => {
+    return new Promise<InvItemVerbose[]>((resolve, reject) => {
       this.dataService.getData("statics/dummy-items.json").subscribe(
-        (data: InvItem[]) => {
+        (data: InvItemVerbose[]) => {
 					resolve(data);
         },
         (error: string) => {
@@ -130,6 +152,36 @@ export class SkyUIComponent implements OnInit {
       );
     });
 
+	};
+
+	extractData = (invVs: InvItemVerbose[]) => {
+		let extData: InvItem[] = [];
+		for (let invV of invVs) {
+			let invItem = {} as InvItem;
+
+			invItem.name = invV.base.name;
+			invItem.description = invV.base.description;
+			invItem.value = invV.base.value;
+			invItem.weight = invV.base.weight;
+			
+			// {Waring!} This is wrong, because refitems has the exact quantity.
+			// It isn't determined simply by ref length
+			invItem.quantity = invV.refDetails.length;
+
+
+			// details
+			if (invV.base.detail) {
+				invItem.rating = invV.base.detail.rating;
+				invItem.type = invV.base.detail.type;
+				invItem.typeName = invV.base.detail.typeName;
+				invItem.equips = invV.base.detail.equipI18n;
+				invItem.effects = invV.base.detail.effectsI18n;
+				invItem.bookContent = invV.base.detail.contentDetail;
+			}
+
+			extData.push(invItem);
+		}
+		return extData;
 	};
 
 	findTab = (dbname: string) => {
@@ -164,7 +216,8 @@ export class SkyUIComponent implements OnInit {
 
   main = async () => {
     // fetch data
-		this.invItems = (await this.getInvItems()) || [];
+		this.invItems = (this.extractData(await this.getInvItems())) || [];
+
 		this.dataSource = new SkyuiDataSource(this.invItems);
 		// activate default tab
 		this.changeCategoryTab("category-all-inventory");

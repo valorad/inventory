@@ -34,9 +34,11 @@ interface IconDict {
 }
 
 const iconDict: IconDict = {
-  misc: "icon-default-misc",
-  food: "icon-default-food",
-  crossbow: "icon-weapon-crossbow",
+  "type-misc": "icon-default-misc",
+  "type-food": "icon-default-food",
+  "type-crossbow": "icon-weapon-crossbow",
+  "type-heavyarmor": "icon-armor-heavy-body",
+  "type-ingredient": "icon-default-ingredient",
   _default: "icon-default-misc"
 }
 

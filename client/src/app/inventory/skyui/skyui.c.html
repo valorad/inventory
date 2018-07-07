@@ -15,16 +15,6 @@
         <li *ngFor="let tab of tabs" [class.active]="tab.active" (click)="changeCategoryTab(tab.dbname)">
           <i class="icomoon skyui-category" [ngClass]="tab.icon"></i>
         </li>
-        <!-- <li><i class="icomoon skyui-category" [ngClass]="icon"></i></li>
-        <li class="active"><i class="icomoon skyui-category icon-all-inventory"></i></li>
-        <li><i class="icomoon skyui-category icon-apparel"></i></li>
-        <li><i class="icomoon skyui-category icon-potions"></i></li>
-        <li><i class="icomoon skyui-category icon-scrolls"></i></li>
-        <li><i class="icomoon skyui-category icon-food"></i></li>
-        <li><i class="icomoon skyui-category icon-ingredients"></i></li>
-        <li><i class="icomoon skyui-category icon-books"></i></li>
-        <li><i class="icomoon skyui-category icon-keys"></i></li>
-        <li><i class="icomoon skyui-category icon-misc"></i></li> -->
       </ul>
     </div>
 
@@ -43,25 +33,25 @@
 
       <!-- name Definition -->
       <ng-container cdkColumnDef="name">
-        <td cdk-header-cell *cdkHeaderCellDef> name </td>
-        <td cdk-cell *cdkCellDef="let row"> {{row.name}} </td>
+        <td cdk-header-cell *cdkHeaderCellDef> Name </td>
+        <td cdk-cell *cdkCellDef="let row"> {{row.name}} <span *ngIf="row.quantity > 1"> ({{ row.quantity }})</span> </td>
       </ng-container>
 
       <!-- type Definition -->
-      <ng-container cdkColumnDef="type">
-        <td cdk-header-cell *cdkHeaderCellDef> type </td>
-        <td cdk-cell *cdkCellDef="let row"> {{row.type}} </td>
+      <ng-container cdkColumnDef="typeName">
+        <td cdk-header-cell *cdkHeaderCellDef> Type </td>
+        <td cdk-cell *cdkCellDef="let row"> {{row.typeName}} </td>
       </ng-container>
     
       <!-- value Definition -->
       <ng-container cdkColumnDef="value">
-        <td cdk-header-cell *cdkHeaderCellDef> value </td>
+        <td cdk-header-cell *cdkHeaderCellDef> Value </td>
         <td *cdkCellDef="let row"> {{row.value}} </td>
       </ng-container>
     
       <!-- weight Definition -->
       <ng-container cdkColumnDef="weight">
-        <td cdk-header-cell *cdkHeaderCellDef> weight </td>
+        <td cdk-header-cell *cdkHeaderCellDef> Weight </td>
         <td cdk-cell *cdkCellDef="let row"> {{row.weight}} </td>
       </ng-container>
     
