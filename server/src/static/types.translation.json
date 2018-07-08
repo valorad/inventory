@@ -1,0 +1,410 @@
+[
+  {
+    "dbname": "type-garment",
+    "name": {
+      "en": "Garment",
+      "zh": "服装"
+    }
+  },
+
+  {
+    "dbname": "type-heavyarmor",
+    "name": {
+      "en": "Heavy Armor",
+      "zh": "重甲"
+    }
+  },
+
+
+  {
+    "dbname": "type-lightarmor",
+    "name": {
+      "en": "Light Armor",
+      "zh": "轻甲"
+    }
+  },
+
+  {
+    "dbname": "type-armor",
+    "name": {
+      "en": "Armor",
+      "zh": "护甲"
+    }
+  },
+
+  {
+    "dbname": "type-scroll",
+    "name": {
+      "en": "Scroll",
+      "zh": "卷轴"
+    }
+  },
+
+  {
+    "dbname": "type-food",
+    "name": {
+      "en": "Food",
+      "zh": "食物"
+    }
+  },
+
+  {
+    "dbname": "type-ingredient",
+    "name": {
+      "en": "Ingredient",
+      "zh": "原料"
+    }
+  },
+
+  {
+    "dbname": "type-misc-key",
+    "name": {
+      "en": "Key",
+      "zh": "钥匙"
+    }
+  },
+
+  {
+    "dbname": "type-potion",
+    "name": {
+      "en": "Potion",
+      "zh": "魔药"
+    }
+  },
+
+  {
+    "dbname": "type-weapon",
+    "name": {
+      "en": "Weapon",
+      "zh": "武器"
+    }
+  },
+
+  {
+    "dbname": "type-food-wine",
+    "name": {
+      "en": "Wine",
+      "zh": "酒"
+    }
+  },
+
+  {
+    "dbname": "type-spelltome",
+    "name": {
+      "en": "Spell Tome",
+      "zh": "法术书"
+    }
+  },
+
+  {
+    "dbname": "type-misc-artifact",
+    "name": {
+      "en": "Artifact",
+      "zh": "工品"
+    }
+  },
+
+  {
+    "dbname": "type-misc-clutter",
+    "name": {
+      "en": "Clutter",
+      "zh": "杂项"
+    }
+  },
+
+  {
+    "dbname": "type-misc-dragonclaw",
+    "name": {
+      "en": "Dragonclaw",
+      "zh": "龙爪"
+    }
+  },
+
+  {
+    "dbname": "type-misc-gem",
+    "name": {
+      "en": "Gem",
+      "zh": "宝石"
+    }
+  },
+
+  {
+    "dbname": "type-misc-gold",
+    "name": {
+      "en": "Gold",
+      "zh": "金钱"
+    }
+  },
+
+  {
+    "dbname": "type-misc-goldsack",
+    "name": {
+      "en": "Goldsack",
+      "zh": "钱袋"
+    }
+  },
+
+  {
+    "dbname": "type-misc-hide",
+    "name": {
+      "en": "Hide",
+      "zh": "皮毛"
+    }
+  },
+
+  {
+    "dbname": "type-misc-ingot",
+    "name": {
+      "en": "Ingot",
+      "zh": "金锭"
+    }
+  },
+
+  {
+    "dbname": "type-misc-leather",
+    "name": {
+      "en": "Leather",
+      "zh": "皮革"
+    }
+  },
+
+  {
+    "dbname": "type-misc-lockpick",
+    "name": {
+      "en": "Lockpick",
+      "zh": "开锁器"
+    }
+  },
+
+  {
+    "dbname": "type-misc-ore",
+    "name": {
+      "en": "Ore",
+      "zh": "矿"
+    }
+  },
+
+  {
+    "dbname": "type-misc-remains",
+    "name": {
+      "en": "Remains",
+      "zh": "残遗"
+    }
+  },
+
+  {
+    "dbname": "type-misc-soulgem",
+    "name": {
+      "en": "Soulgem",
+      "zh": "魂石"
+    }
+  },
+
+  {
+    "dbname": "type-misc-strips",
+    "name": {
+      "en": "Strips",
+      "zh": "皮条"
+    }
+  },
+
+  {
+    "dbname": "type-misc-torch",
+    "name": {
+      "en": "Torch",
+      "zh": "火炬"
+    }
+  },
+
+  {
+    "dbname": "type-misc-trollskull",
+    "name": {
+      "en": "Trollskull",
+      "zh": "巨魔头"
+    }
+  },
+
+  {
+    "dbname": "type-misc-wood",
+    "name": {
+      "en": "Wood",
+      "zh": "木材"
+    }
+  },
+
+  {
+    "dbname": "type-potion-fire",
+    "name": {
+      "en": "Fire",
+      "zh": "火"
+    }
+  },
+
+  {
+    "dbname": "type-potion-frost",
+    "name": {
+      "en": "Frost",
+      "zh": "冰"
+    }
+  },
+
+  {
+    "dbname": "type-potion-health",
+    "name": {
+      "en": "Health",
+      "zh": "命"
+    }
+  },
+
+  {
+    "dbname": "type-potion-magic",
+    "name": {
+      "en": "Magic",
+      "zh": "魔"
+    }
+  },
+
+  {
+    "dbname": "type-potion-poison",
+    "name": {
+      "en": "Poison",
+      "zh": "毒"
+    }
+  },
+
+  {
+    "dbname": "type-potion-shock",
+    "name": {
+      "en": "Shock",
+      "zh": "电"
+    }
+  },
+
+  {
+    "dbname": "type-potion-stamina",
+    "name": {
+      "en": "Stamina",
+      "zh": "体"
+    }
+  },
+
+  {
+    "dbname": "type-soulgem-azura",
+    "name": {
+      "en": "Azura",
+      "zh": "阿祖拉"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-arrow",
+    "name": {
+      "en": "Arrow",
+      "zh": "箭"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-battleaxe",
+    "name": {
+      "en": "Battleaxe",
+      "zh": "战斧"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-bolt",
+    "name": {
+      "en": "Bolt",
+      "zh": "矢"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-bow",
+    "name": {
+      "en": "Bow",
+      "zh": "弓"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-crossbow",
+    "name": {
+      "en": "Crossbow",
+      "zh": "弩"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-dagger",
+    "name": {
+      "en": "Dagger",
+      "zh": "匕首"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-greatsword",
+    "name": {
+      "en": "Greatsword",
+      "zh": "大剑"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-hammer",
+    "name": {
+      "en": "Hammer",
+      "zh": "战锤"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-mace",
+    "name": {
+      "en": "Mace",
+      "zh": "手锤"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-pickaxe",
+    "name": {
+      "en": "Pickaxe",
+      "zh": "鹤嘴锄"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-staff",
+    "name": {
+      "en": "Staff",
+      "zh": "杖"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-sword",
+    "name": {
+      "en": "Sword",
+      "zh": "剑"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-waraxe",
+    "name": {
+      "en": "Waraxe",
+      "zh": "手斧"
+    }
+  },
+
+  {
+    "dbname": "type-weapon-woodaxe",
+    "name": {
+      "en": "Woodaxe",
+      "zh": "劈柴斧"
+    }
+  }
+]

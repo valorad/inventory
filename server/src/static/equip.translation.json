@@ -1,0 +1,97 @@
+[
+  {
+    "dbname": "equip-neck",
+    "name": {
+      "en": "Neck",
+      "zh": "颈部"
+    }
+  },
+
+  {
+    "dbname": "equip-head",
+    "name": {
+      "en": "Head",
+      "zh": "头部"
+    }
+  },
+
+  {
+    "dbname": "equip-feet",
+    "name": {
+      "en": "Feet",
+      "zh": "足部"
+    }
+  },
+
+  {
+    "dbname": "equip-forearms",
+    "name": {
+      "en": "Forearms",
+      "zh": "臂膀"
+    }
+  },
+
+  {
+    "dbname": "equip-face",
+    "name": {
+      "en": "Face",
+      "zh": "面部"
+    }
+  },
+
+  {
+    "dbname": "equip-shield",
+    "name": {
+      "en": "Shield",
+      "zh": "盾牌"
+    }
+  },
+
+  {
+    "dbname": "equip-finger",
+    "name": {
+      "en": "Finger",
+      "zh": "手指"
+    }
+  },
+
+  {
+    "dbname": "equip-chest",
+    "name": {
+      "en": "Chest",
+      "zh": "上身"
+    }
+  },
+
+  {
+    "dbname": "equip-leg",
+    "name": {
+      "en": "Leg",
+      "zh": "腿部"
+    }
+  },
+
+  {
+    "dbname": "equip-back",
+    "name": {
+      "en": "Back",
+      "zh": "背部"
+    }
+  },
+
+  {
+    "dbname": "equip-hand-left",
+    "name": {
+      "en": "Left Hand",
+      "zh": "左手"
+    }
+  },
+
+  {
+    "dbname": "equip-hand-right",
+    "name": {
+      "en": "Right Hand",
+      "zh": "右手"
+    }
+  }
+]
