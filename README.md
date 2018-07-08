@@ -57,6 +57,6 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 MIT License
 
-所有图标、界面的版权属于Bethesda Game Studios和/或SkyUI团队。
+skyUI页面的界面、图标版权属于Bethesda Game Studios和/或SkyUI团队。
 
 Thanks to Bethesda Game Studios for creating The Elder Scrolls V: Skyrim (and SSE), providing the base content and allowing us to mod it.

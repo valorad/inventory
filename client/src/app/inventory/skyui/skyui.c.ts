@@ -4,56 +4,7 @@ import { DataService } from '../../_services/data.s';
 
 import { SkyuiDataSource } from './skyui.table';
 
-interface IEquip {
-	name: string,
-	equip: string
-}
-
-interface IEffect {
-	name: string,
-	effect: string
-}
-
-interface InvItem {
-  icon?: string, // to be assigned in the cdk table
-	name?: string,
-	description?: string,
-	type?: string,
-	typeName?: string,
-  value?: number,
-	weight?: number,
-	rating?: number,
-	equips: IEquip[]
-	effects: IEffect[],
-	quantity: number,
-	bookContent?: string;
-
-}
-
-interface InvItemVerbose {
-  holder: string,
-  item: string,
-  refDetails: any[],
-  // item base info
-  base: {
-		dbname: string,
-		name?: string,
-		description?: string,
-    value: number,
-    weight: number,
-    category: string,
-    detail?: {
-      rating?: number,
-			type?: string,
-			typeName: string,
-      equipI18n?: any,
-      effectsI18n?: any,
-			content?: string,
-			contentDetail?: string
-    }
-  }
-}
-
+import { InvItem, InvItemVerbose } from "./invItem.interface";
 
 interface CategoryTab {
 	dbname: string,
@@ -140,6 +91,8 @@ export class SkyUIComponent implements OnInit {
 
 	currentDetail = {} as InvItem;
 
+	itemLoaded = false;
+
   getInvItems = () => {
     return new Promise<InvItemVerbose[]>((resolve, reject) => {
       this.dataService.getData("statics/dummy-items.json").subscribe(
@@ -168,12 +121,24 @@ export class SkyUIComponent implements OnInit {
 			// It isn't determined simply by ref length
 			invItem.quantity = invV.refDetails.length;
 
+			// polyfill types for books and non-cate items
+			// books
+			if (invV.base.category === "books") {
+				invItem.type = "type-book";
+				invItem.typeName = "Books";
+			}
+
+			// non-cate misc
+			if (!invV.base.category) {
+				invItem.type = "type-misc";
+				invItem.typeName = "Miscellaneous";
+			}
 
 			// details
 			if (invV.base.detail) {
 				invItem.rating = invV.base.detail.rating;
-				invItem.type = invV.base.detail.type;
-				invItem.typeName = invV.base.detail.typeName;
+				if (invV.base.detail.type) {invItem.type = invV.base.detail.type;}
+				if (invV.base.detail.typeName) invItem.typeName = invV.base.detail.typeName;
 				invItem.equips = invV.base.detail.equipI18n;
 				invItem.effects = invV.base.detail.effectsI18n;
 				invItem.bookContent = invV.base.detail.contentDetail;
@@ -215,13 +180,15 @@ export class SkyUIComponent implements OnInit {
 	};
 
   main = async () => {
+		// activate default tab
+		this.changeCategoryTab("category-all-inventory");
+
     // fetch data
 		this.invItems = (this.extractData(await this.getInvItems())) || [];
 
 		this.dataSource = new SkyuiDataSource(this.invItems);
-		// activate default tab
-		this.changeCategoryTab("category-all-inventory");
-		
+		this.itemLoaded = true;
+
   };
 
 
