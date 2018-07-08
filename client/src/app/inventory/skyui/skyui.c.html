@@ -60,6 +60,10 @@
       <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay" (mouseenter)="showDetail($event)"></tr>
     </table>
 
+    <div *ngIf="!itemLoaded">
+      <h2>Loading Items...</h2>
+    </div>
+
   </aside>
   <main class="list" *ngIf="currentDetail.name">
     <header>
