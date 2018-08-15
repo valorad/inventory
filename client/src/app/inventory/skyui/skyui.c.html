@@ -4,7 +4,7 @@
       <h1 [innerHTML]="currentTab.name">Loading...</h1>
       <div class="flexSpacer"></div>
       <div class="filter">
-        <input type="text" class="filter" name="filter" placeholder="Filter">
+        <input type="text" class="filter" name="filter" placeholder="Filter" [(ngModel)]="searchTerm">
         <picture> <i class="icomoon skyui-misc icon-search"></i> </picture>
         <div class="divider"></div>
         <picture> <i class="icomoon skyui-misc icon-filter-settings"></i> </picture>

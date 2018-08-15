@@ -4,18 +4,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { InvItem } from "./invItem.interface";
 import { SkyUIIcon } from './skyui.icon';
 
-interface IconDict {
-  [index: string]: string;
-}
+// interface IconDict {
+//   [index: string]: string;
+// }
 
-const iconDict: IconDict = {
-  "type-misc": "icon-default-misc",
-  "type-food": "icon-default-food",
-  "type-crossbow": "icon-weapon-crossbow",
-  "type-heavyarmor": "icon-armor-heavy-body",
-  "type-ingredient": "icon-default-ingredient",
-  _default: "icon-default-misc"
-}
+// const iconDict: IconDict = {
+//   "type-misc": "icon-default-misc",
+//   "type-food": "icon-default-food",
+//   "type-crossbow": "icon-weapon-crossbow",
+//   "type-heavyarmor": "icon-armor-heavy-body",
+//   "type-ingredient": "icon-default-ingredient",
+//   _default: "icon-default-misc"
+// }
 
 export class SkyuiDataSource extends DataSource<InvItem> {
 

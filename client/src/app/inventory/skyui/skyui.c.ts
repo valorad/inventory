@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+// import { of } from 'rxjs';
+// import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { DataService } from '../../_services/data.s';
 
 import { SkyuiDataSource } from './skyui.table';
 
 import { InvItem, InvItemVerbose } from "./invItem.interface";
+
 
 interface CategoryTab {
 	dbname: string,
@@ -88,10 +91,26 @@ export class SkyUIComponent implements OnInit {
 	currentTab = {} as CategoryTab;
 
 	invItems: InvItem[] = [];
+	filteredInvItems: InvItem[] = [];
 
 	currentDetail = {} as InvItem;
 
 	itemLoaded = false;
+
+	_searchTerm = "";
+
+	get searchTerm(): string {
+		return this._searchTerm;
+	}
+
+	set searchTerm(val: string) {
+		this._searchTerm = val;
+		this.filteredInvItems = this.filterByName(val);
+		this.updateDataTable();
+	}
+
+	// searchInputHandler = of(this.searchTerm);
+
 
   getInvItems = () => {
     return new Promise<InvItemVerbose[]>((resolve, reject) => {
@@ -112,7 +131,7 @@ export class SkyUIComponent implements OnInit {
 		for (let invV of invVs) {
 			let invItem = {} as InvItem;
 
-			invItem.name = invV.base.name;
+			invItem.name = invV.base.name || invV.base.dbname;
 			invItem.description = invV.base.description;
 			invItem.value = invV.base.value;
 			invItem.weight = invV.base.weight;
@@ -175,8 +194,23 @@ export class SkyUIComponent implements OnInit {
 	showDetail = (e: MouseEvent) => {
 		let tr = e.srcElement as HTMLTableRowElement;
 		let index = tr.rowIndex - 1;
-		this.currentDetail = this.invItems[index];
+		this.currentDetail = this.filteredInvItems[index];
 		console.log(this.currentDetail);
+	};
+
+	// filterByCategory = (dbname: string) => {
+	// 	return this.invItems.filter(
+	// 		invItem => invItem.typeName
+	// 	)
+	// };
+	filterByName = (name: string) => {
+		return this.invItems.filter(
+			invItem => invItem.name.toLowerCase().includes(name.toLowerCase())
+		);
+	};
+
+	updateDataTable = () => {
+		this.dataSource = new SkyuiDataSource(this.filteredInvItems);
 	};
 
   main = async () => {
@@ -185,9 +219,27 @@ export class SkyUIComponent implements OnInit {
 
     // fetch data
 		this.invItems = (this.extractData(await this.getInvItems())) || [];
+		this.filteredInvItems = this.invItems;
 
-		this.dataSource = new SkyuiDataSource(this.invItems);
+		this.updateDataTable();
+
 		this.itemLoaded = true;
+
+		// search handler
+		// this.searchInputHandler
+		//  .pipe(
+		// 	 debounceTime(500),
+		// 	 distinctUntilChanged()
+		//  )
+		//  .subscribe(
+		// 	 (next) => {
+		// 		console.log(next);
+		// 		this.filteredInvItems = this.filterByName(next);
+		// 	 },
+		// 	 (err) => {
+		// 		console.error(err);
+		// 	 }
+		//  )
 
   };
 

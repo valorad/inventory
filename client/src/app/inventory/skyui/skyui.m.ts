@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 // mat modules
 import { CdkTableModule } from '@angular/cdk/table';
@@ -17,6 +18,7 @@ const matModules = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     matModules,
 
     skyuiRouter
