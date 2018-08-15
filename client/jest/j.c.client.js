@@ -4,7 +4,7 @@ const config = {
   setupTestFrameworkScriptFile: "./src/jest.setup.ts",
   globals: {
     "ts-jest": {
-      tsConfigFile: "./src/tsconfig.test.json"
+      tsConfigFile: "./tsconfig.test.json"
     },
     __TRANSFORM_HTML__: true
   }
