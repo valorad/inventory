@@ -9,7 +9,8 @@ interface IEffect {
 }
 
 export interface InvItem {
-  icon?: string, // to be assigned in the cdk table
+	icon?: string, // to be assigned in the cdk table
+	category?: string, // to be assigned in the cdk table
 	name: string,
 	description?: string,
 	type: string,

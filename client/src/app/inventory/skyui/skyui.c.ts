@@ -45,6 +45,12 @@ export class SkyUIComponent implements OnInit {
 			active: false
 		},
 		{
+			dbname: "category-weapons",
+			icon: "icon-weapons",
+			name: "Weapons",
+			active: false
+		},
+		{
 			dbname: "category-potions",
 			icon: "icon-potions",
 			name: "Potions",
@@ -91,6 +97,7 @@ export class SkyUIComponent implements OnInit {
 	currentTab = {} as CategoryTab;
 
 	invItems: InvItem[] = [];
+	filteredInvItemsByName: InvItem[] = [];
 	filteredInvItems: InvItem[] = [];
 
 	currentDetail = {} as InvItem;
@@ -105,8 +112,9 @@ export class SkyUIComponent implements OnInit {
 
 	set searchTerm(val: string) {
 		this._searchTerm = val;
-		this.filteredInvItems = this.filterByName(val);
-		this.updateDataTable();
+		this.filteredInvItemsByName = this.filterByName(val);
+
+		this.filterPipe(); // triggers filtering
 	}
 
 	// searchInputHandler = of(this.searchTerm);
@@ -186,9 +194,17 @@ export class SkyUIComponent implements OnInit {
 		if (tab.dbname) {
 			tab.active = true;
 			this.currentTab = tab;
+
+			// filter items by category
+
+			this.filterPipe(); // triggers filtering
+
+
 		} else {
 			console.error(`Failed to switch to tab with dbname ${dbname}`);
 		}
+
+
 	};
 
 	showDetail = (e: MouseEvent) => {
@@ -209,6 +225,35 @@ export class SkyUIComponent implements OnInit {
 		);
 	};
 
+	filterByCategory = (dbname: string) => {
+
+		if (dbname === "category-all-inventory") {
+
+			return this.filteredInvItemsByName.filter(()=>{return true});
+
+		} else {
+
+			return this.filteredInvItemsByName.filter(
+				(invItem) => {
+					if (invItem.category) {
+						return invItem.category === dbname
+					} else {
+						return "category-misc" === dbname
+					}
+				}
+			);
+
+		}
+
+
+	}
+
+	filterPipe = () => {
+		this.filteredInvItemsByName = this.filterByName(this._searchTerm);
+		this.filteredInvItems = this.filterByCategory(this.currentTab.dbname);
+		this.updateDataTable();
+	};
+
 	updateDataTable = () => {
 		this.dataSource = new SkyuiDataSource(this.filteredInvItems);
 	};
@@ -220,6 +265,7 @@ export class SkyUIComponent implements OnInit {
     // fetch data
 		this.invItems = (this.extractData(await this.getInvItems())) || [];
 		this.filteredInvItems = this.invItems;
+		this.filteredInvItemsByName = this.invItems;
 
 		this.updateDataTable();
 

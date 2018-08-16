@@ -3,31 +3,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { InvItem } from "./invItem.interface";
 import { SkyUIIcon } from './skyui.icon';
-
-// interface IconDict {
-//   [index: string]: string;
-// }
-
-// const iconDict: IconDict = {
-//   "type-misc": "icon-default-misc",
-//   "type-food": "icon-default-food",
-//   "type-crossbow": "icon-weapon-crossbow",
-//   "type-heavyarmor": "icon-armor-heavy-body",
-//   "type-ingredient": "icon-default-ingredient",
-//   _default: "icon-default-misc"
-// }
+import { SkyUICategory } from './skyui.category';
 
 export class SkyuiDataSource extends DataSource<InvItem> {
 
   /** Stream of data that is provided to the table. */
   data: BehaviorSubject<InvItem[]>;
   skyUIIcon = new SkyUIIcon();
+  skyUICategory = new SkyUICategory();
 
   constructor(
     invItems: InvItem[]
   ) {
     super();
     this.skyUIIcon.assignIcon(invItems);
+    this.skyUICategory.assignCategory(invItems);
     this.data = new BehaviorSubject<InvItem[]>(invItems);
   }
 
