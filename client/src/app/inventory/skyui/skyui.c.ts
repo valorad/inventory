@@ -117,9 +117,6 @@ export class SkyUIComponent implements OnInit {
 		this.filterPipe(); // triggers filtering
 	}
 
-	// searchInputHandler = of(this.searchTerm);
-
-
   getInvItems = () => {
     return new Promise<InvItemVerbose[]>((resolve, reject) => {
       this.dataService.getData("statics/dummy-items.json").subscribe(
@@ -262,7 +259,7 @@ export class SkyUIComponent implements OnInit {
 		// activate default tab
 		this.changeCategoryTab("category-all-inventory");
 
-    // fetch data
+		// fetch data
 		this.invItems = (this.extractData(await this.getInvItems())) || [];
 		this.filteredInvItems = this.invItems;
 		this.filteredInvItemsByName = this.invItems;
@@ -270,22 +267,6 @@ export class SkyUIComponent implements OnInit {
 		this.updateDataTable();
 
 		this.itemLoaded = true;
-
-		// search handler
-		// this.searchInputHandler
-		//  .pipe(
-		// 	 debounceTime(500),
-		// 	 distinctUntilChanged()
-		//  )
-		//  .subscribe(
-		// 	 (next) => {
-		// 		console.log(next);
-		// 		this.filteredInvItems = this.filterByName(next);
-		// 	 },
-		// 	 (err) => {
-		// 		console.error(err);
-		// 	 }
-		//  )
 
   };
 

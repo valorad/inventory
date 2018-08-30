@@ -36,6 +36,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Typescript v1 declaration files
+typings/
+
 # Optional npm cache directory
 .npm
 
@@ -54,10 +57,12 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
-# site specefic
-/dist/**
+# Apple
+.DS_Stores
+
+# Site Specific
+.vscode/**
 *.lock
 package-*.json
-!*.example.*
-/src/statics/**
-!.gitkeep
+/dist/**
+!*.gitkeep

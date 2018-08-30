@@ -1,40 +1,49 @@
 # inventory
 A game-inventory highly resembles SkyUI 5 
 
-powered by ngx-webpack-grande-starter
+
+## Development
+
+To develop this site, you will need to have @angular/cli ^6.0.0 **Globally** installed.
+
+``` bash
+
+npm i -g @angular/cli
+
+# or
+
+yarn global add @angular/cli
+
+```
 
 ## Code scaffolding
-Copy and paste the `dummy` module.
+1. Copy and paste the `dummy` module.
+2. Or use [angular-cli](https://www.npmjs.com/package/@angular/cli#generating-components-directives-pipes-and-services)
 
 ## Serve
 
-Run dev-server with HMR
+Run dev-server
 
 ```
-npm run serve
+ng serve
 ```
 
 ## Build
 
-Build site with production mode enabled
-
 ```
-npm run build
+ng build
 ```
 
 ## Unit Tests
 
+This project uses Jest testing framework for unit tests. ([Configuring Jest Options](https://github.com/meltedspark/angular-builders/tree/master/packages/jest#builder-options))
+
 ``` bash
 # Run unit tests
-npm run test
-
-# run tests in watch mode
-npm run test-w
-
-# Run unit tests and generate a coverage report
-npm run test-c
+ng test
 
 ```
+
 
 
 

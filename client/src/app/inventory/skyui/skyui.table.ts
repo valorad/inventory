@@ -23,7 +23,7 @@ export class SkyuiDataSource extends DataSource<InvItem> {
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<InvItem[]> {
-    return this.data || [];
+    return this.data;
   }
 
   disconnect() {}
