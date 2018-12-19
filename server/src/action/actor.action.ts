@@ -2,7 +2,7 @@ import { Query } from "../util/query";
 import { IAction } from "./interface/action.interface";
 // import schemas
 import { actors } from '../database/schema/actors';
-import { ObjectId } from "bson";
+import { ObjectId } from "mongodb";
 
 export class ActorAction implements IAction {
 

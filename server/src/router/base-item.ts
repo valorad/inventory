@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
-import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
+import { ApolloServer } from 'apollo-server-koa';
 
 // graphs
 import { baseItemGraph as schema } from "../graph/base-item";
@@ -13,6 +13,8 @@ class BaseItem {
   router = new Router();
   action = new Action();
 
+
+
   constructor() {
 
     this.router.get('/', async (ctx) => {
@@ -20,8 +22,8 @@ class BaseItem {
       ctx.body = result;
     });
 
-    this.router.get('/graph', graphqlKoa({ schema: schema }));
-    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/baseItems/graph' }));
+    // this.router.get('/graph', graphqlKoa({ schema: schema }));
+    // this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/baseItems/graph' }));
 
     this.router.get('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
@@ -102,7 +104,7 @@ class BaseItem {
 
     });
 
-    this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
+    // this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
 
     this.router.delete('/dbname/:dbname', async (ctx) => {
 
@@ -125,6 +127,9 @@ class BaseItem {
       }
 
     });
+
+
+
 
   }
 

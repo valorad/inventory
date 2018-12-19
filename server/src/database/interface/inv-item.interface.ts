@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 
 export interface IInvItem extends Document {
   item: string,

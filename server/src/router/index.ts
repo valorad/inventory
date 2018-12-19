@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
-import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
+import { ApolloServer } from 'apollo-server-koa';
 
 // sub routes
 import { actor } from "./actor";

@@ -60,3 +60,4 @@ jspm_packages/
 package-*.json
 /src/config/**
 !*.example.*
+shrinkwrap.yaml

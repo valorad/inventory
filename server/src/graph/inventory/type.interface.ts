@@ -1,4 +1,4 @@
-import { ObjectId } from "bson";
+import { ObjectId } from "mongodb";
 import { ITranslatedEffect, ITranslatedEquip } from "../base-item/type.interface"
 
 export interface IInvItem {

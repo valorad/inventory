@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
-import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
+import { ApolloServer } from 'apollo-server-koa';
 
 // graphs
 import { actorGraph as schema } from "../graph/actor";
@@ -12,6 +12,9 @@ class Actor {
   
   router = new Router();
   action = new Action();
+  server = new ApolloServer({
+    schema: schema
+  });
 
   constructor() {
 
@@ -20,8 +23,8 @@ class Actor {
       ctx.body = result;
     });
 
-    this.router.get('/graph', graphqlKoa({ schema: schema }));
-    this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/actors/graph' }));
+    // this.router.get('/graph', graphqlKoa({ schema: schema }));
+    // this.router.get('/iql', graphiqlKoa({ endpointURL: '/api/actors/graph' }));
 
     this.router.get('/dbname/:dbname', async (ctx) => {
       let dbname: string = ctx.params.dbname || "";
@@ -35,7 +38,7 @@ class Actor {
       
     });
 
-    this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
+    // this.router.post('/graph', bodyParser(), graphqlKoa({ schema: schema }));
 
     // atomic add
     this.router.post('/', async (ctx) => {
@@ -128,6 +131,9 @@ class Actor {
 
     });
 
+    this.server.applyMiddleware({
+      app: this.router
+    });
   }
 
 }

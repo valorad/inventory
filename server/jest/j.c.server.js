@@ -2,7 +2,7 @@ const config = {
   rootDir: "..",
   globals: {
     "ts-jest": {
-      tsConfigFile: "./tsconfig.test.json"
+      tsConfig: "./tsconfig.test.json"
     }
   },
   testEnvironment: "node",
