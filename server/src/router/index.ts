@@ -11,6 +11,11 @@ import { consumable } from "./consumable";
 import { book } from "./book";
 import { invItem } from "./inv-item";
 
+// graph servers
+import { actorServer } from "./actor";
+import { baseItemServer } from "./base-item";
+import { invItemServer } from "./inv-item";
+
 class API {
 
   static routerInstance = new Router();
@@ -34,15 +39,31 @@ class API {
     this.routerInstance.use('/books', book.routes(), book.allowedMethods());
     this.routerInstance.use('/invItems', invItem.routes(), invItem.allowedMethods());
 
-
-    // this.routerInstance.get('/graphql', graphqlKoa({ schema: schema }));
-    // this.routerInstance.get('/graphiql', graphiqlKoa({ endpointURL: '/api/graphql' }));
-    
-    // this.routerInstance.post('/graphql', bodyParser(), graphqlKoa({ schema: schema }));
-
     return this.routerInstance;
 
   }
+
+  static get server() {
+    let graphServers = [
+      {
+        name: "actors",
+        server: actorServer,
+      },
+      {
+        name: "baseItems",
+        server: baseItemServer,
+      },
+      {
+        name: "invItems",
+        server: invItemServer,
+      }
+      
+    ];
+
+    return graphServers;
+  }
+
 }
 
 export const api = API.router;
+export const servers = API.server;

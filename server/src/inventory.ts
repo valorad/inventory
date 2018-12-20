@@ -9,6 +9,7 @@ import * as bodyParser from 'koa-bodyparser';
 import * as cors from "@koa/cors";
 
 import { api } from './router';
+import { servers } from './router';
 
 import { ConfigLoader } from './util';
 import { DataBase } from "./database";
@@ -42,6 +43,16 @@ if (config) {
   
   const db = new DataBase();
   db.connect();
+
+  // bind graphqls
+  for (let server of servers) {
+
+    server.server.applyMiddleware({
+      app: app,
+      path: `/api/${server.name}/graph`
+    })
+
+  }
 
   // listen
   app.listen(port, () => {

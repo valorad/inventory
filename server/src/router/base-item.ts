@@ -12,7 +12,9 @@ class BaseItem {
 
   router = new Router();
   action = new Action();
-
+  server = new ApolloServer({
+    schema: schema
+  });
 
 
   constructor() {
@@ -135,4 +137,8 @@ class BaseItem {
 
 }
 
-export const baseItem = new BaseItem().router;
+const _baseItem = new BaseItem();
+
+export const baseItem = _baseItem.router;
+export const baseItemServer = _baseItem.server;
+

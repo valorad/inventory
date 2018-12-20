@@ -14,10 +14,7 @@ class InventoryItem {
   action = new Action();
 
   server = new ApolloServer({
-    schema: schema,
-    playground: {
-      endpoint: "/graphql"
-    }
+    schema: schema
   });
 
   constructor() {
@@ -176,11 +173,12 @@ class InventoryItem {
 
     });
 
-    this.server.applyMiddleware({app: this.router});
-
   }
   
 
 }
 
-export const invItem = new InventoryItem().router;
+const _invItem = new InventoryItem();
+
+export const invItem = _invItem.router;
+export const invItemServer = _invItem.server;

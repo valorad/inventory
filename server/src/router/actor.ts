@@ -131,11 +131,12 @@ class Actor {
 
     });
 
-    this.server.applyMiddleware({
-      app: this.router
-    });
   }
 
 }
 
-export const actor = new Actor().router;
+
+const _actor = new Actor();
+
+export const actor = _actor.router;
+export const actorServer = _actor.server;
