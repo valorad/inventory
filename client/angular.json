@@ -73,7 +73,8 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-
+            "preset": "jest-preset-angular",
+            "setupTestFrameworkScriptFile": "<rootDir>/src/jest.setup.ts"
           }
         },
         "lint": {
