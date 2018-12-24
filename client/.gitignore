@@ -64,5 +64,6 @@ typings/
 .vscode/**
 *.lock
 package-*.json
+shrinkwrap.yaml
 /dist/**
 !*.gitkeep
