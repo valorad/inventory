@@ -141,9 +141,11 @@ export class SkyUIComponent implements OnInit {
 			invItem.value = invV.base.value;
 			invItem.weight = invV.base.weight;
 			
-			// {Waring!} This is wrong, because refitems has the exact quantity.
-			// It isn't determined simply by ref length
-			invItem.quantity = invV.refDetails.length;
+			// count item number based on ref Detail
+			invItem.quantity = 0;
+			for (let refDetail of invV.refDetails) {
+				invItem.quantity += refDetail.num;
+			}
 
 			// polyfill types for books and non-cate items
 			// books
