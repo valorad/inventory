@@ -23,7 +23,7 @@ interface CategoryTab {
 })
 export class SkyUIComponent implements OnInit {
 
-	columnsToDisplay = ['icon', 'name', 'typeName', 'value', 'weight'];
+	columnsToDisplay = ['equip', 'icon', 'name', 'typeName', 'value', 'weight'];
 	dataSource: SkyuiDataSource;
 	tabs: CategoryTab[] = [
 		{
@@ -255,6 +255,10 @@ export class SkyUIComponent implements OnInit {
 
 	updateDataTable = () => {
 		this.dataSource = new SkyuiDataSource(this.filteredInvItems);
+	};
+
+	toggleEquip = () => {
+		console.log(this.currentDetail.equips);
 	};
 
   main = async () => {

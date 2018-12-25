@@ -23,6 +23,14 @@
 
     <table cdk-table [dataSource]="dataSource">
 
+     <!-- equip Definition -->
+     <ng-container cdkColumnDef="equip">
+      <td class="equip" cdk-header-cell *cdkHeaderCellDef></td>
+      <td class="equip" cdk-cell *cdkCellDef="let row">
+        <i class="icomoon skyui-misc icon-equiped" [ngClass]="row.equip"></i>
+      </td>
+    </ng-container>
+
       <!-- icon Definition -->
       <ng-container cdkColumnDef="icon">
         <td class="icon" cdk-header-cell *cdkHeaderCellDef> o </td>
@@ -57,7 +65,7 @@
     
       <!-- Header and Row Declarations -->
       <tr cdk-header-row *cdkHeaderRowDef="columnsToDisplay"></tr>
-      <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay" (mouseenter)="showDetail($event)"></tr>
+      <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay" (mouseenter)="showDetail($event)" (click)="toggleEquip()"></tr>
     </table>
 
     <div *ngIf="!itemLoaded">

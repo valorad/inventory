@@ -57,6 +57,12 @@ aside.list {
   tr {
     height: 2em;
     font-size: 16px;
+    position: relative;
+    .equip {
+      position: absolute;
+      left: -1.5em;
+      bottom: 0.3em;
+    }
   }
 
   tr.cdk-row {
@@ -68,7 +74,7 @@ aside.list {
   }
 
   tr.cdk-header-row {
-    td {
+    td:not(.equip) {
       border-bottom: $borderStyle;
     }
   }
