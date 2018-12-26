@@ -57,11 +57,13 @@ aside.list {
   tr {
     height: 2em;
     font-size: 16px;
-    position: relative;
-    .equip {
+    td.equip {
       position: absolute;
-      left: -1.5em;
-      bottom: 0.3em;
+      left: 0.4em;
+    }
+    div.equip {
+      position: relative;
+      top: 0.4em;
     }
   }
 

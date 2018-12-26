@@ -27,7 +27,9 @@
      <ng-container cdkColumnDef="equip">
       <td class="equip" cdk-header-cell *cdkHeaderCellDef></td>
       <td class="equip" cdk-cell *cdkCellDef="let row">
-        <i class="icomoon skyui-misc icon-equiped" [ngClass]="row.equip"></i>
+        <div *ngIf="row.isEquiped" class="equip">
+          <i class="icomoon skyui-misc icon-equiped" [ngClass]="row.equip"></i>
+        </div>
       </td>
     </ng-container>
 

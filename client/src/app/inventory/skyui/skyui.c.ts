@@ -140,6 +140,7 @@ export class SkyUIComponent implements OnInit {
 			invItem.description = invV.base.description;
 			invItem.value = invV.base.value;
 			invItem.weight = invV.base.weight;
+			invItem.isEquiped = false;
 			
 			// count item number based on ref Detail
 			invItem.quantity = 0;
@@ -259,6 +260,12 @@ export class SkyUIComponent implements OnInit {
 
 	toggleEquip = () => {
 		console.log(this.currentDetail.equips);
+
+		// equip
+		this.currentDetail.isEquiped = !this.currentDetail.isEquiped;
+
+		// present changes on table
+		this.updateDataTable();
 	};
 
   main = async () => {
@@ -274,7 +281,11 @@ export class SkyUIComponent implements OnInit {
 
 		this.itemLoaded = true;
 
-  };
+	};
+	
+	wl = (s: string) => {
+		console.log(s);
+	};
 
 
 	constructor (
