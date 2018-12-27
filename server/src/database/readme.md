@@ -140,6 +140,88 @@ content-
 
 ## type 表
 
+```
+type-armor              护甲
+type-garment            衣裳
+type-lightarmor         轻甲
+type-heavyarmor         重甲
+
+type-book               书籍
+type-scroll             卷轴
+type-spelltome          法术书
+
+type-food               食物
+type-food-wine          酒
+
+type-ingredient         配料
+
+type-potion             魔药
+type-potion-fire        魔药（火）
+type-potion-frost       魔药（冰）
+type-potion-health      魔药（命）
+type-potion-magic       魔药（魔）
+type-potion-poison      魔药（毒）
+type-potion-shock       魔药（电）
+type-potion-stamina     魔药（耐）
+
+type-weapon             武器
+type-weapon-arrow       箭
+type-weapon-battleaxe   战斧
+type-weapon-bolt        矢
+type-weapon-bow         弓
+type-weapon-crossbow    弩
+type-weapon-dagger      匕首
+type-weapon-greatsword  巨剑
+type-weapon-hammer      巨锤
+type-weapon-mace        手锤
+type-weapon-pickaxe     鹤嘴锄
+type-weapon-staff       法杖
+type-weapon-sword       剑
+type-weapon-waraxe      手斧
+type-weapon-woodaxe     伐木斧
+
+type-misc-key           钥匙
+type-misc-artifact      工艺
+type-misc-clutter       整体
+type-misc-dragonclaw    龙爪
+type-misc-gem           宝石
+type-misc-gold          金钱
+type-misc-goldsack      钱包
+type-misc-hide          毛皮
+type-misc-ingot         矿锭
+type-misc-leather       革质
+type-misc-lockpick      开锁器
+type-misc-ore           矿石
+type-misc-remains       遗物
+type-misc-soulgem       灵魂石
+type-misc-soulgem-azura 灵魂石（阿祖拉）
+type-misc-strips        革带
+type-misc-torch         火炬
+type-misc-trollskull    巨魔头骨
+type-misc-wood          木材
+
+```
+
+
+
+## Equip 类型
+
+护甲：
+```
+equip-head        头部
+equip-face        脸部
+equip-chest       胸部
+equip-forearms    臂膀
+equip-finger      手指
+equip-shield      盾牌
+equip-leg         膝盖
+equip-feet        足部
+```
+武器：
+```
+equip-hand-left   左手
+equip-hand-right  右手
+```
 
 [actor-1]:https://github.com/valorad/inventory/blob/master/server/src/database/interface/actor.interface.ts#L4
 [trans-1]:https://github.com/valorad/inventory/blob/master/server/src/database/interface/translation.interface.ts#L3
