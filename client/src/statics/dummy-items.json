@@ -1,5 +1,6 @@
 [
   {
+    "id": "xmarkthespot",
     "holder": "actor-dragonborn",
     "item": "item-stimpack",
     "refDetails": [
@@ -39,6 +40,7 @@
     }
   },
   {
+    "id": "whosyourdaddy",
     "holder": "actor-dragonborn",
     "item": "item-iron_helmet",
     "refDetails": [
@@ -67,12 +69,13 @@
           }
         ],
         "effectsI18n": [
-          "Heal"
+
         ]
       }
     }
   },
   {
+    "id": "robinhood",
     "holder": "actor-dragonborn",
     "item": "item-darkbro_tenant",
     "refDetails": [
@@ -93,6 +96,53 @@
       "detail": {
         "content": "content-darkbro_tenant",
         "contentDetail": "Dark-bro rules: 1. No black sacrament on kittens. 2. No D.."
+      }
+    }
+  },
+  {
+    "id": "tucktucktuck",
+    "holder": "actor-dragonborn",
+    "item": "item-buggy_set",
+    "refDetails": [
+      {
+        "refID": "fireinthehole",
+        "owner": "actor-dragonborn",
+        "num": 1,
+        "item": "item-buggy_set"
+      }
+    ],
+    "base": {
+      "dbname": "item-buggy_set",
+      "name": "Buggy Set",
+      "description": "",
+      "value": 250,
+      "weight": 12,
+      "category": "gears",
+      "detail": {
+        "rating": 30,
+        "type": "type-lightarmor",
+        "typeName": "Light Armor",
+        "equipI18n": [
+          {
+            "name": "Head",
+            "equip": "equip-head"
+          },
+          {
+            "name": "Chest",
+            "equip": "equip-chest"
+          },
+          {
+            "name": "forearms",
+            "equip": "equip-forearms"
+          },
+          {
+            "name": "feet",
+            "equip": "equip-feet"
+          }
+        ],
+        "effectsI18n": [
+         
+        ]
       }
     }
   }

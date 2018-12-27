@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { AppComponent } from './app.component';
 
 // mat modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -15,7 +14,10 @@ import { MatListModule } from '@angular/material/list';
 
 // services
 import { DataService } from './_services/data.s';
+import { ActorService } from "./_services/actor.s";
 
+
+import { AppComponent } from './app.component';
 // other components
 import { IndexComponent } from "./index/index.c";
 import { Http404Component } from "./http404/http404.c";
@@ -50,7 +52,8 @@ const matModules = [
     Http404Component,
   ],
   providers: [
-    DataService
+    DataService,
+    ActorService
   ],
   bootstrap: [ AppComponent ]
 })

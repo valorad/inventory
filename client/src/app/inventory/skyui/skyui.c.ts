@@ -7,6 +7,7 @@ import { DataService } from '../../_services/data.s';
 import { SkyuiDataSource } from './skyui.table';
 
 import { InvItem, InvItemVerbose } from "./invItem.interface";
+import { ActorService } from 'src/app/_services/actor.s';
 
 
 interface CategoryTab {
@@ -22,6 +23,15 @@ interface CategoryTab {
 	styleUrls: ['./skyui.c.scss']
 })
 export class SkyUIComponent implements OnInit {
+
+	// test data
+	actor = {
+		"dbname": "actor-dragonborn",
+		"icon": null,
+		"equiped": {},
+		"name": "Dragonborn",
+		"biography": "I am Dragonborn!"
+	}
 
 	columnsToDisplay = ['equip', 'icon', 'name', 'typeName', 'value', 'weight'];
 	dataSource: SkyuiDataSource;
@@ -136,6 +146,7 @@ export class SkyUIComponent implements OnInit {
 		for (let invV of invVs) {
 			let invItem = {} as InvItem;
 
+			invItem.id = invV.id;
 			invItem.name = invV.base.name || invV.base.dbname;
 			invItem.description = invV.base.description;
 			invItem.value = invV.base.value;
@@ -184,6 +195,15 @@ export class SkyUIComponent implements OnInit {
 		}
 		return {};
 	};
+
+	findInvItem = (id: string) => {
+		for (let item of this.filteredInvItems) {
+			if (item.id === id) {
+				return item;
+			}
+		}
+		return {} as InvItem;
+	};
 	
 	changeCategoryTab = (dbname: string) => {
 		// deactivate previous tab
@@ -214,11 +234,6 @@ export class SkyUIComponent implements OnInit {
 		console.log(this.currentDetail);
 	};
 
-	// filterByCategory = (dbname: string) => {
-	// 	return this.invItems.filter(
-	// 		invItem => invItem.typeName
-	// 	)
-	// };
 	filterByName = (name: string) => {
 		return this.invItems.filter(
 			invItem => invItem.name.toLowerCase().includes(name.toLowerCase())
@@ -258,14 +273,82 @@ export class SkyUIComponent implements OnInit {
 		this.dataSource = new SkyuiDataSource(this.filteredInvItems);
 	};
 
-	toggleEquip = () => {
-		console.log(this.currentDetail.equips);
+	useItem = () => {
+
+		switch (this.currentDetail.category) {
+			
+			case "category-apparel":
+			case "category-weapons":
+				this.currentDetail.isEquiped? this.unEquipItem(): this.equipItem();
+				break;
+
+			case "category-potions":
+			case "category-scrolls":
+			case "category-food":
+			case "category-ingredients":
+				console.log("consumed 1");
+				break;
+
+			default:
+				console.log("This item cannot be equiped");
+				break;
+		}
+
+	};
+
+	equipItem = () => {
+
+		let slotsToTake: string[] = [];
+		// get equip info from equips array
+		for (let slot of this.currentDetail.equips) {
+			slotsToTake.push(slot.equip);
+		}
+
+		// if slot is taken, need to unequip then equip
+		for (let slot of slotsToTake) {
+
+			if (this.actor.equiped[slot]) {
+
+				// a slot conflict is detected, trying to unequip
+				
+				// an inv item may take up multiple slots (like armor sets / suits)
+				let itemslotsTaken: string[] = [];
+				let invIDOnSlot: string = this.actor.equiped[slot];
+
+				// add all taken slots with same invID to the array
+				for (let key in this.actor.equiped) {
+
+					if (this.actor.equiped[key] === invIDOnSlot) {
+						itemslotsTaken.push(key);
+					}
+				}
+
+				this.actor.equiped = this.actorService.unequipFrom(this.actor.equiped, itemslotsTaken);
+				
+				// the equip icon state also needs to get updated
+				let invItemUnequiped = this.findInvItem(invIDOnSlot);
+				if (invItemUnequiped.id) {
+					invItemUnequiped.isEquiped = false;
+				}
+
+			}
+		}
+
+		// -> slot is now blank, just fill in
+		this.actor.equiped = this.actorService.equip(this.actor.equiped, this.currentDetail.id, slotsToTake);
+
+		console.log(this.actor.equiped);
 
 		// equip
-		this.currentDetail.isEquiped = !this.currentDetail.isEquiped;
+		this.currentDetail.isEquiped = true;
 
 		// present changes on table
 		this.updateDataTable();
+
+	};
+
+	unEquipItem = () => {
+		console.log("unEquipItem()");
 	};
 
   main = async () => {
@@ -283,13 +366,15 @@ export class SkyUIComponent implements OnInit {
 
 	};
 	
+	// debug methods
 	wl = (s: string) => {
 		console.log(s);
 	};
 
 
 	constructor (
-		private dataService: DataService
+		private dataService: DataService,
+		private actorService: ActorService
 	) {
 		this.main();
 	}

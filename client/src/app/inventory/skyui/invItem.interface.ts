@@ -16,6 +16,7 @@ interface IRefDetail {
 }
 
 export interface InvItem {
+	id: string,
 	icon?: string, // to be assigned in the cdk table
 	category?: string, // to be assigned in the cdk table
 	isEquiped?: boolean,
@@ -34,6 +35,7 @@ export interface InvItem {
 }
 
 export interface InvItemVerbose {
+	id: string,
   holder: string,
   item: string,
   refDetails: IRefDetail[],
