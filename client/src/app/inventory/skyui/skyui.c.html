@@ -27,8 +27,12 @@
      <ng-container cdkColumnDef="equip">
       <td class="equip" cdk-header-cell *cdkHeaderCellDef></td>
       <td class="equip" cdk-cell *cdkCellDef="let row">
-        <div *ngIf="row.isEquiped" class="equip">
+        <div *ngIf="row.equipState.equiped" class="equip">
           <i class="icomoon skyui-misc icon-equiped" [ngClass]="row.equip"></i>
+          <div class="weaponPos">
+            <span *ngIf="row.equipState.lefthand">L</span>
+            <span *ngIf="row.equipState.righthand">R</span>
+          </div>
         </div>
       </td>
     </ng-container>
@@ -67,7 +71,7 @@
     
       <!-- Header and Row Declarations -->
       <tr cdk-header-row *cdkHeaderRowDef="columnsToDisplay"></tr>
-      <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay" (mouseenter)="showDetail($event)" (click)="useItem()"></tr>
+      <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay" (mouseenter)="showDetail($event)" (mousedown)="useItem($event)"></tr>
     </table>
 
     <div *ngIf="!itemLoaded">

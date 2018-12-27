@@ -63,7 +63,19 @@ aside.list {
     }
     div.equip {
       position: relative;
+      top: 0.2em;
+      right: 0.2em;
+      i.icon-equiped {
+        font-size: 1.5em;
+      }
+    }
+    div.weaponPos {
+      width: 1.3em;
+      font-size: 0.8em;
+      position: absolute;
       top: 0.4em;
+      right: 0.4em;
+      text-align: center;
     }
   }
 

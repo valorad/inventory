@@ -133,47 +133,47 @@ export class SkyUIIcon {
         // <- (lower priority)
 
         // face
-        if (item.equips.filter(eq => eq.equip === "equip-face").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-face").length > 0) {
           item.icon = this.armorEquipDict["equip-face"][item.type];
         }
 
         // ring
-        if (item.equips.filter(eq => eq.equip === "equip-finger").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-finger").length > 0) {
           item.icon = this.armorEquipDict["equip-finger"][item.type];
         }
 
         // circlet
-        if (item.equips.filter(eq => eq.equip === "equip-neck").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-neck").length > 0) {
           item.icon = this.armorEquipDict["equip-neck"][item.type];
         }
 
         // shield
-        if (item.equips.filter(eq => eq.equip === "equip-shield").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-shield").length > 0) {
           item.icon = this.armorEquipDict["equip-shield"][item.type];
         }
 
         // forearms
-        if (item.equips.filter(eq => eq.equip === "equip-forearms").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-forearms").length > 0) {
           item.icon = this.armorEquipDict["equip-forearms"][item.type];
         }
 
         // leg
-        if (item.equips.filter(eq => eq.equip === "equip-leg").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-leg").length > 0) {
           item.icon = this.armorEquipDict["equip-leg"][item.type];
         }
 
         // shoes
-        if (item.equips.filter(eq => eq.equip === "equip-feet").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-feet").length > 0) {
           item.icon = this.armorEquipDict["equip-feet"][item.type];
         }
 
         // helmet
-        if (item.equips.filter(eq => eq.equip === "equip-head").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-head").length > 0) {
           item.icon = this.armorEquipDict["equip-head"][item.type];
         }
 
         // (highest priority) base: chest armor 
-        if (item.equips.filter(eq => eq.equip === "equip-chest").length > 0) {
+        if (item.equipSlots.filter(eq => eq.equip === "equip-chest").length > 0) {
           item.icon = this.armorEquipDict["equip-chest"][item.type];
         }
 

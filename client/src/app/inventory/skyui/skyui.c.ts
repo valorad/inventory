@@ -17,6 +17,11 @@ interface CategoryTab {
 	active: boolean
 }
 
+interface _1HWeaponEquipState {
+	left: boolean,
+	right: boolean
+}
+
 @Component({
 	selector: 'inventory-skyui',
 	templateUrl: './skyui.c.html',
@@ -151,7 +156,7 @@ export class SkyUIComponent implements OnInit {
 			invItem.description = invV.base.description;
 			invItem.value = invV.base.value;
 			invItem.weight = invV.base.weight;
-			invItem.isEquiped = false;
+			invItem.equipState = {};
 			
 			// count item number based on ref Detail
 			invItem.quantity = 0;
@@ -177,7 +182,7 @@ export class SkyUIComponent implements OnInit {
 				invItem.rating = invV.base.detail.rating;
 				if (invV.base.detail.type) {invItem.type = invV.base.detail.type;}
 				if (invV.base.detail.typeName) invItem.typeName = invV.base.detail.typeName;
-				invItem.equips = invV.base.detail.equipI18n;
+				invItem.equipSlots = invV.base.detail.equipI18n;
 				invItem.effects = invV.base.detail.effectsI18n;
 				invItem.bookContent = invV.base.detail.contentDetail;
 			}
@@ -273,13 +278,57 @@ export class SkyUIComponent implements OnInit {
 		this.dataSource = new SkyuiDataSource(this.filteredInvItems);
 	};
 
-	useItem = () => {
+	useItem = (e: MouseEvent) => {
+
+		let weaponEquipState: _1HWeaponEquipState = {
+			left: false,
+			right: false
+		}
+
+		if (e.button === 2) {
+			weaponEquipState.left = true;
+		} else {
+			weaponEquipState.right = true;
+		}
+
+		console.log(this.currentDetail.equipState);
 
 		switch (this.currentDetail.category) {
 			
 			case "category-apparel":
+				this.currentDetail.equipState.equiped?
+				this.unEquipItem():
+				this.equipItem();
 			case "category-weapons":
-				this.currentDetail.isEquiped? this.unEquipItem(): this.equipItem();
+
+				// if leftclicked
+				if (weaponEquipState.right) {
+					// -> if right hand equiped, unequip
+					if (this.currentDetail.equipState.righthand) {
+						this.unEquipEitherhand(weaponEquipState)
+						console.log("unequip", weaponEquipState);
+					} else {
+						// -> if right hand empty, equip
+						this.equipItem(weaponEquipState)
+					}
+					
+				}
+
+				// if rightclicked
+				if (weaponEquipState.left) {
+					// -> if right hand equiped, unequip
+					if (this.currentDetail.equipState.lefthand) {
+						this.unEquipEitherhand(weaponEquipState)
+					} else {
+						// -> if right hand empty, equip
+						this.equipItem(weaponEquipState)
+					}
+				}
+				// -> if left hand equiped, unequip
+
+				// -> if left hand empty, equip
+
+
 				break;
 
 			case "category-potions":
@@ -296,12 +345,37 @@ export class SkyUIComponent implements OnInit {
 
 	};
 
-	equipItem = () => {
+	equipItem = (options?: _1HWeaponEquipState) => {
 
 		let slotsToTake: string[] = [];
+
+		let weaponEquipState: _1HWeaponEquipState = {
+			left: false,
+			right: false
+		}
+
 		// get equip info from equips array
-		for (let slot of this.currentDetail.equips) {
-			slotsToTake.push(slot.equip);
+		for (let slot of this.currentDetail.equipSlots) {
+
+			// either-hand slot is determined by how the user wants to equip
+			// rightclick is equiped left, left click is equiped right
+			// also for 2h weapons needs to mention equip state explicitly
+			switch (slot.equip) {
+				case "equip-hand-either":
+					if (options && options.left) {
+						slotsToTake.push("equip-hand-left");
+						weaponEquipState.left = true;
+					} else {
+						slotsToTake.push("equip-hand-right");
+						weaponEquipState.right = true;
+					}
+					this.unEquipEitherhand(weaponEquipState);
+					break;
+				default:
+					slotsToTake.push(slot.equip);
+					break;
+			}
+
 		}
 
 		// if slot is taken, need to unequip then equip
@@ -310,28 +384,20 @@ export class SkyUIComponent implements OnInit {
 			if (this.actor.equiped[slot]) {
 
 				// a slot conflict is detected, trying to unequip
-				
-				// an inv item may take up multiple slots (like armor sets / suits)
-				let itemslotsTaken: string[] = [];
-				let invIDOnSlot: string = this.actor.equiped[slot];
-
-				// add all taken slots with same invID to the array
-				for (let key in this.actor.equiped) {
-
-					if (this.actor.equiped[key] === invIDOnSlot) {
-						itemslotsTaken.push(key);
-					}
-				}
-
-				this.actor.equiped = this.actorService.unequipFrom(this.actor.equiped, itemslotsTaken);
-				
-				// the equip icon state also needs to get updated
-				let invItemUnequiped = this.findInvItem(invIDOnSlot);
-				if (invItemUnequiped.id) {
-					invItemUnequiped.isEquiped = false;
-				}
+				this.unEquipItemFrom(slot);
 
 			}
+
+
+			// also present changes for weapon slots
+			if (slot === "equip-hand-left") {
+				this.currentDetail.equipState.lefthand = true;
+			}
+
+			if (slot === "equip-hand-right") {
+				this.currentDetail.equipState.righthand = true;
+			}
+
 		}
 
 		// -> slot is now blank, just fill in
@@ -339,16 +405,115 @@ export class SkyUIComponent implements OnInit {
 
 		console.log(this.actor.equiped);
 
-		// equip
-		this.currentDetail.isEquiped = true;
+		// present equip state to the inventory interface
+
+		this.currentDetail.equipState.equiped = true;
 
 		// present changes on table
 		this.updateDataTable();
 
 	};
 
+	unEquipEitherhand = (options: _1HWeaponEquipState) => {
+
+		let slotToUnequip = "";
+
+		// if it's a weapon, specifically "either hand", then unequip based on mouseclick.
+		if (options.left) {
+			slotToUnequip = "equip-hand-left"
+		}
+		if (options.right) {
+			slotToUnequip = "equip-hand-right"
+		} 
+
+		this.unEquipItemFrom(slotToUnequip, options);
+	};
+
 	unEquipItem = () => {
-		console.log("unEquipItem()");
+
+		let currentInvID = this.currentDetail.id;
+		let slotToUnequip = "";
+		// get current equip position in actor.equiped
+		let currentEquipedPos = "";
+		for (let key in this.actor.equiped) {
+			if (this.actor.equiped[key] === currentInvID) {
+				currentEquipedPos = key;
+			}
+		}
+
+		// armors / 2H weapons, then simply unequip
+		slotToUnequip = currentEquipedPos;
+		this.unEquipItemFrom(slotToUnequip);
+	};
+
+	/**
+	 * Will unequip all the slots with the same invID from the specified slot
+	 */
+	unEquipItemFrom = (slot: string, options?: _1HWeaponEquipState) => {
+
+		// an inv item may take up multiple slots (like armor sets or 2h weapons)
+		let itemslotsTaken: string[] = [];
+		let invIDOnSlot: string = this.actor.equiped[slot];
+
+		// add all taken slots with same invID to the array
+		for (let key in this.actor.equiped) {
+
+			if (this.actor.equiped[key] === invIDOnSlot) {
+				itemslotsTaken.push(key);
+			}
+		}
+
+		// TODO:
+		// for 1H weapons, unequiping one hand does not mean the other hand also need to unequip
+		// because both hands may hold same invID, not doing so may delete every hand.
+		// need to compare both "before" and "after" weapon,
+		// only both of them have "equips" property of "either hand" can we delete one hand
+		if (options && options.left) {
+
+			itemslotsTaken.splice(itemslotsTaken.indexOf("equip-hand-right"), 1);
+		}
+
+		if (options && options.right) {
+			itemslotsTaken.splice(itemslotsTaken.indexOf("equip-hand-left"), 1);
+		}
+
+		this.actor.equiped = this.actorService.unequipFrom(this.actor.equiped, itemslotsTaken);
+
+		this.unequipUpdateState(invIDOnSlot, options);
+
+	};
+
+	unequipUpdateState = (invID: string, options?: _1HWeaponEquipState) => {
+		// the equip icon state also needs to get updated
+		let invItemUnequiped = this.findInvItem(invID);
+		if (invItemUnequiped.id) {
+		
+			// need to determine which hand is unequiped based on how the user mouseclicks
+			if (options) {
+
+				// 1h weapons, to unequip explicitly
+				if (options.left) {
+					invItemUnequiped.equipState.lefthand = false;
+				}
+
+				if (options.right) {
+					invItemUnequiped.equipState.righthand = false;
+				}
+
+				if (!invItemUnequiped.equipState.lefthand && !invItemUnequiped.equipState.righthand) {
+					// if both left hand and right hand is empty
+					console.log("both hands empty")
+					invItemUnequiped.equipState.equiped = false;
+				}
+				
+			} else {
+
+				// may be 2h weapons or bows
+				invItemUnequiped.equipState.lefthand = false;
+				invItemUnequiped.equipState.righthand = false;
+				invItemUnequiped.equipState.equiped = false;
+			}
+		}
 	};
 
   main = async () => {

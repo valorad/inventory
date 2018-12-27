@@ -105,7 +105,7 @@
     "item": "item-buggy_set",
     "refDetails": [
       {
-        "refID": "fireinthehole",
+        "refID": "AllYourBaseAreBelongToUs",
         "owner": "actor-dragonborn",
         "num": 1,
         "item": "item-buggy_set"
@@ -138,6 +138,119 @@
           {
             "name": "feet",
             "equip": "equip-feet"
+          }
+        ],
+        "effectsI18n": [
+         
+        ]
+      }
+    }
+  },
+  {
+    "id": "aegisaaegis",
+    "holder": "actor-dragonborn",
+    "item": "item-greatsword-dragonbone",
+    "refDetails": [
+      {
+        "refID": "blacksheepwall",
+        "owner": "actor-dragonborn",
+        "num": 1,
+        "item": "item-greatsword-dragonbone"
+      }
+    ],
+    "base": {
+      "dbname": "item-greatsword-dragonbone",
+      "name": "Dragonbone Greatsword",
+      "description": "",
+      "value": 1050,
+      "weight": 8,
+      "category": "gears",
+      "detail": {
+        "rating": 60,
+        "type": "type-weapon-greatsword",
+        "typeName": "GreatSword",
+        "equipI18n": [
+          {
+            "name": "Left Hand",
+            "equip": "equip-hand-left"
+          },
+          {
+            "name": "Right Hand",
+            "equip": "equip-hand-right"
+          }
+        ],
+        "effectsI18n": [
+         
+        ]
+      }
+    }
+  },
+  {
+    "id": "thereisnocowlevel",
+    "holder": "actor-dragonborn",
+    "item": "item-dagger-combat",
+    "refDetails": [
+      {
+        "refID": "howdoyouturnthison",
+        "owner": "actor-dragonborn",
+        "num": 1,
+        "item": "item-dagger-combat"
+      }
+    ],
+    "base": {
+      "dbname": "item-dagger-combat",
+      "name": "Combat Dagger",
+      "description": "",
+      "value": 150,
+      "weight": 1,
+      "category": "gears",
+      "detail": {
+        "rating": 10,
+        "type": "type-weapon-dagger",
+        "typeName": "Dagger",
+        "equipI18n": [
+          {
+            "name": "Either Hand",
+            "equip": "equip-hand-either"
+          }
+        ],
+        "effectsI18n": [
+         
+        ]
+      }
+    }
+  },
+  {
+    "id": "IseeDeadPeople",
+    "holder": "actor-dragonborn",
+    "item": "item-crossbow",
+    "refDetails": [
+      {
+        "refID": "irwinner",
+        "owner": "actor-dragonborn",
+        "num": 1,
+        "item": "item-crossbow"
+      }
+    ],
+    "base": {
+      "dbname": "item-crossbow",
+      "name": "Crossbow",
+      "description": "",
+      "value": 150,
+      "weight": 1,
+      "category": "gears",
+      "detail": {
+        "rating": 10,
+        "type": "type-weapon-crossbow",
+        "typeName": "Crossbow",
+        "equipI18n": [
+          {
+            "name": "Left Hand",
+            "equip": "equip-hand-left"
+          },
+          {
+            "name": "Right Hand",
+            "equip": "equip-hand-right"
           }
         ],
         "effectsI18n": [

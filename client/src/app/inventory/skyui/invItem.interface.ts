@@ -1,6 +1,12 @@
-interface IEquip {
+interface IEquipSlot {
 	name: string,
 	equip: string
+}
+
+interface IEquipState {
+	equiped?: boolean,
+	lefthand?: boolean,
+	righthand?: boolean
 }
 
 interface IEffect {
@@ -19,7 +25,7 @@ export interface InvItem {
 	id: string,
 	icon?: string, // to be assigned in the cdk table
 	category?: string, // to be assigned in the cdk table
-	isEquiped?: boolean,
+	equipState: IEquipState;
 	name: string,
 	description?: string,
 	type: string,
@@ -27,7 +33,7 @@ export interface InvItem {
   value?: number,
 	weight?: number,
 	rating?: number,
-	equips: IEquip[]
+	equipSlots: IEquipSlot[]
 	effects: IEffect[],
 	quantity: number,
 	bookContent?: string;

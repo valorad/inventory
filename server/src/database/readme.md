@@ -221,6 +221,7 @@ equip-feet        足部
 ```
 equip-hand-left   左手
 equip-hand-right  右手
+equip-hand-either 左手或右手
 ```
 
 [actor-1]:https://github.com/valorad/inventory/blob/master/server/src/database/interface/actor.interface.ts#L4
