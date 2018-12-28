@@ -326,177 +326,6 @@ export class SkyUIComponent implements OnInit {
 
 	};
 
-	// equipItem = (options?: _1HWeaponEquipState) => {
-
-	// 	let slotsToTake: string[] = [];
-
-	// 	let weaponEquipState: _1HWeaponEquipState = {
-	// 		left: false,
-	// 		right: false
-	// 	}
-
-	// 	// get equip info from equips array
-	// 	for (let slot of this.currentDetail.equipSlots) {
-
-	// 		// either-hand slot is determined by how the user wants to equip
-	// 		// rightclick is equiped left, left click is equiped right
-	// 		// also for 2h weapons needs to mention equip state explicitly
-	// 		switch (slot.equip) {
-	// 			case "equip-hand-either":
-	// 				if (options && options.left) {
-	// 					slotsToTake.push("equip-hand-left");
-	// 					weaponEquipState.left = true;
-	// 				} else {
-	// 					slotsToTake.push("equip-hand-right");
-	// 					weaponEquipState.right = true;
-	// 				}
-	// 				this.unEquipEitherhand(weaponEquipState);
-	// 				break;
-	// 			default:
-	// 				slotsToTake.push(slot.equip);
-	// 				break;
-	// 		}
-
-	// 	}
-
-	// 	// if slot is taken, need to unequip then equip
-	// 	for (let slot of slotsToTake) {
-
-	// 		if (this.actor.equiped[slot]) {
-
-	// 			// a slot conflict is detected, trying to unequip
-	// 			this.unEquipItemFrom(slot);
-
-	// 		}
-
-
-	// 		// also present changes for weapon slots
-	// 		if (slot === "equip-hand-left") {
-	// 			this.currentDetail.equipState.lefthand = true;
-	// 		}
-
-	// 		if (slot === "equip-hand-right") {
-	// 			this.currentDetail.equipState.righthand = true;
-	// 		}
-
-	// 	}
-
-	// 	// -> slot is now blank, just fill in
-	// 	this.actor.equiped = this.actorService.equip(this.actor.equiped, this.currentDetail.id, slotsToTake);
-
-	// 	console.log(this.actor.equiped);
-
-	// 	// present equip state to the inventory interface
-
-	// 	this.currentDetail.equipState.equiped = true;
-
-	// 	// present changes on table
-	// 	this.updateDataTable();
-
-	// };
-
-	// unEquipEitherhand = (options: _1HWeaponEquipState) => {
-
-	// 	let slotToUnequip = "";
-
-	// 	// if it's a weapon, specifically "either hand", then unequip based on mouseclick.
-	// 	if (options.left) {
-	// 		slotToUnequip = "equip-hand-left"
-	// 	}
-	// 	if (options.right) {
-	// 		slotToUnequip = "equip-hand-right"
-	// 	} 
-
-	// 	this.unEquipItemFrom(slotToUnequip, options);
-	// };
-
-	// unEquipItem = () => {
-
-	// 	let currentInvID = this.currentDetail.id;
-	// 	let slotToUnequip = "";
-	// 	// get current equip position in actor.equiped
-	// 	let currentEquipedPos = "";
-	// 	for (let key in this.actor.equiped) {
-	// 		if (this.actor.equiped[key] === currentInvID) {
-	// 			currentEquipedPos = key;
-	// 		}
-	// 	}
-
-	// 	// armors / 2H weapons, then simply unequip
-	// 	slotToUnequip = currentEquipedPos;
-	// 	this.unEquipItemFrom(slotToUnequip);
-	// };
-
-	// /**
-	//  * Will unequip all the slots with the same invID from the specified slot
-	//  */
-	// unEquipItemFrom = (slot: string, options?: _1HWeaponEquipState) => {
-
-	// 	// an inv item may take up multiple slots (like armor sets or 2h weapons)
-	// 	let itemslotsTaken: string[] = [];
-	// 	let invIDOnSlot: string = this.actor.equiped[slot];
-
-	// 	// add all taken slots with same invID to the array
-	// 	for (let key in this.actor.equiped) {
-
-	// 		if (this.actor.equiped[key] === invIDOnSlot) {
-	// 			itemslotsTaken.push(key);
-	// 		}
-	// 	}
-
-	// 	// TODO:
-	// 	// for 1H weapons, unequiping one hand does not mean the other hand also need to unequip
-	// 	// because both hands may hold same invID, not doing so may delete every hand.
-	// 	// need to compare both "before" and "after" weapon,
-	// 	// only both of them have "equips" property of "either hand" can we delete one hand
-	// 	if (options && options.left) {
-
-	// 		itemslotsTaken.splice(itemslotsTaken.indexOf("equip-hand-right"), 1);
-	// 	}
-
-	// 	if (options && options.right) {
-	// 		itemslotsTaken.splice(itemslotsTaken.indexOf("equip-hand-left"), 1);
-	// 	}
-
-	// 	this.actor.equiped = this.actorService.unequipFrom(this.actor.equiped, itemslotsTaken);
-
-	// 	this.unequipUpdateState(invIDOnSlot, options);
-
-	// };
-
-	// unequipUpdateState = (invID: string, options?: _1HWeaponEquipState) => {
-	// 	// the equip icon state also needs to get updated
-	// 	let invItemUnequiped = this.findInvItem(invID);
-	// 	if (invItemUnequiped.id) {
-		
-	// 		// need to determine which hand is unequiped based on how the user mouseclicks
-	// 		if (options) {
-
-	// 			// 1h weapons, to unequip explicitly
-	// 			if (options.left) {
-	// 				invItemUnequiped.equipState.lefthand = false;
-	// 			}
-
-	// 			if (options.right) {
-	// 				invItemUnequiped.equipState.righthand = false;
-	// 			}
-
-	// 			if (!invItemUnequiped.equipState.lefthand && !invItemUnequiped.equipState.righthand) {
-	// 				// if both left hand and right hand is empty
-	// 				console.log("both hands empty")
-	// 				invItemUnequiped.equipState.equiped = false;
-	// 			}
-				
-	// 		} else {
-
-	// 			// may be 2h weapons or bows
-	// 			invItemUnequiped.equipState.lefthand = false;
-	// 			invItemUnequiped.equipState.righthand = false;
-	// 			invItemUnequiped.equipState.equiped = false;
-	// 		}
-	// 	}
-	// };
-
 	getSlotsToTake = (equipSlotObjects: InvItem["equipSlots"]) => {
 		let slots: string[] = [];
 
@@ -579,7 +408,7 @@ export class SkyUIComponent implements OnInit {
 		// get slots
 		let slotsToTake = this.getSlotsToTake(invItem.equipSlots);
 
-		let positionToUnequip: string[];
+		let positionToUnequip: string[] = [];
 
 		// either-hand is special
 		if (slotsToTake.includes("equip-hand-either") && _1HWeaponUnequipOption) {
@@ -597,8 +426,6 @@ export class SkyUIComponent implements OnInit {
 		} else {
 			positionToUnequip = slotsToTake;
 		}
-
-		console.log(positionToUnequip);
 
 		this.actorService.unequipFrom(this.actor.equiped, positionToUnequip);
 
@@ -636,8 +463,6 @@ export class SkyUIComponent implements OnInit {
 			this.unequipArmor(invItemToReplace);
 		}
 
-		console.log(invItemNew, invItemToReplace)
-
 		if (!invItemToReplace || invItemToReplace && invItemToReplace.id !== invItemNew.id) {
 			this.equipArmor(invItemNew);
 		}
@@ -652,9 +477,38 @@ export class SkyUIComponent implements OnInit {
 		let invItemToReplace: InvItem;
 		let slotsOld: string[];
 
+		// find the invID of invItem to replace
 		if (slotsNew.length > 0) {
-			invIDToReplace = this.actor.equiped[slotsNew[0]];
+			// case "equip-hand-either"
+			let slotNew = slotsNew[0];
+			
+			if (slotNew === "equip-hand-either" && _1HWeaponChangeOption) {
+				
+				// translate "equip-hand-either" to left or right based on mouseclick
+				if (_1HWeaponChangeOption.left) {
+					invIDToReplace = this.actor.equiped["equip-hand-left"];
+				}
+				if (_1HWeaponChangeOption.right) {
+					invIDToReplace = this.actor.equiped["equip-hand-right"];
+				}
+
+			} else {
+				let validSlot: string;
+				// case "equip-hand-left" and/or "equip-hand-right"
+				for (let slot of slotsNew) {
+					if (this.actor.equiped[slot]) {
+						validSlot = slot;
+						break;
+					}
+				}
+
+				if (validSlot) {
+					invIDToReplace = this.actor.equiped[validSlot];
+				}
+			}
 		}
+
+		console.log("invIDToReplace", invIDToReplace)
 
 		if (invIDToReplace) {
 			invItemToReplace = this.findInvItem(invIDToReplace);
@@ -668,16 +522,19 @@ export class SkyUIComponent implements OnInit {
 				slotsOld.length === 1 &&
 				slotsOld[0] === "equip-hand-either"
 			) {
+
 				this.unequipWeapon(invItemToReplace, _1HWeaponChangeOption);
+
 			} else {
+				
 				this.unequipWeapon(invItemToReplace, {
 					left: true,
 					right: true
 				});
+
 			}
 
 		}
-
 
 		if (!invItemToReplace || invItemToReplace && invItemToReplace.id !== invItemNew.id) {
 			this.equipWeapon(invItemNew, _1HWeaponChangeOption);
