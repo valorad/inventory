@@ -536,6 +536,19 @@ export class SkyUIComponent implements OnInit {
 
 		}
 
+		// cannot equip an 1H weapon on both left/right hands (if quantity < 2)
+
+		if (slotsNew.includes("equip-hand-either") && invItemNew.quantity < 2) {
+
+			this.unequipWeapon(invItemNew, {
+				left: true,
+				right: true
+			});
+
+		}
+
+
+
 		if (!invItemToReplace || invItemToReplace && invItemToReplace.id !== invItemNew.id) {
 			this.equipWeapon(invItemNew, _1HWeaponChangeOption);
 		}
