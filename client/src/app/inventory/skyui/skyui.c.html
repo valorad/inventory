@@ -71,7 +71,11 @@
     
       <!-- Header and Row Declarations -->
       <tr cdk-header-row *cdkHeaderRowDef="columnsToDisplay"></tr>
-      <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay" (mouseenter)="showDetail($event)" (mousedown)="useItem($event)"></tr>
+      <tr cdk-row *cdkRowDef="let row; columns: columnsToDisplay" tabindex="0"
+       (mouseenter)="showDetail($event)"
+       (mousedown)="useItem($event)" 
+       (keyup)="manipulateItem($event)"
+       ></tr>
     </table>
 
     <div *ngIf="!itemLoaded">

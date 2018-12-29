@@ -1,0 +1,25 @@
+<section class="remove">
+  <header>
+
+    <h1>
+      The number of {{ invItem.name }} to remove (Range: 1 - {{ invItem.quantity }})
+    </h1>
+
+  </header>
+  <main>
+
+    <mat-slider
+     tickInterval="1"
+     min="1"
+     [max]="invItem.quantity"
+     [(ngModel)]="numSelected"
+     ></mat-slider>
+
+     <input matInput type="number" placeholder="numSelected" [(ngModel)]="numSelected">
+
+  </main>
+  <footer class="remove" mat-dialog-actions>
+    <button mat-button (click)="cancel()">No</button>
+    <button mat-button (click)="ok()">Yes</button>
+  </footer>
+</section>

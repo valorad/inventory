@@ -4,15 +4,24 @@ import { FormsModule } from '@angular/forms';
 
 // mat modules
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 // componets
 import { SkyUIComponent } from './skyui.c';
+import { DialogRemoveComponent } from './dialog-remove/dialog-remove.c';
 
 // router
 import { skyuiRouter } from './skyui.r';
 
 const matModules = [
-  CdkTableModule
+  MatDialogModule,
+  CdkTableModule,
+  MatSliderModule,
+  MatButtonModule,
+  MatInputModule
 ];
 
 @NgModule({
@@ -24,7 +33,11 @@ const matModules = [
     skyuiRouter
   ],
   declarations: [
-    SkyUIComponent
-  ]
+    SkyUIComponent,
+    DialogRemoveComponent
+  ],
+  entryComponents: [
+    DialogRemoveComponent
+  ],
 })
 export class SkyUIModule { }

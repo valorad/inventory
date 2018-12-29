@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-// import { of } from 'rxjs';
-// import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 
 import { DataService } from '../../_services/data.s';
+import { ActorService } from 'src/app/_services/actor.s';
 
 import { SkyuiDataSource } from './skyui.table';
 
 import { InvItem, InvItemVerbose } from "./invItem.interface";
-import { ActorService } from 'src/app/_services/actor.s';
+import { DialogRemoveComponent } from './dialog-remove/dialog-remove.c';
 
 
 interface CategoryTab {
@@ -209,6 +209,15 @@ export class SkyUIComponent implements OnInit {
 		}
 		return {} as InvItem;
 	};
+
+	findInvItemIndex = (id: string) => {
+		for (let i = 0; i < this.filteredInvItems.length; i++) {
+			if (this.filteredInvItems[i].id === id) {
+				return i;
+			}
+		}
+		return -1;
+	};
 	
 	changeCategoryTab = (dbname: string) => {
 		// deactivate previous tab
@@ -234,6 +243,7 @@ export class SkyUIComponent implements OnInit {
 
 	showDetail = (e: MouseEvent) => {
 		let tr = e.srcElement as HTMLTableRowElement;
+		tr.focus();
 		let index = tr.rowIndex - 1;
 		this.currentDetail = this.filteredInvItems[index];
 		console.log(this.currentDetail);
@@ -298,8 +308,6 @@ export class SkyUIComponent implements OnInit {
 				break;
 		}
 
-		console.log(this.currentDetail.equipState);
-
 		switch (this.currentDetail.category) {
 			
 			case "category-apparel":
@@ -316,7 +324,7 @@ export class SkyUIComponent implements OnInit {
 			case "category-scrolls":
 			case "category-food":
 			case "category-ingredients":
-				console.log("consumed 1");
+				this.removeItem(this.currentDetail, 1);
 				break;
 
 			default:
@@ -324,6 +332,41 @@ export class SkyUIComponent implements OnInit {
 				break;
 		}
 
+	};
+
+	/**
+	 * Handles Key-press event
+	 */
+	manipulateItem = (e: KeyboardEvent) => {
+		switch (e.key) {
+			case "r":
+			case "R":
+				// dropItem
+				this.dropItem(this.currentDetail);
+				break;
+
+			default:
+				break;
+		}
+	};
+
+	/**
+	 * The item is dropped if pressed R key
+	 */
+	dropItem = async (invItem: InvItem) => {
+		if (invItem.quantity <= 5) {
+			this.removeItem(invItem, 1);
+		} else {
+			let dropNum: number;
+			try {
+				dropNum = await this.openRemoveDialog(invItem);
+			} catch (error) {
+				console.log("User Cancelled drop Or some error occurs");
+			}
+			if (dropNum > 0) {
+				this.removeItem(invItem, dropNum);
+			}
+		}
 	};
 
 	getSlotsToTake = (equipSlotObjects: InvItem["equipSlots"]) => {
@@ -555,6 +598,39 @@ export class SkyUIComponent implements OnInit {
 
 	};
 
+	removeItem = (invItem: InvItem, num: number) => {
+
+			invItem.quantity -= num;
+
+			if (invItem.quantity <= 0) {
+				// delete invItem when quantity reaches 0
+				let index = this.findInvItemIndex(this.currentDetail.id);
+				this.filteredInvItems.splice(index, 1);
+				this.updateDataTable();
+			}
+
+	};
+
+	openRemoveDialog = (invItem: InvItem): Promise<number> => {
+		let dialog = this.matDialog.open(DialogRemoveComponent, {
+			data: invItem
+		});
+
+		return new Promise((resolve, reject) => {
+			dialog.afterClosed().subscribe(
+				(result: number) => {
+					if (result >= 0) {
+						resolve(result);
+					} else {
+						reject(-1);
+					}
+				}
+			);
+		});
+
+	};
+
+
   main = async () => {
 		// activate default tab
 		this.changeCategoryTab("category-all-inventory");
@@ -577,6 +653,7 @@ export class SkyUIComponent implements OnInit {
 
 
 	constructor (
+		private matDialog: MatDialog,
 		private dataService: DataService,
 		private actorService: ActorService
 	) {
