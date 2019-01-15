@@ -195,6 +195,12 @@
         "owner": "actor-dragonborn",
         "num": 1,
         "item": "item-dagger-combat"
+      },
+      {
+        "refID": "ilovethemonkeyhead",
+        "owner": "actor-dragonborn",
+        "num": 1,
+        "item": "item-dagger-combat"
       }
     ],
     "base": {

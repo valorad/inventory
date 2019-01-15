@@ -446,6 +446,10 @@ export class SkyUIComponent implements OnInit {
 		this.updateDataTable();
 	};
 
+	/**
+	 * Will unequip a specific weapon from inventory
+	 * @param _1HWeaponUnequipOption Optional, decides whether to remove left hand or right hand for 1H weapons. Has no effect with other weapon types
+	 */
 	unequipWeapon = (invItem: InvItem, _1HWeaponUnequipOption?: _1HWeaponEquipState) => {
 
 		// get slots
@@ -474,12 +478,14 @@ export class SkyUIComponent implements OnInit {
 
 		// display changes
 
-		if (_1HWeaponUnequipOption.left) {
-			invItem.equipState.lefthand = false;
-		}
-
-		if (_1HWeaponUnequipOption.right) {
-			invItem.equipState.righthand = false;
+		if (slotsToTake.includes("equip-hand-either") && _1HWeaponUnequipOption) {
+			if (_1HWeaponUnequipOption.left) {
+				invItem.equipState.lefthand = false;
+			}
+	
+			if (_1HWeaponUnequipOption.right) {
+				invItem.equipState.righthand = false;
+			}
 		}
 
 		if (!invItem.equipState.lefthand && !invItem.equipState.righthand) {
@@ -551,8 +557,6 @@ export class SkyUIComponent implements OnInit {
 			}
 		}
 
-		console.log("invIDToReplace", invIDToReplace)
-
 		if (invIDToReplace) {
 			invItemToReplace = this.findInvItem(invIDToReplace);
 			slotsOld = this.getSlotsToTake(invItemToReplace.equipSlots);
@@ -600,14 +604,46 @@ export class SkyUIComponent implements OnInit {
 
 	removeItem = (invItem: InvItem, num: number) => {
 
-			invItem.quantity -= num;
+		invItem.quantity -= num;
 
-			if (invItem.quantity <= 0) {
-				// delete invItem when quantity reaches 0
-				let index = this.findInvItemIndex(this.currentDetail.id);
-				this.filteredInvItems.splice(index, 1);
-				this.updateDataTable();
+
+		// weapon dropped from 2 to 1
+		if (invItem.quantity == 1 && invItem.category === "category-weapons") {
+			// unequip an "either-hand" weapon if equiped
+			let equipSlots = this.getSlotsToTake(invItem.equipSlots);
+			if (
+			 equipSlots.includes("equip-hand-either") && 
+			 invItem.equipState.lefthand &&
+			 invItem.equipState.righthand) {
+				// when the weapon is an "either-hand" weapon,
+				// and only when both left and right hand are equiped at the same time,
+				// we unequip the left hand
+				this.unequipWeapon(invItem, {left: true, right: false});
 			}
+		}
+
+		// item dropped from 1 to 0
+		if (invItem.quantity <= 0) {
+			// when quantity reaches 0
+			// unequip if equiped
+			if (invItem.equipState.equiped) {
+				switch (invItem.category) {
+					case "category-apparel":
+						this.unequipArmor(invItem);
+					break;
+					case "category-weapons":
+						this.unequipWeapon(invItem);
+						break;
+					default:
+						break;
+				}
+			}
+
+			// delete invItem
+			let index = this.findInvItemIndex(invItem.id);
+			this.filteredInvItems.splice(index, 1);
+			this.updateDataTable();
+		}
 
 	};
 
