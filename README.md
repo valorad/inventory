@@ -21,6 +21,8 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 另外我不是美工。比如《巫师3》的：每一件物品都是图标。我这个手残让我画那么多图标？emmmmmm...
 
+## Class Diagram
+![clsdgm](https://i.imgur.com/JsrOg15.png)
 
 # To Do:
 
