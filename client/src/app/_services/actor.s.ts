@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 
-import { IActor } from '../_interfaces/actor.i';
+import { Actor } from '../_interfaces/actor.i';
 
 @Injectable()
 export class ActorService {
 
 
-  equip = (equiped: IActor["equiped"], invItemID: string, equiptTo: string[]) => {
+  equip = (equiped: Actor["equiped"], invItemID: string, equiptTo: string[]) => {
     for (let pos of equiptTo) {
       equiped[pos] = invItemID;
     }
     return equiped;
   };
 
-  unequipFrom = (equiped: IActor["equiped"], equiptTo?: string[]) => {
+  unequipFrom = (equiped: Actor["equiped"], equiptTo?: string[]) => {
 
     if (equiptTo) {
       for (let pos of equiptTo) {
@@ -25,7 +25,7 @@ export class ActorService {
 
   };
 
-  unequip = (equiped: IActor["equiped"], invItemID: string) => {
+  unequip = (equiped: Actor["equiped"], invItemID: string) => {
 
     for (let key in equiped) {
       if (equiped[key] === invItemID) {

@@ -1,4 +1,4 @@
-import { InvItem } from "./invItem.interface";
+import { InvItem } from "src/app/_interfaces/invItem.i";
 
 interface CategoryDict {
   [index: string]: string;

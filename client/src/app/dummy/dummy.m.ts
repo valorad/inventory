@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// componets
+// components
 import { DummyComponent } from './dummy.c';
 import { DummyDirective } from './dummy.dr';
 

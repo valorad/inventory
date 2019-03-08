@@ -2,7 +2,7 @@ interface IEquiped {
   [index: string]: string;
 }
 
-export interface IActor {
+export interface Actor {
   dbname: string,
   icon?: string,
   equiped: IEquiped

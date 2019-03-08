@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { InvItem } from '../invItem.interface';
+import { InvItem } from 'src/app/_interfaces/invItem.i';
 
 
 @Component({

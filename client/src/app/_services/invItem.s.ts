@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { InvItem, InvItemVerbose } from "../_interfaces/invItem.interface";
+import { InvItem, InvItemVerbose, _1HWeaponEquipState } from "../_interfaces/invItem.i";
 import { DataService } from "./data.s";
 
-
-interface _1HWeaponEquipState {
-	left: boolean,
-	right: boolean
-}
-
 @Injectable()
-export class InventoryService {
+export class InvItemService {
 
   getInvItems = () => {
     return new Promise<InvItemVerbose[]>((resolve, reject) => {
@@ -24,7 +18,56 @@ export class InventoryService {
       );
     });
 
-  };
+	};
+	
+	extractInvItems = async () => {
+
+		let extInvItem: InvItem[] = [];
+		let invVs: InvItemVerbose[] = await this.getInvItems();
+
+		for (let invV of invVs) {
+			let invItem = {} as InvItem;
+
+			invItem.id = invV.id;
+			invItem.name = invV.base.name || invV.base.dbname;
+			invItem.description = invV.base.description;
+			invItem.value = invV.base.value;
+			invItem.weight = invV.base.weight;
+			invItem.equipState = {};
+			
+			// count item number based on ref Detail
+			invItem.quantity = 0;
+			for (let refDetail of invV.refDetails) {
+				invItem.quantity += refDetail.num;
+			}
+
+			// polyfill types for books and non-cate items
+			// books
+			if (invV.base.category === "books") {
+				invItem.type = "type-book";
+				invItem.typeName = "Books";
+			}
+
+			// non-cate misc
+			if (!invV.base.category) {
+				invItem.type = "type-misc";
+				invItem.typeName = "Miscellaneous";
+			}
+
+			// details
+			if (invV.base.detail) {
+				invItem.rating = invV.base.detail.rating;
+				if (invV.base.detail.type) {invItem.type = invV.base.detail.type;}
+				if (invV.base.detail.typeName) invItem.typeName = invV.base.detail.typeName;
+				invItem.equipSlots = invV.base.detail.equipI18n;
+				invItem.effects = invV.base.detail.effectsI18n;
+				invItem.bookContent = invV.base.detail.contentDetail;
+			}
+
+			extInvItem.push(invItem);
+		}
+		return extInvItem;
+	};
   
 	getSlotsToTake = (equipSlotObjects: InvItem["equipSlots"]) => {
 		let slots: string[] = [];
@@ -90,6 +133,29 @@ export class InventoryService {
     };
 
 	};
+
+	findInvItem = (id: string, invItem: InvItem[]) => {
+		for (let item of invItem) {
+			if (item.id === id) {
+				return item;
+			}
+		}
+		return {} as InvItem;
+	};
+
+	findInvItemIndex = (id: string, invItem: InvItem[]) => {
+		for (let i = 0; i < invItem.length; i++) {
+			if (invItem[i].id === id) {
+				return i;
+			}
+		}
+		return -1;
+	};
+
+	removeItem = (invItem: InvItem, num: number) => {
+		invItem.quantity -= num;
+		return invItem;
+	}
 
 
   constructor(

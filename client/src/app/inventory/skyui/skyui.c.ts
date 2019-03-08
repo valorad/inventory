@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
-import { ActorService } from 'src/app/_services/actor.s';
-import { InventoryService } from 'src/app/_services/inventory.s';
 import { SkyuiDataSource } from './skyui.table';
 
-import { InvItem, InvItemVerbose } from "./invItem.interface";
 import { DialogRemoveComponent } from './dialog-remove/dialog-remove.c';
-
+import { InventoryService } from '../inventory.s';
+import { _1HWeaponEquipState, InvItem } from 'src/app/_interfaces/invItem.i';
 
 
 interface CategoryTab {
@@ -17,10 +15,6 @@ interface CategoryTab {
 	active: boolean
 }
 
-interface _1HWeaponEquipState {
-	left: boolean,
-	right: boolean
-}
 
 @Component({
 	selector: 'inventory-skyui',
@@ -132,51 +126,7 @@ export class SkyUIComponent implements OnInit {
 		this.filterPipe(); // triggers filtering
 	}
 
-	extractData = (invVs: InvItemVerbose[]) => {
-		let extData: InvItem[] = [];
-		for (let invV of invVs) {
-			let invItem = {} as InvItem;
 
-			invItem.id = invV.id;
-			invItem.name = invV.base.name || invV.base.dbname;
-			invItem.description = invV.base.description;
-			invItem.value = invV.base.value;
-			invItem.weight = invV.base.weight;
-			invItem.equipState = {};
-			
-			// count item number based on ref Detail
-			invItem.quantity = 0;
-			for (let refDetail of invV.refDetails) {
-				invItem.quantity += refDetail.num;
-			}
-
-			// polyfill types for books and non-cate items
-			// books
-			if (invV.base.category === "books") {
-				invItem.type = "type-book";
-				invItem.typeName = "Books";
-			}
-
-			// non-cate misc
-			if (!invV.base.category) {
-				invItem.type = "type-misc";
-				invItem.typeName = "Miscellaneous";
-			}
-
-			// details
-			if (invV.base.detail) {
-				invItem.rating = invV.base.detail.rating;
-				if (invV.base.detail.type) {invItem.type = invV.base.detail.type;}
-				if (invV.base.detail.typeName) invItem.typeName = invV.base.detail.typeName;
-				invItem.equipSlots = invV.base.detail.equipI18n;
-				invItem.effects = invV.base.detail.effectsI18n;
-				invItem.bookContent = invV.base.detail.contentDetail;
-			}
-
-			extData.push(invItem);
-		}
-		return extData;
-	};
 
 	findTab = (dbname: string) => {
 		for (let tab of this.tabs) {
@@ -187,23 +137,6 @@ export class SkyUIComponent implements OnInit {
 		return {};
 	};
 
-	findInvItem = (id: string) => {
-		for (let item of this.filteredInvItems) {
-			if (item.id === id) {
-				return item;
-			}
-		}
-		return {} as InvItem;
-	};
-
-	findInvItemIndex = (id: string) => {
-		for (let i = 0; i < this.filteredInvItems.length; i++) {
-			if (this.filteredInvItems[i].id === id) {
-				return i;
-			}
-		}
-		return -1;
-	};
 	
 	changeCategoryTab = (dbname: string) => {
 		// deactivate previous tab
@@ -357,50 +290,26 @@ export class SkyUIComponent implements OnInit {
 
 	equipArmor = (invItem: InvItem) => {
 
-		// get slots
-		let slotsToTake = this.inventoryService.getSlotsToTake(invItem.equipSlots);
-
-		// modify actor
-		this.actorService.equip(this.actor.equiped, invItem.id, slotsToTake);
+		this.inventoryService.equipArmor(invItem, this.actor);
 
 		// display changes
-		invItem.equipState.equiped = true;
 		this.updateDataTable();
-
 	};
 
 	equipWeapon = (invItem: InvItem, _1HWeaponEquipOption?: _1HWeaponEquipState) => {
 
-		let positionToEquip = this.inventoryService.getWeaponPosEquip(invItem, _1HWeaponEquipOption);
-
-		this.actorService.equip(this.actor.equiped, invItem.id, positionToEquip);
+		this.inventoryService.equipWeapon(invItem, this.actor, _1HWeaponEquipOption);
 
 		// display changes
-		invItem.equipState.equiped = true;
-
-		for (let pos of positionToEquip) {
-			switch (pos) {
-				case "equip-hand-left":
-					invItem.equipState.lefthand = true;
-					break;
-				case "equip-hand-right":
-					invItem.equipState.righthand = true;
-					break;
-				default:
-					break;
-			}
-		}
-		
 		this.updateDataTable();
 
 	};
 
 	unequipArmor = (invItem: InvItem) => {
 
-		this.actorService.unequip(this.actor.equiped, invItem.id);
+		this.inventoryService.unequipArmor(invItem, this.actor)
 
 		// display changes
-		invItem.equipState.equiped = false;
 		this.updateDataTable();
 	};
 
@@ -410,186 +319,34 @@ export class SkyUIComponent implements OnInit {
 	 */
 	unequipWeapon = (invItem: InvItem, _1HWeaponUnequipOption?: _1HWeaponEquipState) => {
 
-		let unequipInfo = this.inventoryService.getWeaponPosUnequip(invItem, _1HWeaponUnequipOption);
+		// let unequipInfo = this.invItemService.getWeaponPosUnequip(invItem, _1HWeaponUnequipOption);
 
-		this.actorService.unequipFrom(this.actor.equiped, unequipInfo.positionToUnequip);
+		// this.actorService.unequipFrom(this.actor.equiped, unequipInfo.positionToUnequip);
+
+		this.inventoryService.unequipWeapon(invItem, this.actor, _1HWeaponUnequipOption);
 
 		// display changes
-		// -> dual-wielding
-		if (unequipInfo.slotsToTake.includes("equip-hand-either") && _1HWeaponUnequipOption) {
-			if (_1HWeaponUnequipOption.left) {
-				invItem.equipState.lefthand = false;
-			}
-	
-			if (_1HWeaponUnequipOption.right) {
-				invItem.equipState.righthand = false;
-			}
-		} else {
-			// -> two-handed weapon
-			if (unequipInfo.slotsToTake.includes("equip-hand-left")) {
-				invItem.equipState.lefthand = false;
-			}
-
-			if (unequipInfo.slotsToTake.includes("equip-hand-right")) {
-				invItem.equipState.righthand = false;
-			}
-
-		}
-
-		if (!invItem.equipState.lefthand && !invItem.equipState.righthand) {
-			// both hands are empty, remove equip symbol
-			invItem.equipState.equiped = false;
-		}
-
 		this.updateDataTable();
 
 	};
 
 	changeArmor = (invItemNew: InvItem) => {
 
-		let slotsNew = this.inventoryService.getSlotsToTake(invItemNew.equipSlots);
-		let invIDToReplace: string;
-		let invItemToReplace: InvItem;
-
-		if (slotsNew.length > 0) {
-			invIDToReplace = this.actor.equiped[slotsNew[0]];
-		}
-
-		if (invIDToReplace) {
-			invItemToReplace = this.findInvItem(invIDToReplace);
-			this.unequipArmor(invItemToReplace);
-		}
-
-		if (!invItemToReplace || invItemToReplace && invItemToReplace.id !== invItemNew.id) {
-			this.equipArmor(invItemNew);
-		}
+		this.inventoryService.changeArmor(this.filteredInvItems, invItemNew, this.actor);
 		
 	};
 
 	changeWeapon = (invItemNew: InvItem, _1HWeaponChangeOption?: _1HWeaponEquipState) => {
 		
-		let slotsNew = this.inventoryService.getSlotsToTake(invItemNew.equipSlots);
-
-		let invIDToReplace: string;
-		let invItemToReplace: InvItem;
-		let slotsOld: string[];
-
-		// find the invID of invItem to replace
-		if (slotsNew.length > 0) {
-			// case "equip-hand-either"
-			let slotNew = slotsNew[0];
-			
-			if (slotNew === "equip-hand-either" && _1HWeaponChangeOption) {
-				
-				// translate "equip-hand-either" to left or right based on mouseclick
-				if (_1HWeaponChangeOption.left) {
-					invIDToReplace = this.actor.equiped["equip-hand-left"];
-				}
-				if (_1HWeaponChangeOption.right) {
-					invIDToReplace = this.actor.equiped["equip-hand-right"];
-				}
-
-			} else {
-				let validSlot: string;
-				// case "equip-hand-left" and/or "equip-hand-right"
-				for (let slot of slotsNew) {
-					if (this.actor.equiped[slot]) {
-						validSlot = slot;
-						break;
-					}
-				}
-
-				if (validSlot) {
-					invIDToReplace = this.actor.equiped[validSlot];
-				}
-			}
-		}
-
-		if (invIDToReplace) {
-			invItemToReplace = this.findInvItem(invIDToReplace);
-			slotsOld = this.inventoryService.getSlotsToTake(invItemToReplace.equipSlots);
-
-			// only when both new and old weapon is "either-hand" is the option valid.
-			if (
-				slotsNew.length === 1 &&
-				slotsNew[0] === "equip-hand-either" &&
-				slotsOld &&
-				slotsOld.length === 1 &&
-				slotsOld[0] === "equip-hand-either"
-			) {
-
-				this.unequipWeapon(invItemToReplace, _1HWeaponChangeOption);
-
-			} else {
-				
-				this.unequipWeapon(invItemToReplace, {
-					left: true,
-					right: true
-				});
-
-			}
-
-		}
-
-		// cannot equip an 1H weapon on both left/right hands (if quantity < 2)
-
-		if (slotsNew.includes("equip-hand-either") && invItemNew.quantity < 2) {
-
-			this.unequipWeapon(invItemNew, {
-				left: true,
-				right: true
-			});
-
-		}
-
-		if (!invItemToReplace || invItemToReplace && invItemToReplace.id !== invItemNew.id) {
-			this.equipWeapon(invItemNew, _1HWeaponChangeOption);
-		}
+		this.inventoryService.changeWeapon(this.filteredInvItems, invItemNew, this.actor, _1HWeaponChangeOption);
 
 	};
 
 	removeItem = (invItem: InvItem, num: number) => {
 
-		invItem.quantity -= num;
+		this.inventoryService.removeItem(this.filteredInvItems, invItem, num, this.actor);
 
-
-		// weapon dropped from 2 to 1
-		if (invItem.quantity == 1 && invItem.category === "category-weapons") {
-			// unequip an "either-hand" weapon if equiped
-			let equipSlots = this.inventoryService.getSlotsToTake(invItem.equipSlots);
-			if (
-			 equipSlots.includes("equip-hand-either") && 
-			 invItem.equipState.lefthand &&
-			 invItem.equipState.righthand) {
-				// when the weapon is an "either-hand" weapon,
-				// and only when both left and right hand are equiped at the same time,
-				// we unequip the left hand
-				this.unequipWeapon(invItem, {left: true, right: false});
-			}
-		}
-
-		// item dropped from 1 to 0
-		if (invItem.quantity <= 0) {
-			// when quantity reaches 0
-			// unequip if equiped
-			if (invItem.equipState.equiped) {
-				switch (invItem.category) {
-					case "category-apparel":
-						this.unequipArmor(invItem);
-					break;
-					case "category-weapons":
-						this.unequipWeapon(invItem);
-						break;
-					default:
-						break;
-				}
-			}
-
-			// delete invItem
-			let index = this.findInvItemIndex(invItem.id);
-			this.filteredInvItems.splice(index, 1);
-			this.updateDataTable();
-		}
+		this.updateDataTable();
 
 	};
 
@@ -618,7 +375,7 @@ export class SkyUIComponent implements OnInit {
 		this.changeCategoryTab("category-all-inventory");
 
 		// fetch data
-		this.invItems = (this.extractData(await this.inventoryService.getInvItems())) || [];
+		this.invItems = await this.inventoryService.getInvItems();
 		this.filteredInvItems = this.invItems;
 		this.filteredInvItemsByName = this.invItems;
 
@@ -636,7 +393,8 @@ export class SkyUIComponent implements OnInit {
 
 	constructor (
 		private matDialog: MatDialog,
-		private actorService: ActorService,
+		// private actorService: ActorService,
+		// private invItemService: InvItemService,
 		private inventoryService: InventoryService
 	) {
 		this.main();

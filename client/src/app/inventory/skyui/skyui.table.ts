@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { InvItem } from "./invItem.interface";
+import { InvItem } from "src/app/_interfaces/invItem.i";
 import { SkyUIIcon } from './skyui.icon';
 import { SkyUICategory } from './skyui.category';
 

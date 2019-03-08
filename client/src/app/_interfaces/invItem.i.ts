@@ -9,6 +9,11 @@ interface IEquipState {
 	righthand?: boolean
 }
 
+export interface _1HWeaponEquipState {
+	left: boolean,
+	right: boolean
+}
+
 interface IEffect {
 	name: string,
 	effect: string

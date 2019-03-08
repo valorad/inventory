@@ -1,4 +1,4 @@
-import { InvItem, InvItemVerbose } from "./invItem.interface";
+import { InvItem, InvItemVerbose } from "src/app/_interfaces/invItem.i";
 
 interface IconDict {
   [index: string]: string;

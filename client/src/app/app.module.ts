@@ -15,7 +15,7 @@ import { MatListModule } from '@angular/material/list';
 // services
 import { DataService } from './_services/data.s';
 import { ActorService } from "./_services/actor.s";
-import { InventoryService } from './_services/inventory.s';
+import { InvItemService } from './_services/invItem.s';
 
 import { AppComponent } from './app.component';
 // other components
@@ -54,7 +54,7 @@ const matModules = [
   providers: [
     DataService,
     ActorService,
-    InventoryService
+    InvItemService
   ],
   bootstrap: [ AppComponent ]
 })
