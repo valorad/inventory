@@ -477,7 +477,7 @@ export class SkyUIComponent implements OnInit {
 		this.actorService.unequipFrom(this.actor.equiped, positionToUnequip);
 
 		// display changes
-
+		// -> dual-wielding
 		if (slotsToTake.includes("equip-hand-either") && _1HWeaponUnequipOption) {
 			if (_1HWeaponUnequipOption.left) {
 				invItem.equipState.lefthand = false;
@@ -486,6 +486,16 @@ export class SkyUIComponent implements OnInit {
 			if (_1HWeaponUnequipOption.right) {
 				invItem.equipState.righthand = false;
 			}
+		} else {
+			// -> two-handed weapon
+			if (slotsToTake.includes("equip-hand-left")) {
+				invItem.equipState.lefthand = false;
+			}
+
+			if (slotsToTake.includes("equip-hand-right")) {
+				invItem.equipState.righthand = false;
+			}
+
 		}
 
 		if (!invItem.equipState.lefthand && !invItem.equipState.righthand) {
@@ -561,6 +571,9 @@ export class SkyUIComponent implements OnInit {
 			invItemToReplace = this.findInvItem(invIDToReplace);
 			slotsOld = this.getSlotsToTake(invItemToReplace.equipSlots);
 
+
+			
+
 			// only when both new and old weapon is "either-hand" is the option valid.
 			if (
 				slotsNew.length === 1 &&
@@ -580,6 +593,8 @@ export class SkyUIComponent implements OnInit {
 				});
 
 			}
+
+			console.log(this.actor);
 
 		}
 
