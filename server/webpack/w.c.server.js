@@ -2,7 +2,7 @@ const { resolve, join } = require('path');
 const { readdirSync } = require('fs');
 
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
@@ -47,7 +47,7 @@ let config = {
   },
 
   plugins: [
-    new CleanWebpackPlugin([`${root("dist")}/**`], {root: root("."), verbose: false}),
+    new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { 
         from: resolve(serverpath, "config"),

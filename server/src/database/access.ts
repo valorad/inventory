@@ -1,7 +1,5 @@
 import * as mongoose from "mongoose";
 
-(<any>mongoose).Promise = global.Promise;
-
 interface IAccessConfig {
   user: string,
   password: string,
@@ -18,7 +16,11 @@ class Access {
     const uri = `mongodb://${ config.user }:${ config.password }@${ config.host }:${ config.port }/${ config.db.apply }?authSource=${ config.db.auth }`;
     
     try {
-      let mongooseInstance = await mongoose.connect(uri);
+      let mongooseInstance = await mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useFindAndModify: false
+      })
+
       console.log(`Connection to '${ config.db.apply }' established successfully.`);
       return mongooseInstance;
 

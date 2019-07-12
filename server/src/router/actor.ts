@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import * as bodyParser from 'koa-bodyparser';
+
 import { ApolloServer } from 'apollo-server-koa';
 
 // graphs
