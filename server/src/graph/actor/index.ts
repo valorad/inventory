@@ -86,6 +86,19 @@ class ActorGraph {
     
   };
 
+  equip: IMutation["equip"] = async (obj, args) => {
+    let actorName = args.input.actorName;
+    let equiptTo = args.input.equiptTo;
+    let invItemID = args.input.invItemID;
+    return await this.action.equip(actorName, invItemID, equiptTo);
+  };
+
+  unequip: IMutation["unequip"] = async (obj, args) => {
+    let actorName = args.input.actorName;
+    let unequipSettings = args.input.unequip;
+    return await this.action.unequip(actorName, unequipSettings);
+  };
+
   resolvers = {
     Query: {
       actor: this.getSingle,
@@ -93,7 +106,9 @@ class ActorGraph {
     },
     Mutation: {
       add: this.add,
-      delete: this.delete
+      delete: this.delete,
+      equip: this.equip,
+      unequip: this.unequip
     }
   }
 

@@ -27,6 +27,17 @@ input newActor {
   translations: translations
 }
 
+input equip {
+  actorName: String
+  invItemID: String
+  equiptTo: [String]
+}
+
+input unequip {
+  actorName: String
+  unequip: JSON
+}
+
 input translations {
   name: JSON
   biography: JSON
@@ -40,4 +51,6 @@ type Query {
 type Mutation {
   add(input: newActor!): AddCallback
   delete(conditions: JSON): DeleteCallback
+  equip(input: equip): JSON
+  unequip(input: unequip): JSON
 }

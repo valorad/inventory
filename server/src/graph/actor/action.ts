@@ -5,6 +5,11 @@ import { TranslationAction } from "../../action/translation.action";
 const actorAction = new ActorAction();
 const translationAction = new TranslationAction();
 
+interface unequipSettings {
+  item?: string,
+  position?: string[]
+}
+
 export class Action {
 
   add = async (input: INewActor) => {
@@ -72,6 +77,21 @@ export class Action {
     let delResult = await actorAction.delete(conditions);
 
     return delResult;
+
+  };
+
+  equip = async (actorName: string, invItemID: string, equiptTo: string[]) => {
+    return await actorAction.equip(actorName, invItemID, equiptTo);
+  }
+
+  unequip = async (actorName: string, unequip: unequipSettings) => {
+    if (unequip.item) {
+      return await actorAction.unequip(actorName, unequip.item);
+    }
+
+    if (unequip.position && unequip.position.length > 0) {
+      return await actorAction.unequipFrom(actorName, unequip.position);
+    }
 
   };
 

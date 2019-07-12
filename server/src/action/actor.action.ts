@@ -95,15 +95,19 @@ export class ActorAction implements IAction {
     return null;
   };
 
-  equip = async (actorName: string, invItemID: ObjectId, equiptTo: string[]) => {
-    let actors = await this.getSingle(actorName);
-    if (actors && actors[0]) {
-      let actor = actors[0];
-      for (let pos of equiptTo) {
-        actor.equiped[pos] = invItemID;
+  equip = async (actorName: string, invItem: ObjectId | string, equiptTo: string[]) => {
+    let invItemIDObj = Query.toObjID(invItem);
+    if (invItemIDObj) {
+      let actors = await this.getSingle(actorName);
+      if (actors && actors[0]) {
+        let actor = actors[0];
+        for (let pos of equiptTo) {
+          actor.equiped[pos] = invItemIDObj;
+        }
+        return actor.equiped;
       }
-      return actor.equiped;
     }
+
     return {};
   };
 
@@ -123,14 +127,18 @@ export class ActorAction implements IAction {
     return {};
   };
 
-  unequip = async (actorName: string, invItemID: ObjectId) => {
-    let actors = await this.getSingle(actorName);
-    if (actors && actors[0]) {
-      let actor = actors[0];
-      for (let key in actor.equiped) {
-        if (actor.equiped[key] === invItemID) {
-          delete actor.equiped[key];
-          return actor.equiped;
+  unequip = async (actorName: string, invItem: ObjectId | string) => {
+    let invItemIDObj = Query.toObjID(invItem);
+
+    if (invItemIDObj) {
+      let actors = await this.getSingle(actorName);
+      if (actors && actors[0]) {
+        let actor = actors[0];
+        for (let key in actor.equiped) {
+          if (actor.equiped[key] === invItemIDObj) {
+            delete actor.equiped[key];
+            return actor.equiped;
+          }
         }
       }
     }
