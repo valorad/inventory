@@ -3,12 +3,13 @@
 > 
 > A game-inventory highly resembles [SkyUI](https://www.nexusmods.com/skyrimspecialedition/mods/12604) 5
 
+![Overview](https://i.imgur.com/H0xPR0i.png)
+
 主要是希望当成 [GraphQL](https://github.com/graphql/graphql-js) 和 [Angular-Redux](https://github.com/angular-redux/store) 的练手项目。
 
-由于所需技术栈尚未完全补全，这里只是挖个坑，进度应该会非常缓慢。😐
+~~由于所需技术栈尚未完全补全，这里只是挖个坑，进度应该会非常缓慢。😐~~
 
-## 运行
-
+(由于项目过于复杂，除非重构，否则已经无法继续进行了。😐)
 
 ## 为啥做物品栏
 Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一点的，但是又不是复杂到我无法完成的项目中，物品栏可能是比较合适的。业务逻辑比较清晰，比较灵活，比较常见。
@@ -26,11 +27,11 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 # To Do:
 
-前端：
+❌前端：
 
-- 界面：首页
-- 界面：登录页（选人）
-- 界面：物品栏页（物品详情 增加物品-控制台 删除物品-R-移动端-更多）
+- ❌ 界面：首页
+- ❌ 界面：登录页（选人）
+- ❌ 界面：物品栏页（物品详情 增加物品-控制台 删除物品-R-移动端-更多）
 
 ✔️ 后台：
 
@@ -57,8 +58,8 @@ Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一�
 
 # License
 
-MIT License
+MIT LicenseS
 
-skyUI页面的界面、图标版权属于Bethesda Game Studios和/或SkyUI团队。
+SkyUI页面的界面、图标版权属于Bethesda Game Studios和/或SkyUI团队。
 
-Thanks to Bethesda Game Studios for creating The Elder Scrolls V: Skyrim (and SSE), providing the base content and allowing us to mod it.
+Thanks to our beloved Bethesda Game Studios for bringing us The Elder Scrolls V: Skyrim (and SSE).
