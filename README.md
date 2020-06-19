@@ -1,4 +1,9 @@
 # inventory
+
+[![Docker pulls](https://img.shields.io/docker/pulls/valorad/inventory.svg?style=flat-square)](https://hub.docker.com/r/valorad/inventory/)
+[![Image version](https://images.microbadger.com/badges/version/valorad/inventory.svg)](https://microbadger.com/images/valorad/inventory "inventory Version")
+[![Image Info](https://images.microbadger.com/badges/image/valorad/inventory.svg)](https://microbadger.com/images/valorad/inventory "inventory Image")
+
 > 高仿[SkyUI](https://www.nexusmods.com/skyrimspecialedition/mods/12604) 5的[Angular](https://github.com/angular/angular)物品栏.
 > 
 > A game-inventory highly resembles [SkyUI](https://www.nexusmods.com/skyrimspecialedition/mods/12604) 5
