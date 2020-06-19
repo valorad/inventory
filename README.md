@@ -11,6 +11,23 @@
 
 (由于项目过于复杂，除非重构，否则已经无法继续进行了。😐)
 
+## Deployment
+
+### Prerequisite
+
+- A working MongoDB: [Set up via docker](https://gist.github.com/valorad/40bd4dad5fc94adf03f3451868634213) or [install one manually](https://docs.mongodb.com/manual/installation/).
+
+- `inventory.json` for appliaction settings. You may follow the example from the server repo. Save this file in a folder called `configs`.
+
+### Docker
+``` bash
+docker run -d \
+--network my-vps-main-network \
+--name inventory-c1 \
+-v /path/2/configs:/www/inventory/config \
+valorad/inventory:latest
+```
+
 ## 为啥做物品栏
 Redux和GraphQL是针对大型复杂项目的，而自己能想到的大型一点的，但是又不是复杂到我无法完成的项目中，物品栏可能是比较合适的。业务逻辑比较清晰，比较灵活，比较常见。
 

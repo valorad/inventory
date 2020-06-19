@@ -59,5 +59,6 @@ jspm_packages/
 *.lock
 package-*.json
 /src/config/**
-!*.example.*
+/src/static/client
 shrinkwrap.yaml
+!*.example.*
